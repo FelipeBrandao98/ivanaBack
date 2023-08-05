@@ -75,3 +75,7 @@ Nest is [MIT licensed](LICENSE).
 ### 08-04-23
 
 ## 1 - Criado rota completa de mailer
+
+### 08-05-23
+
+## 1 - Habilitado Cors
