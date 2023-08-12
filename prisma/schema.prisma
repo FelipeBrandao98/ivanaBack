@@ -15,3 +15,23 @@ model Mailer {
   mail      String   @unique
   createdAt DateTime @default(now())
 }
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String   @unique
+  cover       String
+  coverCredit String
+  subtitle    String   @unique
+  publishDate DateTime @default(now())
+  published   Boolean  @default(false)
+  body        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  src       String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

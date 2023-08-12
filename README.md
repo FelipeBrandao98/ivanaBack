@@ -81,3 +81,7 @@ Nest is [MIT licensed](LICENSE).
 ## 1 - Habilitado Cors
 
 ## 2 - Criado regras com Pipe
+
+### 08-12-23
+
+## 1 - Criado rotas events e images
