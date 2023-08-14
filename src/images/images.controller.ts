@@ -6,12 +6,20 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFile,
+  ParseFilePipeBuilder,
+  HttpStatus,
+  StreamableFile,
+  Header,
 } from '@nestjs/common'
 import { ImagesService } from './images.service'
-import { CreateImageDto } from './dto/create-image.dto'
 import { UpdateImageDto } from './dto/update-image.dto'
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { ImagesEntity } from './entities/image.entity'
+import { FileInterceptor } from '@nestjs/platform-express'
+import { createReadStream } from 'fs'
+import { join } from 'path'
 
 @Controller('images')
 @ApiTags('images')
@@ -20,26 +28,62 @@ export class ImagesController {
 
   @Post()
   @ApiCreatedResponse({ type: ImagesEntity })
-  create(@Body() createImageDto: CreateImageDto) {
-    return this.imagesService.create(createImageDto)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      dest: './uploads',
+      preservePath: true,
+    }),
+  )
+  create(
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: 'jpeg',
+        })
+        .addMaxSizeValidator({
+          maxSize: 1000000,
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.imagesService.create({
+      src: file.filename,
+    })
   }
 
-  @Get()
-  @ApiOkResponse({ type: ImagesEntity })
-  findAll() {
-    return this.imagesService.findAll()
-  }
-
-  @Get(':id')
+  @Get('id?=:id')
   @ApiOkResponse({ type: ImagesEntity })
   findOne(@Param('id') id: string) {
     return this.imagesService.findOne(+id)
   }
 
+  @Get(':imgpath')
+  @Header('Content-Type', 'image/jpeg')
+  getStaticFile(@Param('imgpath') imgpath: string): StreamableFile {
+    const file = createReadStream(join(process.cwd(), `./uploads/${imgpath}`))
+    return new StreamableFile(file)
+  }
+
   @Patch(':id')
   @ApiOkResponse({ type: ImagesEntity })
-  update(@Param('id') id: string, @Body() updateImageDto: UpdateImageDto) {
-    return this.imagesService.update(+id, updateImageDto)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      dest: './uploads',
+      preservePath: true,
+    }),
+  )
+  update(
+    @Param('id') id: string,
+    @Body() updateImageDto: UpdateImageDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    updateImageDto.src = file.filename
+    return this.imagesService.update(+id, {
+      src: file.filename,
+    })
   }
 
   @Delete(':id')

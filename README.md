@@ -85,3 +85,7 @@ Nest is [MIT licensed](LICENSE).
 ### 08-12-23
 
 ## 1 - Criado rotas events e images
+
+### 14-08-23
+
+## 1 - Finalizado rotas de images

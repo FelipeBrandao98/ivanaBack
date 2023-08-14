@@ -1,4 +1,4 @@
-import { Injectable, UploadedFile } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { CreateImageDto } from './dto/create-image.dto'
 import { UpdateImageDto } from './dto/update-image.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
@@ -9,22 +9,25 @@ export class ImagesService {
 
   // CRUD Operators
   create(createImageDto: CreateImageDto) {
-    return 'This action adds a new image'
-  }
-
-  findAll() {
-    return `This action returns all images`
+    return this.prisma.image.create({ data: createImageDto })
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} image`
+    return this.prisma.image.findUnique({
+      where: { id: id },
+    })
   }
 
   update(id: number, updateImageDto: UpdateImageDto) {
-    return `This action updates a #${id} image`
+    return this.prisma.image.update({
+      where: { id: id },
+      data: updateImageDto,
+    })
   }
 
   remove(id: number) {
-    return `This action removes a #${id} image`
+    return this.prisma.image.delete({
+      where: { id: id },
+    })
   }
 }
