@@ -19,7 +19,8 @@ model Mailer {
 model Event {
   id          Int      @id @default(autoincrement())
   title       String   @unique
-  cover       String
+  cover       Image?   @relation(fields: [coverId], references: [id])
+  coverId     Int?
   coverCredit String
   subtitle    String   @unique
   publishDate DateTime @default(now())
@@ -34,4 +35,5 @@ model Image {
   src       String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Event     Event[]
 }

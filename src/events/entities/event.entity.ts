@@ -8,8 +8,8 @@ export class EventsEntity implements Event {
   @ApiProperty({ required: true, nullable: false })
   title: string
 
-  @ApiProperty({ required: true, nullable: false })
-  cover: string
+  @ApiProperty({ required: false })
+  coverId: number | null
 
   @ApiProperty({ required: true, nullable: false })
   coverCredit: string

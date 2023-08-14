@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
 import {
-  Contains,
   IsBoolean,
   IsDate,
   IsNotEmpty,
@@ -15,11 +14,8 @@ export class CreateEventDto {
   @ApiProperty({ required: true })
   title: string
 
-  @IsString()
-  @IsNotEmpty()
-  @Contains('http://')
-  @ApiProperty({ required: true })
-  cover: string
+  @ApiProperty({ required: false })
+  coverID: number
 
   @IsString()
   @IsNotEmpty()
