@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common'
 import { MailerService } from './mailer.service'
 import { CreateMailerDto } from './dto/create-mailer.dto'
@@ -37,13 +38,16 @@ export class MailerController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMailerDto: UpdateMailerDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateMailerDto: UpdateMailerDto,
+  ) {
     return this.mailerService.update(+id, updateMailerDto)
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: MailerEntity })
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.mailerService.remove(+id)
   }
 }

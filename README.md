@@ -91,3 +91,7 @@ Nest is [MIT licensed](LICENSE).
 ## 1 - Finalizado rotas de images
 
 ## 2 - Criado a relação de imagens na tabela eventos
+
+### 16-08-23
+
+## 1 - Acrescentado ParseIntPipe nos Controllers

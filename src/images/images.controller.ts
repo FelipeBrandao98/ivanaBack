@@ -12,6 +12,7 @@ import {
   HttpStatus,
   StreamableFile,
   Header,
+  ParseIntPipe,
 } from '@nestjs/common'
 import { ImagesService } from './images.service'
 import { UpdateImageDto } from './dto/update-image.dto'
@@ -56,7 +57,7 @@ export class ImagesController {
 
   @Get('id?=:id')
   @ApiOkResponse({ type: ImagesEntity })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.imagesService.findOne(+id)
   }
 
@@ -76,7 +77,7 @@ export class ImagesController {
     }),
   )
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateImageDto: UpdateImageDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
@@ -88,7 +89,7 @@ export class ImagesController {
 
   @Delete(':id')
   @ApiOkResponse({ type: ImagesEntity })
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.imagesService.remove(+id)
   }
 }
