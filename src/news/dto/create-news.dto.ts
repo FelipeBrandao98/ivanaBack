@@ -12,7 +12,7 @@ export class CreateNewsDto {
   categoryId: number
 
   @ApiProperty({ required: false })
-  coverID: number
+  coverId: number
 
   @IsString()
   @IsNotEmpty()

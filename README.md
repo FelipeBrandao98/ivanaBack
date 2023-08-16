@@ -101,3 +101,5 @@ Nest is [MIT licensed](LICENSE).
 ## 3 - Adição dos campos url e author na tabela image
 
 ## 4 - Renomeação da tabela Events para News, e adicionado o campo categoryId, juntamente com a tabela NewsCategory
+
+## 5 - Adicionado função de incluir tabela de imagens e categoria na chamada GET de news

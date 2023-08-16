@@ -36,7 +36,7 @@ export class ImagesController {
       preservePath: true,
     }),
   )
-  create(
+  async create(
     @Body() createImageDto: CreateImageDto,
     @UploadedFile(
       new ParseFilePipeBuilder()
@@ -54,13 +54,13 @@ export class ImagesController {
   ) {
     createImageDto.src = file.filename
     createImageDto.url = `http://localhost:3001/images/${file.filename}`
-    return this.imagesService.create(createImageDto)
+    return new ImagesEntity(await this.imagesService.create(createImageDto))
   }
 
   @Get('id?=:id')
   @ApiOkResponse({ type: ImagesEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.imagesService.findOne(id)
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return new ImagesEntity(await this.imagesService.findOne(id))
   }
 
   @Get(':imgpath')
@@ -78,19 +78,19 @@ export class ImagesController {
       preservePath: true,
     }),
   )
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateImageDto: UpdateImageDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
     updateImageDto.src = file.filename
     updateImageDto.url = `http://localhost:3001/images/${file.filename}`
-    return this.imagesService.update(id, updateImageDto)
+    return new ImagesEntity(await this.imagesService.update(id, updateImageDto))
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: ImagesEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.imagesService.remove(id)
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return new ImagesEntity(await this.imagesService.remove(id))
   }
 }

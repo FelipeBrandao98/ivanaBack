@@ -13,11 +13,22 @@ export class NewsService {
   }
 
   findAll() {
-    return this.prisma.news.findMany()
+    return this.prisma.news.findMany({
+      include: {
+        cover: true,
+        category: true,
+      },
+    })
   }
 
   findOne(id: number) {
-    return this.prisma.news.findUnique({ where: { id: id } })
+    return this.prisma.news.findUnique({
+      where: { id: id },
+      include: {
+        cover: true,
+        category: true,
+      },
+    })
   }
 
   update(id: number, updateNewsDto: UpdateNewsDto) {
