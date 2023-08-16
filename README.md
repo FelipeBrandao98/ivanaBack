@@ -99,3 +99,5 @@ Nest is [MIT licensed](LICENSE).
 ## 2 - Removido Parse int das rotas
 
 ## 3 - Adição dos campos url e author na tabela image
+
+## 4 - Renomeação da tabela Events para News, e adicionado o campo categoryId, juntamente com a tabela NewsCategory

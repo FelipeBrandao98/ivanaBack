@@ -1,9 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Event } from '@prisma/client'
+import { News } from '@prisma/client'
 
-export class EventsEntity implements Event {
+export class NewsEntity implements News {
   @ApiProperty()
   id: number
+
+  @ApiProperty({ required: true })
+  categoryId: number
 
   @ApiProperty({ required: true, nullable: false })
   title: string

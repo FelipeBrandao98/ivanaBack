@@ -5,11 +5,11 @@ import { AppService } from './app.service'
 import { PrismaModule } from './prisma/prisma.module'
 
 import { MailerModule } from './mailer/mailer.module'
-import { EventsModule } from './events/events.module'
+import { NewsModule } from './news/news.module'
 import { ImagesModule } from './images/images.module'
 
 @Module({
-  imports: [PrismaModule, MailerModule, EventsModule, ImagesModule],
+  imports: [PrismaModule, MailerModule, NewsModule, ImagesModule],
   controllers: [AppController],
   providers: [AppService],
 })

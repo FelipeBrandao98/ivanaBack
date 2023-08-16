@@ -1,12 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsBoolean, IsNotEmpty, IsString, MaxLength } from 'class-validator'
 
-export class CreateEventDto {
+export class CreateNewsDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(320)
   @ApiProperty({ required: true })
   title: string
+
+  @ApiProperty({ required: true })
+  categoryId: number
 
   @ApiProperty({ required: false })
   coverID: number
