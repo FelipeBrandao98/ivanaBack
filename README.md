@@ -97,3 +97,5 @@ Nest is [MIT licensed](LICENSE).
 ## 1 - Acrescentado ParseIntPipe nos Controllers
 
 ## 2 - Removido Parse int das rotas
+
+## 3 - Adição dos campos url e author na tabela image

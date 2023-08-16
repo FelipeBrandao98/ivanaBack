@@ -1,11 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import {
-  IsBoolean,
-  IsDate,
-  IsNotEmpty,
-  IsString,
-  MaxLength,
-} from 'class-validator'
+import { IsBoolean, IsNotEmpty, IsString, MaxLength } from 'class-validator'
 
 export class CreateEventDto {
   @IsString()
@@ -27,7 +21,7 @@ export class CreateEventDto {
   @ApiProperty({ required: true })
   subtitle: string
 
-  @IsDate()
+  @IsString()
   @IsNotEmpty()
   @ApiProperty({ required: true })
   publishDate: Date

@@ -21,6 +21,7 @@ import { ImagesEntity } from './entities/image.entity'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { createReadStream } from 'fs'
 import { join } from 'path'
+import { CreateImageDto } from './dto/create-image.dto'
 
 @Controller('images')
 @ApiTags('images')
@@ -36,13 +37,14 @@ export class ImagesController {
     }),
   )
   create(
+    @Body() createImageDto: CreateImageDto,
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({
           fileType: 'jpeg',
         })
         .addMaxSizeValidator({
-          maxSize: 1000000,
+          maxSize: 1000000000,
         })
         .build({
           errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
@@ -50,9 +52,9 @@ export class ImagesController {
     )
     file: Express.Multer.File,
   ) {
-    return this.imagesService.create({
-      src: file.filename,
-    })
+    createImageDto.src = file.filename
+    createImageDto.url = `http://localhost:3001/images/${file.filename}`
+    return this.imagesService.create(createImageDto)
   }
 
   @Get('id?=:id')
@@ -82,9 +84,8 @@ export class ImagesController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     updateImageDto.src = file.filename
-    return this.imagesService.update(id, {
-      src: file.filename,
-    })
+    updateImageDto.url = `http://localhost:3001/images/${file.filename}`
+    return this.imagesService.update(id, updateImageDto)
   }
 
   @Delete(':id')

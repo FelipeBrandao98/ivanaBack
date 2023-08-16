@@ -9,6 +9,12 @@ export class ImagesEntity implements Image {
   src: string
 
   @ApiProperty()
+  url: string
+
+  @ApiProperty({ required: false })
+  author: string
+
+  @ApiProperty()
   createdAt: Date
 
   @ApiProperty()

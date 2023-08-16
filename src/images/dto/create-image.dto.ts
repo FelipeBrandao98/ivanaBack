@@ -1,8 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString } from 'class-validator'
 
 export class CreateImageDto {
-  @IsString()
   @ApiProperty({ required: false })
   src: string
+
+  @ApiProperty()
+  url: string
+
+  @ApiProperty({ required: false })
+  author?: string
 }
