@@ -57,7 +57,7 @@ export class ImagesController {
     return new ImagesEntity(await this.imagesService.create(createImageDto))
   }
 
-  @Get('id?=:id')
+  @Get('id/:id')
   @ApiOkResponse({ type: ImagesEntity })
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return new ImagesEntity(await this.imagesService.findOne(id))

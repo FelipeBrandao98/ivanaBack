@@ -37,6 +37,12 @@ export class NewsController {
     return this.newsService.findOne(id)
   }
 
+  @Get('category/:category')
+  @ApiOkResponse({ type: NewsEntity })
+  findMany(@Param('category', ParseIntPipe) category: number) {
+    return this.newsService.findCategories(category)
+  }
+
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,

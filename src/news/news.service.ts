@@ -31,6 +31,18 @@ export class NewsService {
     })
   }
 
+  findCategories(category: number) {
+    return this.prisma.news.findMany({
+      where: {
+        categoryId: category,
+      },
+      include: {
+        category: true,
+        cover: true,
+      },
+    })
+  }
+
   update(id: number, updateNewsDto: UpdateNewsDto) {
     return this.prisma.news.update({ where: { id: id }, data: updateNewsDto })
   }
