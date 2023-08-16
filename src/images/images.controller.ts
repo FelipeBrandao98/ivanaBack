@@ -58,7 +58,7 @@ export class ImagesController {
   @Get('id?=:id')
   @ApiOkResponse({ type: ImagesEntity })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.imagesService.findOne(+id)
+    return this.imagesService.findOne(id)
   }
 
   @Get(':imgpath')
@@ -82,7 +82,7 @@ export class ImagesController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     updateImageDto.src = file.filename
-    return this.imagesService.update(+id, {
+    return this.imagesService.update(id, {
       src: file.filename,
     })
   }
@@ -90,6 +90,6 @@ export class ImagesController {
   @Delete(':id')
   @ApiOkResponse({ type: ImagesEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.imagesService.remove(+id)
+    return this.imagesService.remove(id)
   }
 }

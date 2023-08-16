@@ -34,7 +34,7 @@ export class EventsController {
   @Get(':id')
   @ApiOkResponse({ type: EventsEntity })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.eventsService.findOne(+id)
+    return this.eventsService.findOne(id)
   }
 
   @Patch(':id')
@@ -42,12 +42,12 @@ export class EventsController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateEventDto: UpdateEventDto,
   ) {
-    return this.eventsService.update(+id, updateEventDto)
+    return this.eventsService.update(id, updateEventDto)
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: EventsEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.eventsService.remove(+id)
+    return this.eventsService.remove(id)
   }
 }

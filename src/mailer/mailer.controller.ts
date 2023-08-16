@@ -42,12 +42,12 @@ export class MailerController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateMailerDto: UpdateMailerDto,
   ) {
-    return this.mailerService.update(+id, updateMailerDto)
+    return this.mailerService.update(id, updateMailerDto)
   }
 
   @Delete(':id')
   @ApiOkResponse({ type: MailerEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.mailerService.remove(+id)
+    return this.mailerService.remove(id)
   }
 }

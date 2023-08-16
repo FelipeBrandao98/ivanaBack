@@ -95,3 +95,5 @@ Nest is [MIT licensed](LICENSE).
 ### 16-08-23
 
 ## 1 - Acrescentado ParseIntPipe nos Controllers
+
+## 2 - Removido Parse int das rotas
