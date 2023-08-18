@@ -109,3 +109,5 @@ Nest is [MIT licensed](LICENSE).
 ### 18-08-23
 
 ## 1 - Adicionado tabelas Collections, CollectionsCategory, e CollectionsImage
+
+## 2 - Adicionado CRUD de collections
