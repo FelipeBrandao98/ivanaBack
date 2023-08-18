@@ -10,12 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Mailer
 model Mailer {
   id        Int      @id @default(autoincrement())
   mail      String   @unique
   createdAt DateTime @default(now())
 }
 
+// Images
+model Image {
+  id         Int          @id @default(autoincrement())
+  src        String       @unique
+  url        String
+  author     String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  News       News[]
+  Collection Collection[]
+}
+
+// News
 model News {
   id          Int           @id @default(autoincrement())
   category    NewsCategory? @relation(fields: [categoryId], references: [id])
@@ -32,20 +46,44 @@ model News {
   updatedAt   DateTime      @updatedAt
 }
 
-model Image {
-  id        Int      @id @default(autoincrement())
-  src       String   @unique
-  url       String
-  author    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  News      News[]
-}
-
 model NewsCategory {
   id          Int      @id @default(autoincrement())
   description String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   News        News[]
+}
+
+// Collections
+model Collection {
+  id               Int                 @id @default(autoincrement())
+  title            String
+  description      String
+  category         CollectionCategory? @relation(fields: [categoryId], references: [id])
+  categoryId       Int?
+  cover            Image?              @relation(fields: [coverId], references: [id])
+  coverId          Int?
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  CollectionImages CollectionImages[]
+}
+
+model CollectionCategory {
+  id             Int          @id @default(autoincrement())
+  description    String
+  subdescription String
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  Collection     Collection[]
+}
+
+model CollectionImages {
+  id           Int         @id @default(autoincrement())
+  src          String      @unique
+  url          String
+  author       String?
+  collection   Collection? @relation(fields: [collectionId], references: [id])
+  collectionId Int?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }

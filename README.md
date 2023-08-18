@@ -105,3 +105,7 @@ Nest is [MIT licensed](LICENSE).
 ## 5 - Adicionado função de incluir tabela de imagens e categoria na chamada GET de news
 
 ## 6 - Adicionado rota de listar news por categoria
+
+### 18-08-23
+
+## 1 - Adicionado tabelas Collections, CollectionsCategory, e CollectionsImage
