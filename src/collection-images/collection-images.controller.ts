@@ -6,10 +6,16 @@ import {
   Patch,
   Param,
   Delete,
+  UploadedFile,
+  ParseFilePipeBuilder,
+  HttpStatus,
+  UseInterceptors,
 } from '@nestjs/common'
 import { CollectionImagesService } from './collection-images.service'
+import { CollectionImagesEntity } from './entities/collection-image.entity'
 import { CreateCollectionImageDto } from './dto/create-collection-image.dto'
 import { UpdateCollectionImageDto } from './dto/update-collection-image.dto'
+import { FileInterceptor } from '@nestjs/platform-express'
 
 @Controller('collection-images')
 export class CollectionImagesController {
@@ -18,8 +24,33 @@ export class CollectionImagesController {
   ) {}
 
   @Post()
-  create(@Body() createCollectionImageDto: CreateCollectionImageDto) {
-    return this.collectionImagesService.create(createCollectionImageDto)
+  @UseInterceptors(
+    FileInterceptor('file', {
+      dest: './uploads/collections/images',
+      preservePath: true,
+    }),
+  )
+  async create(
+    @Body() createCollectionImageDto: CreateCollectionImageDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: 'jpeg',
+        })
+        .addMaxSizeValidator({
+          maxSize: 1000000000,
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    file: Express.Multer.File,
+  ) {
+    createCollectionImageDto.src = file.filename
+    createCollectionImageDto.url = `http://localhost:3001/collection-images/${file.filename}`
+    return new CollectionImagesEntity(
+      await this.collectionImagesService.create(createCollectionImageDto),
+    )
   }
 
   @Get()
@@ -28,8 +59,10 @@ export class CollectionImagesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.collectionImagesService.findOne(+id)
+  async findOne(@Param('id') id: string) {
+    return new CollectionImagesEntity(
+      await this.collectionImagesService.findOne(+id),
+    )
   }
 
   @Patch(':id')
@@ -41,7 +74,9 @@ export class CollectionImagesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.collectionImagesService.remove(+id)
+  async remove(@Param('id') id: string) {
+    return new CollectionImagesEntity(
+      await this.collectionImagesService.remove(+id),
+    )
   }
 }

@@ -1,6 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { CollectionImages } from '@prisma/client'
 
-export class CollectionImage {
+export class CollectionImagesEntity implements CollectionImages {
+  constructor(partial: Partial<CollectionImagesEntity>) {
+    Object.assign(this, partial)
+  }
+
   @ApiProperty()
   id: number
 
@@ -11,8 +16,14 @@ export class CollectionImage {
   url: string
 
   @ApiProperty({ required: false })
-  author?: string
+  author: string
 
   @ApiProperty()
-  collectionId?: number
+  collectionId: number
+
+  @ApiProperty()
+  createdAt: Date
+
+  @ApiProperty()
+  updatedAt: Date
 }
