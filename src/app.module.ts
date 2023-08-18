@@ -8,8 +8,9 @@ import { MailerModule } from './mailer/mailer.module'
 import { NewsModule } from './news/news.module'
 import { ImagesModule } from './images/images.module'
 import { NewscategoryModule } from './newscategory/newscategory.module'
-import { CollectionsModule } from './collections/collections.module';
-import { CollectiosCategoryModule } from './collectios-category/collectios-category.module';
+import { CollectionsModule } from './collections/collections.module'
+import { CollectiosCategoryModule } from './collectios-category/collectios-category.module'
+import { CollectionImagesModule } from './collection-images/collection-images.module'
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CollectiosCategoryModule } from './collectios-category/collectios-categ
     NewscategoryModule,
     CollectionsModule,
     CollectiosCategoryModule,
+    CollectionImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -113,3 +113,5 @@ Nest is [MIT licensed](LICENSE).
 ## 2 - Adicionado CRUD de collections
 
 ## 3 - Adicionado CRUD de collectionsCategory
+
+## 4 - Adicionado CRUD de collectionsImages
