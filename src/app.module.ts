@@ -9,6 +9,7 @@ import { NewsModule } from './news/news.module'
 import { ImagesModule } from './images/images.module'
 import { NewscategoryModule } from './newscategory/newscategory.module'
 import { CollectionsModule } from './collections/collections.module';
+import { CollectiosCategoryModule } from './collectios-category/collectios-category.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CollectionsModule } from './collections/collections.module';
     ImagesModule,
     NewscategoryModule,
     CollectionsModule,
+    CollectiosCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
