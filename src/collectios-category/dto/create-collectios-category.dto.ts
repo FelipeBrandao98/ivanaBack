@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty } from 'class-validator'
+import { IsNotEmpty, IsOptional } from 'class-validator'
 
 export class CreateCollectiosCategoryDto {
   @IsNotEmpty()
@@ -9,4 +9,8 @@ export class CreateCollectiosCategoryDto {
   @IsNotEmpty()
   @ApiProperty({ required: true })
   subdescription: string
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  coverId: number
 }

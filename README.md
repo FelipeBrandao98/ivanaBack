@@ -125,3 +125,5 @@ Nest is [MIT licensed](LICENSE).
 ## 2 - Collections Category Finalizado, também incluído tabela collection e cover na resposta do Collection
 
 ## 3 - Collections Images finalizado
+
+## 4 - Criado Campo CoverId e relacionamento de Images no campo cover na tabela CollectionsCategory

@@ -19,14 +19,15 @@ model Mailer {
 
 // Images
 model Image {
-  id         Int          @id @default(autoincrement())
-  src        String       @unique
-  url        String
-  author     String?
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  News       News[]
-  Collection Collection[]
+  id                 Int                  @id @default(autoincrement())
+  src                String               @unique
+  url                String
+  author             String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  News               News[]
+  Collection         Collection[]
+  CollectionCategory CollectionCategory[]
 }
 
 // News
@@ -72,6 +73,8 @@ model CollectionCategory {
   id             Int          @id @default(autoincrement())
   description    String
   subdescription String
+  cover          Image?       @relation(fields: [coverId], references: [id])
+  coverId        Int?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   Collection     Collection[]
