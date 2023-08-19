@@ -4,6 +4,10 @@ import { CollectiosCategoryEntity } from 'src/collectios-category/entities/colle
 import { ImagesEntity } from 'src/images/entities/image.entity'
 
 export class CollectionEntity implements Collection {
+  constructor(partial: Partial<CollectionEntity>) {
+    Object.assign(this, partial)
+  }
+
   @ApiProperty({ required: true })
   id: number
 

@@ -15,17 +15,31 @@ export class CollectionImagesService {
   }
 
   findAll() {
-    return this.prisma.collectionImages.findMany()
+    return this.prisma.collectionImages.findMany({
+      include: { collection: true },
+    })
   }
 
   findOne(id: number) {
-    return this.prisma.collectionImages.findUnique({ where: { id: id } })
+    return this.prisma.collectionImages.findUnique({
+      where: { id: id },
+      include: { collection: true },
+    })
   }
 
   update(id: number, updateCollectionImageDto: UpdateCollectionImageDto) {
     return this.prisma.collectionImages.update({
       where: { id: id },
       data: updateCollectionImageDto,
+      include: { collection: true },
+    })
+  }
+
+  updateProps(id: number, updateCollectionImageDto: UpdateCollectionImageDto) {
+    return this.prisma.collectionImages.update({
+      where: { id: id },
+      data: updateCollectionImageDto,
+      include: { collection: true },
     })
   }
 

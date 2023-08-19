@@ -70,7 +70,7 @@ export class ImagesController {
     return new StreamableFile(file)
   }
 
-  @Patch(':id')
+  @Patch('id/:id')
   @ApiOkResponse({ type: ImagesEntity })
   @UseInterceptors(
     FileInterceptor('file', {

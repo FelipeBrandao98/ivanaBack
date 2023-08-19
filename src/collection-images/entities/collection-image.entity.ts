@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { CollectionImages } from '@prisma/client'
+import { CollectionEntity } from 'src/collections/entities/collection.entity'
 
 export class CollectionImagesEntity implements CollectionImages {
-  constructor(partial: Partial<CollectionImagesEntity>) {
+  constructor(partial: Partial<CollectionImages>) {
     Object.assign(this, partial)
   }
 
@@ -19,7 +20,10 @@ export class CollectionImagesEntity implements CollectionImages {
   author: string
 
   @ApiProperty()
-  collectionId: number
+  collectionId: number | null
+
+  @ApiProperty({ required: false, type: CollectionEntity })
+  collection: CollectionEntity
 
   @ApiProperty()
   createdAt: Date
