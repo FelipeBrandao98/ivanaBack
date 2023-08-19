@@ -12,7 +12,7 @@ import { CreateCollectiosCategoryDto } from './dto/create-collectios-category.dt
 import { UpdateCollectiosCategoryDto } from './dto/update-collectios-category.dto'
 import { ApiTags } from '@nestjs/swagger'
 
-@Controller('collectios-category')
+@Controller('collections-category')
 @ApiTags('Collectios Category')
 export class CollectiosCategoryController {
   constructor(

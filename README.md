@@ -121,3 +121,5 @@ Nest is [MIT licensed](LICENSE).
 ### 19-08-23
 
 ## 1 - Adicionado rota de post para Collection
+
+## 2 - Collections Category Finalizado, também incluído tabela collection e cover na resposta do Collection

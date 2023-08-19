@@ -13,12 +13,15 @@ export class CollectionsService {
   }
 
   findAll() {
-    return this.prisma.collection.findMany()
+    return this.prisma.collection.findMany({
+      include: { cover: true, category: true },
+    })
   }
 
   findOne(id: number) {
     return this.prisma.collection.findUnique({
       where: { id: id },
+      include: { cover: true, category: true },
     })
   }
 
@@ -26,6 +29,7 @@ export class CollectionsService {
     return this.prisma.collection.update({
       where: { id: id },
       data: updateCollectionDto,
+      include: { cover: true, category: true },
     })
   }
 
