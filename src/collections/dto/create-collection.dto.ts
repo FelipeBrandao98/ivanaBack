@@ -1,15 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
 
 export class CreateCollectionDto {
-  @ApiProperty({ required: true })
+  @IsString()
+  @ApiProperty()
   title: string
 
-  @ApiProperty({ required: true })
+  @IsString()
+  @ApiProperty()
   description: string
 
-  @ApiProperty()
-  categoryId: number
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  categoryId?: number
 
-  @ApiProperty()
-  coverId: number
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty({ required: false })
+  coverId?: number
 }

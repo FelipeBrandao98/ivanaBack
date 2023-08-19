@@ -117,3 +117,7 @@ Nest is [MIT licensed](LICENSE).
 ## 4 - Adicionado CRUD de collectionsImages
 
 ## 5 - Adicionado mecanismo de upload de imagens na rota CollectionsImage
+
+### 19-08-23
+
+## 1 - Adicionado rota de post para Collection
