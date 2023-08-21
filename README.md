@@ -127,3 +127,7 @@ Nest is [MIT licensed](LICENSE).
 ## 3 - Collections Images finalizado
 
 ## 4 - Criado Campo CoverId e relacionamento de Images no campo cover na tabela CollectionsCategory
+
+### 21-08-23
+
+## 1 - Adicionado rota de listagem de fotos de coleção

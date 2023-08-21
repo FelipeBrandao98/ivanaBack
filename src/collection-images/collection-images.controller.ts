@@ -84,6 +84,13 @@ export class CollectionImagesController {
     )
   }
 
+  @Get('collection-id/:id')
+  async findByCollectionId(@Param('id', ParseIntPipe) id: number) {
+    const images = await this.collectionImagesService.findByCollectionId(id)
+
+    return images.map((image) => new CollectionImagesEntity(image))
+  }
+
   @Patch('id/:id')
   @UseInterceptors(
     FileInterceptor('file', {

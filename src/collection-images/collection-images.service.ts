@@ -27,6 +27,12 @@ export class CollectionImagesService {
     })
   }
 
+  findByCollectionId(id: number) {
+    return this.prisma.collectionImages.findMany({
+      where: { collectionId: id },
+    })
+  }
+
   update(id: number, updateCollectionImageDto: UpdateCollectionImageDto) {
     return this.prisma.collectionImages.update({
       where: { id: id },

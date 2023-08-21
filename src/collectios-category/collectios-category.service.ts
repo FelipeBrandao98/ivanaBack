@@ -15,17 +15,21 @@ export class CollectiosCategoryService {
   }
 
   findAll() {
-    return this.prisma.collectionCategory.findMany()
+    return this.prisma.collectionCategory.findMany({ include: { cover: true } })
   }
 
   findOne(id: number) {
-    return this.prisma.collectionCategory.findUnique({ where: { id: id } })
+    return this.prisma.collectionCategory.findUnique({
+      where: { id: id },
+      include: { cover: true },
+    })
   }
 
   update(id: number, updateCollectiosCategoryDto: UpdateCollectiosCategoryDto) {
     return this.prisma.collectionCategory.update({
       where: { id: id },
       data: updateCollectiosCategoryDto,
+      include: { cover: true },
     })
   }
 
