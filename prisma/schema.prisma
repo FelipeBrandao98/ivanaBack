@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -28,6 +25,7 @@ model Image {
   News               News[]
   Collection         Collection[]
   CollectionCategory CollectionCategory[]
+  Avaliation         Avaliation[]
 }
 
 // News
@@ -89,4 +87,16 @@ model CollectionImages {
   collectionId Int?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
+}
+
+model Avaliation {
+  id          Int      @id @default(autoincrement())
+  name        String
+  avaliation  Int
+  description String
+  likes       Int
+  isActive    Boolean
+  createdAt   DateTime
+  image       Image?   @relation(fields: [imageId], references: [id])
+  imageId     Int?
 }
