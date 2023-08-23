@@ -133,3 +133,7 @@ Nest is [MIT licensed](LICENSE).
 ## 1 - Adicionado rota de listagem de fotos de coleção
 
 ## 2 - Criado a Rota de Avaliations
+
+### 23-08-23
+
+## 1 - Renomeado Rota de Avaliations para Comments

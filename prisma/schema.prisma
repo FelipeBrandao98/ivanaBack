@@ -25,7 +25,7 @@ model Image {
   News               News[]
   Collection         Collection[]
   CollectionCategory CollectionCategory[]
-  Avaliation         Avaliation[]
+  Avaliation         Comments[]
 }
 
 // News
@@ -89,9 +89,9 @@ model CollectionImages {
   updatedAt    DateTime    @updatedAt
 }
 
-model Avaliation {
+model Comments {
   id          Int      @id @default(autoincrement())
-  name        String
+  userName    String
   avaliation  Int
   description String
   likes       Int

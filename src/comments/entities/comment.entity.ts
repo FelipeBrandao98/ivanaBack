@@ -1,8 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { Comments } from '@prisma/client'
 
-export class CreateAvaliationDto {
+export class CommentEntity implements Comments {
   @ApiProperty()
-  name: string
+  id: number
+
+  @ApiProperty()
+  userName: string
 
   @ApiProperty()
   avaliation: number

@@ -9,6 +9,7 @@ export class CollectionsService {
 
   // CRUD Operations
   create(createCollectionDto: CreateCollectionDto) {
+    console.log(createCollectionDto)
     return this.prisma.collection.create({ data: createCollectionDto })
   }
 

@@ -11,7 +11,7 @@ import { NewscategoryModule } from './newscategory/newscategory.module'
 import { CollectionsModule } from './collections/collections.module'
 import { CollectiosCategoryModule } from './collectios-category/collectios-category.module'
 import { CollectionImagesModule } from './collection-images/collection-images.module'
-import { AvaliationsModule } from './avaliations/avaliations.module'
+import { CommentsModule } from './comments/comments.module'
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { AvaliationsModule } from './avaliations/avaliations.module'
     CollectionsModule,
     CollectiosCategoryModule,
     CollectionImagesModule,
-    AvaliationsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
