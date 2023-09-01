@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common'
+import { Controller, Post, Body, Patch, Param, Delete } from '@nestjs/common'
 import { CollectionsService } from './collections.service'
 import { CreateCollectionDto } from './dto/create-collection.dto'
 import { UpdateCollectionDto } from './dto/update-collection.dto'
@@ -20,16 +12,6 @@ export class CollectionsController {
   @Post()
   create(@Body() createCollectionDto: CreateCollectionDto) {
     return this.collectionsService.create(createCollectionDto)
-  }
-
-  @Get()
-  findAll() {
-    return this.collectionsService.findAll()
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.collectionsService.findOne(+id)
   }
 
   @Patch(':id')

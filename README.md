@@ -141,3 +141,5 @@ Nest is [MIT licensed](LICENSE).
 ### 01-09-23
 
 ## 1 - Criado campos de Linguagens e Update dos DTOs e Entities
+
+## 2 - Criado rotas de linguagens para Collections Category e Collections

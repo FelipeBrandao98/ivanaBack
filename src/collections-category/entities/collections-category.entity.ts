@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { CollectionCategory } from '@prisma/client'
 import { ImagesEntity } from 'src/images/entities/image.entity'
 
-export class CollectiosCategoryEntity implements CollectionCategory {
+export class CollectionsCategoryEntity implements CollectionCategory {
   constructor(partial: Partial<CollectionCategory>) {
     Object.assign(this, partial)
   }

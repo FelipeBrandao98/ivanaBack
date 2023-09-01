@@ -9,7 +9,7 @@ import { NewsModule } from './news/news.module'
 import { ImagesModule } from './images/images.module'
 import { NewscategoryModule } from './newscategory/newscategory.module'
 import { CollectionsModule } from './collections/collections.module'
-import { CollectiosCategoryModule } from './collectios-category/collectios-category.module'
+import { CollectionsCategoryModule } from './collections-category/collections-category.module'
 import { CollectionImagesModule } from './collection-images/collection-images.module'
 import { CommentsModule } from './comments/comments.module'
 
@@ -21,7 +21,7 @@ import { CommentsModule } from './comments/comments.module'
     ImagesModule,
     NewscategoryModule,
     CollectionsModule,
-    CollectiosCategoryModule,
+    CollectionsCategoryModule,
     CollectionImagesModule,
     CommentsModule,
   ],

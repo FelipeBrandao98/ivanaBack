@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common'
-import { CreateCollectiosCategoryDto } from './dto/create-collectios-category.dto'
-import { UpdateCollectiosCategoryDto } from './dto/update-collectios-category.dto'
+import { CreateCollectionsCategoryDto } from './dto/create-collections-category.dto'
+import { UpdateCollectionsCategoryDto } from './dto/update-collections-category.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
 
 @Injectable()
-export class CollectiosCategoryService {
+export class CollectionsCategoryService {
   constructor(private prisma: PrismaService) {}
 
   // CRUD Operators
-  create(createCollectiosCategoryDto: CreateCollectiosCategoryDto) {
+  create(createCollectionsCategoryDto: CreateCollectionsCategoryDto) {
     return this.prisma.collectionCategory.create({
-      data: createCollectiosCategoryDto,
+      data: createCollectionsCategoryDto,
     })
   }
 
@@ -25,10 +25,13 @@ export class CollectiosCategoryService {
     })
   }
 
-  update(id: number, updateCollectiosCategoryDto: UpdateCollectiosCategoryDto) {
+  update(
+    id: number,
+    updateCollectionsCategoryDto: UpdateCollectionsCategoryDto,
+  ) {
     return this.prisma.collectionCategory.update({
       where: { id: id },
-      data: updateCollectiosCategoryDto,
+      data: updateCollectionsCategoryDto,
       include: { cover: true },
     })
   }

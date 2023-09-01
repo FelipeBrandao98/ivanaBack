@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Collection } from '@prisma/client'
-import { CollectiosCategoryEntity } from 'src/collectios-category/entities/collectios-category.entity'
+import { CollectionsCategoryEntity } from 'src/collections-category/entities/collections-category.entity'
 import { ImagesEntity } from 'src/images/entities/image.entity'
 
 export class CollectionEntity implements Collection {
@@ -38,8 +38,8 @@ export class CollectionEntity implements Collection {
   @ApiProperty({ required: false })
   categoryId: number
 
-  @ApiProperty({ required: false, type: CollectiosCategoryEntity })
-  category: CollectiosCategoryEntity
+  @ApiProperty({ required: false, type: CollectionsCategoryEntity })
+  category: CollectionsCategoryEntity
 
   @ApiProperty({ required: false })
   coverId: number

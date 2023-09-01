@@ -7,14 +7,17 @@ export class CreateCollectionDto {
   title: string
 
   @IsString()
+  @IsOptional()
   @ApiProperty({ required: false })
   titleDe?: string
 
   @IsString()
+  @IsOptional()
   @ApiProperty({ required: false })
   titleEn?: string
 
   @IsString()
+  @IsOptional()
   @ApiProperty({ required: false })
   titleFr: string
 
@@ -23,14 +26,17 @@ export class CreateCollectionDto {
   description: string
 
   @IsString()
+  @IsOptional()
   @ApiProperty({ required: false })
   descriptionDe?: string
 
   @IsString()
+  @IsOptional()
   @ApiProperty({ required: false })
   descriptionEn?: string
 
   @IsString()
+  @IsOptional()
   @ApiProperty({ required: false })
   descriptionFr?: string
 
