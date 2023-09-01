@@ -14,8 +14,26 @@ export class CollectionEntity implements Collection {
   @ApiProperty({ required: true })
   title: string
 
+  @ApiProperty({ required: false, nullable: true })
+  titleDe: string | null
+
+  @ApiProperty({ required: false, nullable: true })
+  titleEn: string | null
+
+  @ApiProperty({ required: false, nullable: true })
+  titleFr: string | null
+
   @ApiProperty({ required: true })
   description: string
+
+  @ApiProperty({ required: false, nullable: true })
+  descriptionDe: string | null
+
+  @ApiProperty({ required: false, nullable: true })
+  descriptionEn: string | null
+
+  @ApiProperty({ required: false, nullable: true })
+  descriptionFr: string | null
 
   @ApiProperty({ required: false })
   categoryId: number

@@ -137,3 +137,7 @@ Nest is [MIT licensed](LICENSE).
 ### 23-08-23
 
 ## 1 - Renomeado Rota de Avaliations para Comments
+
+### 01-09-23
+
+## 1 - Criado campos de Linguagens e Update dos DTOs e Entities

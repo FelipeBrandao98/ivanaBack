@@ -30,34 +30,55 @@ model Image {
 
 // News
 model News {
-  id          Int           @id @default(autoincrement())
-  category    NewsCategory? @relation(fields: [categoryId], references: [id])
-  categoryId  Int?
-  title       String        @unique
-  cover       Image?        @relation(fields: [coverId], references: [id])
-  coverId     Int?
-  coverCredit String
-  subtitle    String        @unique
-  publishDate DateTime      @default(now())
-  published   Boolean       @default(false)
-  body        String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id            Int           @id @default(autoincrement())
+  category      NewsCategory? @relation(fields: [categoryId], references: [id])
+  categoryId    Int?
+  title         String        @unique
+  titleDe       String?
+  titleEn       String?
+  titleFr       String?
+  cover         Image?        @relation(fields: [coverId], references: [id])
+  coverId       Int?
+  coverCredit   String
+  coverCreditDe String?
+  coverCreditEn String?
+  coverCreditFr String?
+  subtitle      String        @unique
+  subtitleDe    String?
+  subtitleEn    String?
+  subtitleFr    String?
+  publishDate   DateTime      @default(now())
+  published     Boolean       @default(false)
+  body          String
+  bodyDe        String?
+  bodyEn        String?
+  bodyFr        String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model NewsCategory {
-  id          Int      @id @default(autoincrement())
-  description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  News        News[]
+  id            Int      @id @default(autoincrement())
+  description   String
+  descriptionDe String?
+  descriptionEn String?
+  descriptionFr String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  News          News[]
 }
 
 // Collections
 model Collection {
   id               Int                 @id @default(autoincrement())
   title            String
+  titleDe          String?
+  titleEn          String?
+  titleFr          String?
   description      String
+  descriptionDe    String?
+  descriptionEn    String?
+  descriptionFr    String?
   category         CollectionCategory? @relation(fields: [categoryId], references: [id])
   categoryId       Int?
   cover            Image?              @relation(fields: [coverId], references: [id])
@@ -68,14 +89,20 @@ model Collection {
 }
 
 model CollectionCategory {
-  id             Int          @id @default(autoincrement())
-  description    String
-  subdescription String
-  cover          Image?       @relation(fields: [coverId], references: [id])
-  coverId        Int?
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  Collection     Collection[]
+  id               Int          @id @default(autoincrement())
+  description      String
+  descriptionDe    String?
+  descriptionEn    String?
+  descriptionFr    String?
+  subdescription   String
+  subdescriptionDe String?
+  subdescriptionEn String?
+  subdescriptionFr String?
+  cover            Image?       @relation(fields: [coverId], references: [id])
+  coverId          Int?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  Collection       Collection[]
 }
 
 model CollectionImages {

@@ -9,8 +9,17 @@ export class NewscategoryEntity implements NewsCategory {
   @ApiProperty()
   id: number
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
   description: string
+
+  @ApiProperty({ required: false })
+  descriptionDe: string | null
+
+  @ApiProperty({ required: false })
+  descriptionEn: string | null
+
+  @ApiProperty({ required: false })
+  descriptionFr: string | null
 
   @ApiProperty()
   createdAt: Date

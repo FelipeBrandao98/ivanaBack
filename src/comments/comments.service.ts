@@ -12,7 +12,7 @@ export class CommentsService {
   }
 
   findAll() {
-    return this.prisma.comments.findMany()
+    return this.prisma.comments.findMany({ include: { image: true } })
   }
 
   findOne(id: number) {

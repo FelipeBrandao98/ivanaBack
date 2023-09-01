@@ -7,8 +7,32 @@ export class CreateCollectionDto {
   title: string
 
   @IsString()
+  @ApiProperty({ required: false })
+  titleDe?: string
+
+  @IsString()
+  @ApiProperty({ required: false })
+  titleEn?: string
+
+  @IsString()
+  @ApiProperty({ required: false })
+  titleFr: string
+
+  @IsString()
   @ApiProperty()
   description: string
+
+  @IsString()
+  @ApiProperty({ required: false })
+  descriptionDe?: string
+
+  @IsString()
+  @ApiProperty({ required: false })
+  descriptionEn?: string
+
+  @IsString()
+  @ApiProperty({ required: false })
+  descriptionFr?: string
 
   @IsNumber()
   @IsOptional()

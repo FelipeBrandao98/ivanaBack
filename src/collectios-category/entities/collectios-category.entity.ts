@@ -13,8 +13,26 @@ export class CollectiosCategoryEntity implements CollectionCategory {
   @ApiProperty({ required: true })
   description: string
 
+  @ApiProperty({ required: false, nullable: true })
+  descriptionDe: string | null
+
+  @ApiProperty({ required: false, nullable: true })
+  descriptionEn: string | null
+
+  @ApiProperty({ required: false, nullable: true })
+  descriptionFr: string | null
+
   @ApiProperty({ required: true })
   subdescription: string
+
+  @ApiProperty({ required: false, nullable: true })
+  subdescriptionDe: string | null
+
+  @ApiProperty({ required: false, nullable: true })
+  subdescriptionEn: string | null
+
+  @ApiProperty({ required: false, nullable: true })
+  subdescriptionFr: string | null
 
   @ApiProperty({ required: false })
   coverId: number
