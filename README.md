@@ -143,3 +143,7 @@ Nest is [MIT licensed](LICENSE).
 ## 1 - Criado campos de Linguagens e Update dos DTOs e Entities
 
 ## 2 - Criado rotas de linguagens para Collections Category e Collections
+
+### 04-09-23
+
+## 1 - Adicionado Filtro de Rota (Interceptors) na rota Collections-Category para filtar resultador com base na linguagem

@@ -1,9 +1,11 @@
-import { Controller, Get, Param } from '@nestjs/common'
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common'
 import { CollectionsCategoryService } from '../../collections-category.service'
 import { ApiTags } from '@nestjs/swagger'
+import { EnCollectionsCategoryLanguageInterceptor } from 'src/collections-category/interceptors/english.interceptor'
 
 @Controller('collections-category')
 @ApiTags('Collectios Category')
+@UseInterceptors(EnCollectionsCategoryLanguageInterceptor)
 export class CollectionsCategoryEnController {
   constructor(
     private readonly collectiosCategoryService: CollectionsCategoryService,
