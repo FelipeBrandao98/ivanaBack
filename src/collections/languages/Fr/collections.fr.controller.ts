@@ -1,9 +1,17 @@
-import { Controller, Get, Param } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  UseInterceptors,
+} from '@nestjs/common'
 import { CollectionsService } from 'src/collections/collections.service'
 import { ApiTags } from '@nestjs/swagger'
+import { FrCollectionLanguageInterceptor } from 'src/collections/interceptors/french.interceptor'
 
 @Controller('collections')
 @ApiTags('Collections')
+@UseInterceptors(FrCollectionLanguageInterceptor)
 export class CollectionsFrController {
   constructor(private readonly collectionsService: CollectionsService) {}
 
@@ -13,7 +21,7 @@ export class CollectionsFrController {
   }
 
   @Get('fr/:id')
-  findOne(@Param('id') id: string) {
-    return this.collectionsService.findOne(+id)
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.collectionsService.findOne(id)
   }
 }

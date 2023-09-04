@@ -1,19 +1,17 @@
 import {
   Controller,
   Get,
-  Post,
-  Body,
-  Patch,
   Param,
-  Delete,
+  ParseIntPipe,
+  UseInterceptors,
 } from '@nestjs/common'
 import { CollectionsService } from 'src/collections/collections.service'
-import { CreateCollectionDto } from 'src/collections/dto/create-collection.dto'
-import { UpdateCollectionDto } from 'src/collections/dto/update-collection.dto'
 import { ApiTags } from '@nestjs/swagger'
+import { EnCollectionLanguageInterceptor } from 'src/collections/interceptors/english.interceptor'
 
 @Controller('collections')
 @ApiTags('Collections')
+@UseInterceptors(EnCollectionLanguageInterceptor)
 export class CollectionsEnController {
   constructor(private readonly collectionsService: CollectionsService) {}
 
@@ -23,7 +21,7 @@ export class CollectionsEnController {
   }
 
   @Get('en/:id')
-  findOne(@Param('id') id: string) {
-    return this.collectionsService.findOne(+id)
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.collectionsService.findOne(id)
   }
 }

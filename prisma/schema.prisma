@@ -123,7 +123,7 @@ model Comments {
   description String
   likes       Int
   isActive    Boolean
-  createdAt   DateTime
+  createdAt   DateTime @default(now())
   image       Image?   @relation(fields: [imageId], references: [id])
   imageId     Int?
 }

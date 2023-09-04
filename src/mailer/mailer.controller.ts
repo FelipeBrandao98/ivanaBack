@@ -38,6 +38,7 @@ export class MailerController {
   }
 
   @Patch(':id')
+  @ApiOkResponse({ type: MailerEntity })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateMailerDto: UpdateMailerDto,

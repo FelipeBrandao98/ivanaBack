@@ -16,9 +16,6 @@ export class CreateCommentDto {
   @ApiProperty()
   isActive: boolean
 
-  @ApiProperty()
-  imageId: number
-
-  @ApiProperty()
-  createdAt: Date
+  @ApiProperty({ required: false })
+  imageId?: number
 }

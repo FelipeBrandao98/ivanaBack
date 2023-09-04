@@ -1,6 +1,5 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
   Patch,
@@ -15,7 +14,7 @@ import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { NewsEntity } from './entities/news.entity'
 
 @Controller('news')
-@ApiTags('news')
+@ApiTags('News')
 export class NewsController {
   constructor(private readonly newsService: NewsService) {}
 
@@ -25,25 +24,8 @@ export class NewsController {
     return this.newsService.create(createNewsDto)
   }
 
-  @Get()
-  @ApiOkResponse({ type: NewsEntity, isArray: true })
-  findAll() {
-    return this.newsService.findAll()
-  }
-
-  @Get(':id')
-  @ApiOkResponse({ type: NewsEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.newsService.findOne(id)
-  }
-
-  @Get('category/:category')
-  @ApiOkResponse({ type: NewsEntity })
-  findMany(@Param('category', ParseIntPipe) category: number) {
-    return this.newsService.findCategories(category)
-  }
-
   @Patch(':id')
+  @ApiOkResponse({ type: NewsEntity })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateNewsDto: UpdateNewsDto,

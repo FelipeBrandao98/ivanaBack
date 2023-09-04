@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { News } from '@prisma/client'
 import { ImagesEntity } from 'src/images/entities/image.entity'
-import { NewscategoryEntity } from 'src/newscategory/entities/newscategory.entity'
+import { NewscategoryEntity } from '../subroutes/newscategory/entities/newscategory.entity'
 
 export class NewsEntity implements News {
   @ApiProperty()

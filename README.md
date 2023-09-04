@@ -147,3 +147,7 @@ Nest is [MIT licensed](LICENSE).
 ### 04-09-23
 
 ## 1 - Adicionado Filtro de Rota (Interceptors) na rota Collections-Category para filtar resultador com base na linguagem
+
+## 2 - Finalizado Rotas da aplicação
+
+## 3 - Conserto da Rota de Comentários

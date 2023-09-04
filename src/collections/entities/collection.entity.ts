@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Collection } from '@prisma/client'
-import { CollectionsCategoryEntity } from 'src/collections-category/entities/collections-category.entity'
+
 import { ImagesEntity } from 'src/images/entities/image.entity'
+import { CollectionsCategoryEntity } from '../subroutes/collections-category/entities/collections-category.entity'
 
 export class CollectionEntity implements Collection {
   constructor(partial: Partial<CollectionEntity>) {

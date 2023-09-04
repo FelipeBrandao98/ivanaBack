@@ -57,19 +57,6 @@ export class ImagesController {
     return new ImagesEntity(await this.imagesService.create(createImageDto))
   }
 
-  @Get('id/:id')
-  @ApiOkResponse({ type: ImagesEntity })
-  async findOne(@Param('id', ParseIntPipe) id: number) {
-    return new ImagesEntity(await this.imagesService.findOne(id))
-  }
-
-  @Get(':imgpath')
-  @Header('Content-Type', 'image/jpeg')
-  getStaticFile(@Param('imgpath') imgpath: string): StreamableFile {
-    const file = createReadStream(join(process.cwd(), `./uploads/${imgpath}`))
-    return new StreamableFile(file)
-  }
-
   @Patch('id/:id')
   @ApiOkResponse({ type: ImagesEntity })
   @UseInterceptors(
@@ -92,5 +79,19 @@ export class ImagesController {
   @ApiOkResponse({ type: ImagesEntity })
   async remove(@Param('id', ParseIntPipe) id: number) {
     return new ImagesEntity(await this.imagesService.remove(id))
+  }
+
+  @Get('id/:id')
+  @ApiOkResponse({ type: ImagesEntity })
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return new ImagesEntity(await this.imagesService.findOne(id))
+  }
+
+  @Get(':imgpath')
+  @ApiOkResponse({ type: ImagesEntity })
+  @Header('Content-Type', 'image/jpeg')
+  getStaticFile(@Param('imgpath') imgpath: string): StreamableFile {
+    const file = createReadStream(join(process.cwd(), `./uploads/${imgpath}`))
+    return new StreamableFile(file)
   }
 }
