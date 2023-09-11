@@ -157,3 +157,5 @@ Nest is [MIT licensed](LICENSE).
 ## 1 - Criado a tabela de Agendamentos
 
 ## 2 - Criado Rotas de Appointment (Falta Campo de Data do Casamento)
+
+## 3 - Adicionado Campo MerryDate na Tabela Appointment

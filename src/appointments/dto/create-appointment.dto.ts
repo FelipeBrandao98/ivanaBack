@@ -27,4 +27,7 @@ export class CreateAppointmentDto {
 
   @ApiProperty()
   party: boolean
+
+  @ApiProperty()
+  merryDate: Date
 }

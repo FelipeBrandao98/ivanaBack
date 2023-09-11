@@ -140,6 +140,7 @@ model Appointment {
   debutant   Boolean  @default(false)
   bridesmaid Boolean  @default(false)
   party      Boolean  @default(false)
+  merryDate  DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }

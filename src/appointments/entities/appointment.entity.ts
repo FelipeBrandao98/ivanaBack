@@ -12,6 +12,7 @@ export class AppointmentEntity implements Appointment {
   debutant: boolean
   bridesmaid: boolean
   party: boolean
+  merryDate: Date
   createdAt: Date
   updatedAt: Date
 }
