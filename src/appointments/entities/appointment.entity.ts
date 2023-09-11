@@ -1,0 +1,17 @@
+import { Appointment } from '@prisma/client'
+import { MailerEntity } from 'src/mailer/entities/mailer.entity'
+
+export class AppointmentEntity implements Appointment {
+  id: number
+  name: string
+  mailerId: number
+  mailer: MailerEntity
+  phone: number
+  bride: boolean
+  groom: boolean
+  debutant: boolean
+  bridesmaid: boolean
+  party: boolean
+  createdAt: Date
+  updatedAt: Date
+}

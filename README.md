@@ -155,3 +155,5 @@ Nest is [MIT licensed](LICENSE).
 ### 11-09-23
 
 ## 1 - Criado a tabela de Agendamentos
+
+## 2 - Criado Rotas de Appointment (Falta Campo de Data do Casamento)

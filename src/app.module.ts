@@ -9,6 +9,7 @@ import { NewsModule } from './news/news.module'
 import { ImagesModule } from './images/images.module'
 import { CollectionsModule } from './collections/collections.module'
 import { CommentsModule } from './comments/comments.module'
+import { AppointmentsModule } from './appointments/appointments.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CommentsModule } from './comments/comments.module'
     ImagesModule,
     CollectionsModule,
     CommentsModule,
+    AppointmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
