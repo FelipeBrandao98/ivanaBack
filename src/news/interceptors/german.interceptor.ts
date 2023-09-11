@@ -37,10 +37,10 @@ export class DeNewsLanguageInterceptor implements NestInterceptor {
           delete item.bodyEn
           delete item.bodyFr
 
-          item.newscategory.description = item.newscategory.descriptionDe
-          delete item.newscategory.descriptionDe
-          delete item.newscategory.descriptionEn
-          delete item.newscategory.descriptionFr
+          item.category.description = item.category.descriptionDe
+          delete item.category.descriptionDe
+          delete item.category.descriptionEn
+          delete item.category.descriptionFr
         })
       }),
     )

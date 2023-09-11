@@ -14,6 +14,7 @@ export class NewsService {
 
   findAll() {
     return this.prisma.news.findMany({
+      where: { published: true },
       include: {
         cover: true,
         category: true,
@@ -23,10 +24,22 @@ export class NewsService {
 
   findOne(id: number) {
     return this.prisma.news.findUnique({
-      where: { id: id },
+      where: { id: id, published: true },
       include: {
         cover: true,
         category: true,
+      },
+    })
+  }
+
+  findLatests() {
+    return this.prisma.news.findMany({
+      where: { published: true },
+      orderBy: [{ publishDate: 'asc' }],
+      take: 4,
+      include: {
+        category: true,
+        cover: true,
       },
     })
   }
@@ -35,6 +48,7 @@ export class NewsService {
     return this.prisma.news.findMany({
       where: {
         categoryId: category,
+        published: true,
       },
       include: {
         category: true,

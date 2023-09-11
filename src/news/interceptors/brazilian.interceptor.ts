@@ -33,9 +33,9 @@ export class PtBrNewsLanguageInterceptor implements NestInterceptor {
           delete item.bodyEn
           delete item.bodyFr
 
-          delete item.newscategory.descriptionDe
-          delete item.newscategory.descriptionEn
-          delete item.newscategory.descriptionFr
+          delete item.category.descriptionDe
+          delete item.category.descriptionEn
+          delete item.category.descriptionFr
         })
       }),
     )

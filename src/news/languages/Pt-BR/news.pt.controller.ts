@@ -22,6 +22,12 @@ export class NewsPtBrController {
     return this.newsService.findAll()
   }
 
+  @Get('latest/pt-BR')
+  @ApiOkResponse({ type: NewsEntity })
+  findLatests() {
+    return this.newsService.findLatests()
+  }
+
   @Get('pt-BR/:id')
   @ApiOkResponse({ type: NewsEntity })
   findOne(@Param('id', ParseIntPipe) id: number) {

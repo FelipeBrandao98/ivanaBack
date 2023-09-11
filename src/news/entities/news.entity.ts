@@ -77,5 +77,5 @@ export class NewsEntity implements News {
   cover?: ImagesEntity
 
   @ApiProperty({ required: false, type: NewscategoryEntity })
-  newscategory?: NewscategoryEntity
+  category?: NewscategoryEntity
 }
