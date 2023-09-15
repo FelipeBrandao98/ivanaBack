@@ -6,7 +6,7 @@ export class AppointmentEntity implements Appointment {
   name: string
   mailerId: number
   mailer: MailerEntity
-  phone: number
+  phone: string
   bride: boolean
   groom: boolean
   debutant: boolean

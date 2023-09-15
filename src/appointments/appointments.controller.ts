@@ -14,7 +14,6 @@ import { MailerService } from 'src/mailer/mailer.service'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { AppointmentEntity } from './entities/appointment.entity'
 import { CreateMailerDto } from 'src/mailer/dto/create-mailer.dto'
-import { MailerEntity } from 'src/mailer/entities/mailer.entity'
 
 @Controller('appointments')
 @ApiTags('Appointments')

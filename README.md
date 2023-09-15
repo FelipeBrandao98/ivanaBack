@@ -159,3 +159,7 @@ Nest is [MIT licensed](LICENSE).
 ## 2 - Criado Rotas de Appointment (Falta Campo de Data do Casamento)
 
 ## 3 - Adicionado Campo MerryDate na Tabela Appointment
+
+### 15-09-23
+
+## 1 - Adicionado método de Envio de E-mail atravéz de uma api micro-serviço criada

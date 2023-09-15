@@ -134,7 +134,7 @@ model Appointment {
   name       String
   mailerId   Int?
   mailer     Mailer?  @relation(fields: [mailerId], references: [id])
-  phone      Int
+  phone      String
   bride      Boolean  @default(false)
   groom      Boolean  @default(false)
   debutant   Boolean  @default(false)

@@ -9,7 +9,7 @@ import { NewsModule } from './news/news.module'
 import { ImagesModule } from './images/images.module'
 import { CollectionsModule } from './collections/collections.module'
 import { CommentsModule } from './comments/comments.module'
-import { AppointmentsModule } from './appointments/appointments.module';
+import { AppointmentsModule } from './appointments/appointments.module'
 
 @Module({
   imports: [

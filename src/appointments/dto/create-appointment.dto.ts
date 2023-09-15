@@ -11,7 +11,7 @@ export class CreateAppointmentDto {
   mailerId?: number
 
   @ApiProperty()
-  phone: number
+  phone: string
 
   @ApiProperty()
   bride: boolean

@@ -9,9 +9,12 @@ import {
   ParseIntPipe,
 } from '@nestjs/common'
 import { MailerService } from './mailer.service'
+import { SendMailDto } from './dto/send-mailer.dto'
 import { CreateMailerDto } from './dto/create-mailer.dto'
 import { UpdateMailerDto } from './dto/update-mailer.dto'
+
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+
 import { MailerEntity } from './entities/mailer.entity'
 
 @Controller('mailer')
@@ -19,6 +22,13 @@ import { MailerEntity } from './entities/mailer.entity'
 export class MailerController {
   constructor(private readonly mailerService: MailerService) {}
 
+  // Mailer Methods
+  @Post('send')
+  async sendMail(@Body() sendMailDto: SendMailDto) {
+    return this.mailerService.sendMailForUnique(sendMailDto)
+  }
+
+  // CRUD methods
   @Post()
   @ApiCreatedResponse({ type: MailerEntity })
   create(@Body() createMailerDto: CreateMailerDto) {
