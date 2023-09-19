@@ -10,6 +10,7 @@ import { ImagesModule } from './images/images.module'
 import { CollectionsModule } from './collections/collections.module'
 import { CommentsModule } from './comments/comments.module'
 import { AppointmentsModule } from './appointments/appointments.module'
+import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AppointmentsModule } from './appointments/appointments.module'
     CollectionsModule,
     CommentsModule,
     AppointmentsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

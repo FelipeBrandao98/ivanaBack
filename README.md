@@ -163,3 +163,7 @@ Nest is [MIT licensed](LICENSE).
 ### 15-09-23
 
 ## 1 - Adicionado método de Envio de E-mail atravéz de uma api micro-serviço criada
+
+### 19-09-23
+
+## 1 - Adicionado tabela e rotas de usuários já com a encriptação através do bcrypt
