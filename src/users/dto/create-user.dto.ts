@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import {
+  Equals,
   IsDateString,
   IsEmail,
   IsNotEmpty,

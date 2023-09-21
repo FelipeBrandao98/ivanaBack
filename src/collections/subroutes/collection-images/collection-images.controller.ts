@@ -21,7 +21,7 @@ import { UpdateCollectionImageDto } from './dto/update-collection-image.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { createReadStream } from 'fs'
 import { join } from 'path'
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 
 @Controller('collections/images')
 @ApiTags('Collection Images')
@@ -31,6 +31,7 @@ export class CollectionImagesController {
   ) {}
 
   @Post()
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionImagesEntity })
   @UseInterceptors(
     FileInterceptor('file', {
@@ -97,6 +98,7 @@ export class CollectionImagesController {
   }
 
   @Patch('id/:id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionImagesEntity })
   @UseInterceptors(
     FileInterceptor('file', {
@@ -117,6 +119,7 @@ export class CollectionImagesController {
   }
 
   @Patch('up/:id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionImagesEntity })
   updateProps(
     @Param('id', ParseIntPipe) id: number,
@@ -126,6 +129,7 @@ export class CollectionImagesController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionImagesEntity })
   async remove(@Param('id', ParseIntPipe) id: number) {
     return new CollectionImagesEntity(

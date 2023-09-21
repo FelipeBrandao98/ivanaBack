@@ -10,7 +10,12 @@ import {
 import { CollectionsService } from './collections.service'
 import { CreateCollectionDto } from './dto/create-collection.dto'
 import { UpdateCollectionDto } from './dto/update-collection.dto'
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 import { CollectionEntity } from './entities/collection.entity'
 
 @Controller('collections')
@@ -19,12 +24,14 @@ export class CollectionsController {
   constructor(private readonly collectionsService: CollectionsService) {}
 
   @Post()
-  @ApiOkResponse({ type: CollectionEntity })
+  @ApiBearerAuth()
+  @ApiCreatedResponse({ type: CollectionEntity })
   create(@Body() createCollectionDto: CreateCollectionDto) {
     return this.collectionsService.create(createCollectionDto)
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionEntity })
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -34,6 +41,7 @@ export class CollectionsController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.collectionsService.remove(id)

@@ -13,7 +13,12 @@ import { SendMailDto } from './dto/send-mailer.dto'
 import { CreateMailerDto } from './dto/create-mailer.dto'
 import { UpdateMailerDto } from './dto/update-mailer.dto'
 
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 
 import { MailerEntity } from './entities/mailer.entity'
 
@@ -24,6 +29,7 @@ export class MailerController {
 
   // Mailer Methods
   @Post('send')
+  @ApiBearerAuth()
   async sendMail(@Body() sendMailDto: SendMailDto) {
     return this.mailerService.sendMailForUnique(sendMailDto)
   }
@@ -36,18 +42,21 @@ export class MailerController {
   }
 
   @Get()
+  @ApiBearerAuth()
   @ApiOkResponse({ type: MailerEntity, isArray: true })
   findAll() {
     return this.mailerService.findAll()
   }
 
   @Get(':mail')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: MailerEntity })
   findOne(@Param('mail') mail: string) {
     return this.mailerService.findOne(mail)
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: MailerEntity })
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -57,6 +66,7 @@ export class MailerController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: MailerEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.mailerService.remove(id)

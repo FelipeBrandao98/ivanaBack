@@ -10,7 +10,7 @@ import {
 import { CollectionsCategoryService } from './collections-category.service'
 import { CreateCollectionsCategoryDto } from './dto/create-collections-category.dto'
 import { UpdateCollectionsCategoryDto } from './dto/update-collections-category.dto'
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ApiOkResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger'
 import { CollectionsCategoryEntity } from './entities/collections-category.entity'
 
 @Controller('collections/category')
@@ -21,12 +21,14 @@ export class CollectionsCategoryController {
   ) {}
 
   @Post()
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionsCategoryEntity })
   create(@Body() createCollectionsCategoryDto: CreateCollectionsCategoryDto) {
     return this.collectionsCategoryService.create(createCollectionsCategoryDto)
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionsCategoryEntity })
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -39,6 +41,7 @@ export class CollectionsCategoryController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionsCategoryEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.collectionsCategoryService.remove(id)

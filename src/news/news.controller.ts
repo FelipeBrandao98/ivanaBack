@@ -10,7 +10,12 @@ import {
 import { NewsService } from './news.service'
 import { CreateNewsDto } from './dto/create-news.dto'
 import { UpdateNewsDto } from './dto/update-news.dto'
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 import { NewsEntity } from './entities/news.entity'
 
 @Controller('news')
@@ -19,12 +24,14 @@ export class NewsController {
   constructor(private readonly newsService: NewsService) {}
 
   @Post()
+  @ApiBearerAuth()
   @ApiCreatedResponse({ type: NewsEntity })
   create(@Body() createNewsDto: CreateNewsDto) {
     return this.newsService.create(createNewsDto)
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: NewsEntity })
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -34,6 +41,7 @@ export class NewsController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: NewsEntity })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.newsService.remove(id)

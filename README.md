@@ -167,3 +167,7 @@ Nest is [MIT licensed](LICENSE).
 ### 19-09-23
 
 ## 1 - Adicionado tabela e rotas de usuários já com a encriptação através do bcrypt
+
+### 21-09-23
+
+## 1 - Criado método de login com jwt e senha encriptada, feito o boqueio de todas as rotas de POST, PATCH e DELETE (Exceto rotas de Mailer e Appointment)

@@ -16,7 +16,12 @@ import {
 } from '@nestjs/common'
 import { ImagesService } from './images.service'
 import { UpdateImageDto } from './dto/update-image.dto'
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 import { ImagesEntity } from './entities/image.entity'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { createReadStream } from 'fs'
@@ -29,6 +34,7 @@ export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 
   @Post()
+  @ApiBearerAuth()
   @ApiCreatedResponse({ type: ImagesEntity })
   @UseInterceptors(
     FileInterceptor('file', {
@@ -58,6 +64,7 @@ export class ImagesController {
   }
 
   @Patch('id/:id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: ImagesEntity })
   @UseInterceptors(
     FileInterceptor('file', {
@@ -76,6 +83,7 @@ export class ImagesController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiOkResponse({ type: ImagesEntity })
   async remove(@Param('id', ParseIntPipe) id: number) {
     return new ImagesEntity(await this.imagesService.remove(id))
