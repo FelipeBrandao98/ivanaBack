@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  Get,
 } from '@nestjs/common'
 import { NewsService } from './news.service'
 import { CreateNewsDto } from './dto/create-news.dto'
@@ -22,6 +23,13 @@ import { NewsEntity } from './entities/news.entity'
 @ApiTags('News')
 export class NewsController {
   constructor(private readonly newsService: NewsService) {}
+
+  @Get()
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: NewsEntity })
+  findAll() {
+    return this.newsService.findAll()
+  }
 
   @Post()
   @ApiBearerAuth()

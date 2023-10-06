@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  Get,
 } from '@nestjs/common'
 import { CollectionsService } from './collections.service'
 import { CreateCollectionDto } from './dto/create-collection.dto'
@@ -22,6 +23,13 @@ import { CollectionEntity } from './entities/collection.entity'
 @ApiTags('Collections')
 export class CollectionsController {
   constructor(private readonly collectionsService: CollectionsService) {}
+
+  @Get()
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: CollectionEntity })
+  findAll() {
+    return this.collectionsService.findAll()
+  }
 
   @Post()
   @ApiBearerAuth()

@@ -58,6 +58,7 @@ export class ImagesController {
     )
     file: Express.Multer.File,
   ) {
+    console.log(file)
     createImageDto.src = file.filename
     createImageDto.url = `http://localhost:3001/images/${file.filename}`
     return new ImagesEntity(await this.imagesService.create(createImageDto))

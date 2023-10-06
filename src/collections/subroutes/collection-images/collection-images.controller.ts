@@ -30,7 +30,7 @@ export class CollectionImagesController {
     private readonly collectionImagesService: CollectionImagesService,
   ) {}
 
-  @Post()
+  @Post(':collectionId')
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionImagesEntity })
   @UseInterceptors(
@@ -54,9 +54,11 @@ export class CollectionImagesController {
         }),
     )
     file: Express.Multer.File,
+    @Param('collectionId', ParseIntPipe) collectionId: number,
   ) {
+    createCollectionImageDto.collectionId = Number(collectionId)
     createCollectionImageDto.src = file.filename
-    createCollectionImageDto.url = `http://localhost:3001/collection-images/${file.filename}`
+    createCollectionImageDto.url = `http://localhost:3001/collections/images/${file.filename}`
     return new CollectionImagesEntity(
       await this.collectionImagesService.create(createCollectionImageDto),
     )

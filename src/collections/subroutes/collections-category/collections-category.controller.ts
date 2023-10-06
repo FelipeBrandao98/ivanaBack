@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   Post,
   Body,
   Patch,
@@ -19,6 +20,13 @@ export class CollectionsCategoryController {
   constructor(
     private readonly collectionsCategoryService: CollectionsCategoryService,
   ) {}
+
+  @Get()
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: CollectionsCategoryEntity })
+  findAll() {
+    return this.collectionsCategoryService.findAll()
+  }
 
   @Post()
   @ApiBearerAuth()

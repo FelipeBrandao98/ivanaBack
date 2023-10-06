@@ -14,7 +14,6 @@ export class NewsService {
 
   findAll() {
     return this.prisma.news.findMany({
-      where: { published: true },
       include: {
         cover: true,
         category: true,

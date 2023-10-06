@@ -171,3 +171,7 @@ Nest is [MIT licensed](LICENSE).
 ### 21-09-23
 
 ## 1 - Criado método de login com jwt e senha encriptada, feito o boqueio de todas as rotas de POST, PATCH e DELETE (Exceto rotas de Mailer e Appointment)
+
+### 06-10-23
+
+## 1 - Mudanças na lógica de envio de fotos para coleções
