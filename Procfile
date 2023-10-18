@@ -1,3 +1,3 @@
-web: yarn build
-web: yarn prisma migrate deploy
-web: yarn start:debug
+web: npm run build
+web: npm run prisma migrate deploy
+web: npm run start:debug
