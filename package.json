@@ -2,7 +2,7 @@
   "name": "median",
   "version": "0.0.1",
   "engines": {
-    "node": "18.16.0",
+    "node": "18.16.x",
     "yarn": "1.22.19"
   },
   "description": "",
