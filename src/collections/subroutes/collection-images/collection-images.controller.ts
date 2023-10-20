@@ -58,7 +58,7 @@ export class CollectionImagesController {
   ) {
     createCollectionImageDto.collectionId = Number(collectionId)
     createCollectionImageDto.src = file.filename
-    createCollectionImageDto.url = `http://localhost:3001/collections/images/${file.filename}`
+    createCollectionImageDto.url = `${process.env.SERVER_ADDRESS}/collections/images/${file.filename}`
     return new CollectionImagesEntity(
       await this.collectionImagesService.create(createCollectionImageDto),
     )
@@ -114,7 +114,7 @@ export class CollectionImagesController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     updateCollectionImageDto.src = file.filename
-    updateCollectionImageDto.url = `http://localhost:3001/collection-images/${file.filename}`
+    updateCollectionImageDto.url = `${process.env.SERVER_ADDRESS}/collections/images/${file.filename}`
     return new CollectionImagesEntity(
       await this.collectionImagesService.update(id, updateCollectionImageDto),
     )

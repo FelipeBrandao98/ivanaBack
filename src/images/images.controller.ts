@@ -60,7 +60,7 @@ export class ImagesController {
   ) {
     console.log(file)
     createImageDto.src = file.filename
-    createImageDto.url = `http://localhost:3001/images/${file.filename}`
+    createImageDto.url = `${process.env.SERVER_ADDRESS}/images/${file.filename}`
     return new ImagesEntity(await this.imagesService.create(createImageDto))
   }
 
@@ -79,7 +79,7 @@ export class ImagesController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     updateImageDto.src = file.filename
-    updateImageDto.url = `http://localhost:3001/images/${file.filename}`
+    updateImageDto.url = `${process.env.SERVER_ADDRESS}/images/${file.filename}`
     return new ImagesEntity(await this.imagesService.update(id, updateImageDto))
   }
 
