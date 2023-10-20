@@ -8,8 +8,6 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
-  ParseFilePipeBuilder,
-  HttpStatus,
   StreamableFile,
   Header,
   ParseIntPipe,
@@ -36,32 +34,14 @@ export class ImagesController {
   @Post()
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: ImagesEntity })
-  @UseInterceptors(
-    FileInterceptor('file', {
-      dest: './uploads',
-      preservePath: true,
-    }),
-  )
+  @UseInterceptors(FileInterceptor('file'))
   async create(
     @Body() createImageDto: CreateImageDto,
-    @UploadedFile(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType: 'jpeg',
-        })
-        .addMaxSizeValidator({
-          maxSize: 1000000000,
-        })
-        .build({
-          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        }),
-    )
-    file: Express.Multer.File,
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(file)
-    createImageDto.src = file.filename
-    createImageDto.url = `${process.env.SERVER_ADDRESS}/images/${file.filename}`
-    return new ImagesEntity(await this.imagesService.create(createImageDto))
+    return new ImagesEntity(
+      await this.imagesService.create(createImageDto, file),
+    )
   }
 
   @Patch('id/:id')
@@ -99,8 +79,8 @@ export class ImagesController {
   @Get(':imgpath')
   @ApiOkResponse({ type: ImagesEntity })
   @Header('Content-Type', 'image/jpeg')
-  getStaticFile(@Param('imgpath') imgpath: string): StreamableFile {
-    const file = createReadStream(join(process.cwd(), `./uploads/${imgpath}`))
+  async getStaticFile(@Param('imgpath') imgpath: string) {
+    const file = await this.imagesService.getImage(imgpath)
     return new StreamableFile(file)
   }
 }
