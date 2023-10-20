@@ -175,3 +175,7 @@ Nest is [MIT licensed](LICENSE).
 ### 06-10-23
 
 ## 1 - Mudanças na lógica de envio de fotos para coleções
+
+### 20-10-23
+
+## 1 - Mudanças na lógica de armazenamento de fotos para aws
