@@ -17,13 +17,12 @@ import { CollectionImagesEntity } from './entities/collection-image.entity'
 import { CreateCollectionImageDto } from './dto/create-collection-image.dto'
 import { UpdateCollectionImageDto } from './dto/update-collection-image.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { createReadStream } from 'fs'
-import { join } from 'path'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 
 @Controller('collections/images')
 @ApiTags('Collection Images')
 export class CollectionImagesController {
+  imagesService: any
   constructor(
     private readonly collectionImagesService: CollectionImagesService,
   ) {}
@@ -56,10 +55,8 @@ export class CollectionImagesController {
   @Get(':imgpath')
   @ApiOkResponse({ type: CollectionImagesEntity })
   @Header('Content-Type', 'image/jpeg')
-  getStaticFile(@Param('imgpath') imgpath: string): StreamableFile {
-    const file = createReadStream(
-      join(process.cwd(), `./uploads/collections/images/${imgpath}`),
-    )
+  async getStaticFile(@Param('imgpath') imgpath: string) {
+    const file = await this.collectionImagesService.getImage(imgpath)
     return new StreamableFile(file)
   }
 
