@@ -8,7 +8,6 @@ import {
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3'
-import { ConfigService } from '@nestjs/config'
 import { randomUUID } from 'crypto'
 
 @Injectable()
@@ -17,10 +16,7 @@ export class CollectionImagesService {
     region: process.env.S3_REGION,
   })
 
-  constructor(
-    private prisma: PrismaService,
-    private readonly configService: ConfigService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   // CRUD Operators
   async create(

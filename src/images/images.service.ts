@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common'
 import { CreateImageDto } from './dto/create-image.dto'
 import { UpdateImageDto } from './dto/update-image.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
-import { ConfigService } from '@nestjs/config'
 import {
   GetObjectCommand,
   GetObjectCommandOutput,
@@ -17,10 +16,7 @@ export class ImagesService {
     region: process.env.S3_REGION,
   })
 
-  constructor(
-    private prisma: PrismaService,
-    private readonly configService: ConfigService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   // CRUD Operators
   async create(createImageDto: CreateImageDto, file: Express.Multer.File) {

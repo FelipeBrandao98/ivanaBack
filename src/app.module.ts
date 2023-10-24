@@ -12,7 +12,6 @@ import { CommentsModule } from './comments/comments.module'
 import { AppointmentsModule } from './appointments/appointments.module'
 import { UsersModule } from './users/users.module'
 import { AuthModule } from './auth/auth.module'
-import { ConfigModule } from '@nestjs/config'
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { ConfigModule } from '@nestjs/config'
     AppointmentsModule,
     UsersModule,
     AuthModule,
-    ConfigModule.forRoot({ isGlobal: true }),
   ],
   controllers: [AppController],
   providers: [AppService],
