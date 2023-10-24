@@ -14,6 +14,10 @@ import { randomUUID } from 'crypto'
 export class ImagesService {
   private readonly s3Client = new S3Client({
     region: process.env.S3_REGION,
+    credentials: {
+      accessKeyId: process.env.S3_ACCESS_KEY_ID,
+      secretAccessKey: process.env.S3_SECRET_ACCESSKEY,
+    },
   })
 
   constructor(private prisma: PrismaService) {}
