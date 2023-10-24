@@ -14,7 +14,7 @@ import { randomUUID } from 'crypto'
 @Injectable()
 export class ImagesService {
   private readonly s3Client = new S3Client({
-    region: this.configService.getOrThrow('AWS_S3_RREGION'),
+    region: this.configService.getOrThrow('AWS_S3_REGION'),
   })
 
   constructor(
