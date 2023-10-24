@@ -4,13 +4,9 @@ import { UpdateImageDto } from './dto/update-image.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
 import { ConfigService } from '@nestjs/config'
 import {
-  GetObjectAclCommandInput,
-  GetObjectAclCommandOutput,
   GetObjectCommand,
   GetObjectCommandOutput,
   PutObjectCommand,
-  PutObjectCommandInput,
-  PutObjectCommandOutput,
   S3Client,
 } from '@aws-sdk/client-s3'
 import { randomUUID } from 'crypto'

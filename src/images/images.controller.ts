@@ -22,8 +22,6 @@ import {
 } from '@nestjs/swagger'
 import { ImagesEntity } from './entities/image.entity'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { createReadStream } from 'fs'
-import { join } from 'path'
 import { CreateImageDto } from './dto/create-image.dto'
 
 @Controller('images')

@@ -7,8 +7,6 @@ import {
   Param,
   Delete,
   UploadedFile,
-  ParseFilePipeBuilder,
-  HttpStatus,
   UseInterceptors,
   StreamableFile,
   Header,
@@ -33,34 +31,16 @@ export class CollectionImagesController {
   @Post(':collectionId')
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionImagesEntity })
-  @UseInterceptors(
-    FileInterceptor('file', {
-      dest: './uploads/collections/images',
-      preservePath: true,
-    }),
-  )
+  @UseInterceptors(FileInterceptor('file'))
   async create(
     @Body() createCollectionImageDto: CreateCollectionImageDto,
-    @UploadedFile(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType: 'jpeg',
-        })
-        .addMaxSizeValidator({
-          maxSize: 1000000000,
-        })
-        .build({
-          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        }),
-    )
+    @UploadedFile()
     file: Express.Multer.File,
     @Param('collectionId', ParseIntPipe) collectionId: number,
   ) {
     createCollectionImageDto.collectionId = Number(collectionId)
-    createCollectionImageDto.src = file.filename
-    createCollectionImageDto.url = `${process.env.SERVER_ADDRESS}/collections/images/${file.filename}`
     return new CollectionImagesEntity(
-      await this.collectionImagesService.create(createCollectionImageDto),
+      await this.collectionImagesService.create(createCollectionImageDto, file),
     )
   }
 
@@ -116,7 +96,11 @@ export class CollectionImagesController {
     updateCollectionImageDto.src = file.filename
     updateCollectionImageDto.url = `${process.env.SERVER_ADDRESS}/collections/images/${file.filename}`
     return new CollectionImagesEntity(
-      await this.collectionImagesService.update(id, updateCollectionImageDto),
+      await this.collectionImagesService.update(
+        id,
+        updateCollectionImageDto,
+        file,
+      ),
     )
   }
 
