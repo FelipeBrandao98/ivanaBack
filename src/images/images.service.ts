@@ -14,7 +14,7 @@ import { randomUUID } from 'crypto'
 @Injectable()
 export class ImagesService {
   private readonly s3Client = new S3Client({
-    region: this.configService.getOrThrow('AWS_S3_REGION'),
+    region: this.configService.getOrThrow('S3_REGION'),
   })
 
   constructor(
@@ -28,7 +28,7 @@ export class ImagesService {
 
     await this.s3Client.send(
       new PutObjectCommand({
-        Bucket: process.env.AWS_S3_BUCKET,
+        Bucket: process.env.S3_BUCKET,
         Key: filename,
         Body: file.buffer,
         ContentEncoding: 'utf8',
@@ -44,7 +44,7 @@ export class ImagesService {
   async getImage(imgName: string) {
     const response: GetObjectCommandOutput = await this.s3Client.send(
       new GetObjectCommand({
-        Bucket: process.env.AWS_S3_BUCKET,
+        Bucket: process.env.S3_BUCKET,
         Key: imgName,
       }),
     )

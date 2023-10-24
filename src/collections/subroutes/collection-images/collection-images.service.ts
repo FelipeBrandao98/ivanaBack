@@ -2,14 +2,19 @@ import { Injectable } from '@nestjs/common'
 import { CreateCollectionImageDto } from './dto/create-collection-image.dto'
 import { UpdateCollectionImageDto } from './dto/update-collection-image.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import {
+  GetObjectCommand,
+  GetObjectCommandOutput,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3'
 import { ConfigService } from '@nestjs/config'
 import { randomUUID } from 'crypto'
 
 @Injectable()
 export class CollectionImagesService {
   private readonly s3Client = new S3Client({
-    region: this.configService.getOrThrow('AWS_S3_REGION'),
+    region: this.configService.getOrThrow('S3_REGION'),
   })
 
   constructor(
@@ -26,7 +31,7 @@ export class CollectionImagesService {
 
     await this.s3Client.send(
       new PutObjectCommand({
-        Bucket: process.env.AWS_S3_BUCKET,
+        Bucket: process.env.S3_BUCKET,
         Key: filename,
         Body: file.buffer,
         ContentEncoding: 'utf8',
@@ -39,6 +44,17 @@ export class CollectionImagesService {
     return this.prisma.collectionImages.create({
       data: createCollectionImageDto,
     })
+  }
+
+  async getImage(imgName: string) {
+    const response: GetObjectCommandOutput = await this.s3Client.send(
+      new GetObjectCommand({
+        Bucket: process.env.S3_BUCKET,
+        Key: imgName,
+      }),
+    )
+
+    return response.Body.transformToByteArray()
   }
 
   findAll() {
