@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common'
 import { CollectionClothesService } from './collection-clothes.service'
 import { CreateCollectionClotheDto } from './dto/create-collection-clothe.dto'
@@ -17,6 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger'
 import { CollectionClothesEntity } from './entities/collection-clothe.entity'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('collections/clothes')
 @ApiTags('Collection Clothes')
@@ -26,6 +28,7 @@ export class CollectionClothesController {
   ) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: CollectionClothesEntity })
   create(@Body() createCollectionClotheDto: CreateCollectionClotheDto) {
@@ -33,6 +36,7 @@ export class CollectionClothesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionClothesEntity })
   findAll() {
@@ -40,6 +44,7 @@ export class CollectionClothesController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionClothesEntity })
   findOne(@Param('id') id: string) {
@@ -47,6 +52,7 @@ export class CollectionClothesController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionClothesEntity })
   update(
@@ -57,6 +63,7 @@ export class CollectionClothesController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionClothesEntity })
   remove(@Param('id') id: string) {

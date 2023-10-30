@@ -7,6 +7,7 @@ import {
   Delete,
   ParseIntPipe,
   Get,
+  UseGuards,
 } from '@nestjs/common'
 import { CollectionsService } from './collections.service'
 import { CreateCollectionDto } from './dto/create-collection.dto'
@@ -18,6 +19,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger'
 import { CollectionEntity } from './entities/collection.entity'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('collections')
 @ApiTags('Collections')
@@ -25,6 +27,7 @@ export class CollectionsController {
   constructor(private readonly collectionsService: CollectionsService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionEntity })
   findAll() {
@@ -32,6 +35,7 @@ export class CollectionsController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: CollectionEntity })
   create(@Body() createCollectionDto: CreateCollectionDto) {
@@ -39,6 +43,7 @@ export class CollectionsController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionEntity })
   update(
@@ -49,6 +54,7 @@ export class CollectionsController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionEntity })
   remove(@Param('id', ParseIntPipe) id: number) {

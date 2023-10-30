@@ -11,6 +11,7 @@ import {
   StreamableFile,
   Header,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common'
 import { ImagesService } from './images.service'
 import { UpdateImageDto } from './dto/update-image.dto'
@@ -23,6 +24,7 @@ import {
 import { ImagesEntity } from './entities/image.entity'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { CreateImageDto } from './dto/create-image.dto'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('images')
 @ApiTags('images')
@@ -30,6 +32,7 @@ export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: ImagesEntity })
   @UseInterceptors(FileInterceptor('file'))
@@ -43,6 +46,7 @@ export class ImagesController {
   }
 
   @Patch('id/:id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: ImagesEntity })
   @UseInterceptors(
@@ -62,6 +66,7 @@ export class ImagesController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: ImagesEntity })
   async remove(@Param('id', ParseIntPipe) id: number) {

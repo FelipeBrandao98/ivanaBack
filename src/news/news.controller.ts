@@ -7,6 +7,7 @@ import {
   Delete,
   ParseIntPipe,
   Get,
+  UseGuards,
 } from '@nestjs/common'
 import { NewsService } from './news.service'
 import { CreateNewsDto } from './dto/create-news.dto'
@@ -18,6 +19,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger'
 import { NewsEntity } from './entities/news.entity'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('news')
 @ApiTags('News')
@@ -25,6 +27,7 @@ export class NewsController {
   constructor(private readonly newsService: NewsService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: NewsEntity })
   findAll() {
@@ -32,6 +35,7 @@ export class NewsController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: NewsEntity })
   create(@Body() createNewsDto: CreateNewsDto) {
@@ -39,6 +43,7 @@ export class NewsController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: NewsEntity })
   update(
@@ -49,6 +54,7 @@ export class NewsController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: NewsEntity })
   remove(@Param('id', ParseIntPipe) id: number) {

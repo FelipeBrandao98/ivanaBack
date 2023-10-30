@@ -7,12 +7,14 @@ import {
   Delete,
   ParseIntPipe,
   Get,
+  UseGuards,
 } from '@nestjs/common'
 import { NewscategoryService } from './newscategory.service'
 import { CreateNewscategoryDto } from './dto/create-newscategory.dto'
 import { UpdateNewscategoryDto } from './dto/update-newscategory.dto'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { NewscategoryEntity } from './entities/newscategory.entity'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('news/category')
 @ApiTags('News Category')
@@ -20,6 +22,7 @@ export class NewscategoryController {
   constructor(private readonly newscategoryService: NewscategoryService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: NewscategoryEntity })
   findAll() {
@@ -27,6 +30,7 @@ export class NewscategoryController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: NewscategoryEntity })
   create(@Body() createNewscategoryDto: CreateNewscategoryDto) {
@@ -34,6 +38,7 @@ export class NewscategoryController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: NewscategoryEntity })
   update(
@@ -44,6 +49,7 @@ export class NewscategoryController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: NewscategoryEntity })
   remove(@Param('id', ParseIntPipe) id: number) {

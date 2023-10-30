@@ -11,6 +11,7 @@ import {
   StreamableFile,
   Header,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common'
 import { CollectionImagesService } from './collection-images.service'
 import { CollectionImagesEntity } from './entities/collection-image.entity'
@@ -18,6 +19,7 @@ import { CreateCollectionImageDto } from './dto/create-collection-image.dto'
 import { UpdateCollectionImageDto } from './dto/update-collection-image.dto'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('collections/images')
 @ApiTags('Collection Images')
@@ -28,6 +30,7 @@ export class CollectionImagesController {
   ) {}
 
   @Post(':collectionId')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionImagesEntity })
   @UseInterceptors(FileInterceptor('file'))
@@ -77,6 +80,7 @@ export class CollectionImagesController {
   }
 
   @Patch('id/:id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionImagesEntity })
   @UseInterceptors(
@@ -102,6 +106,7 @@ export class CollectionImagesController {
   }
 
   @Patch('up/:id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionImagesEntity })
   updateProps(
@@ -112,6 +117,7 @@ export class CollectionImagesController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: CollectionImagesEntity })
   async remove(@Param('id', ParseIntPipe) id: number) {
