@@ -10,6 +10,7 @@ import { CollectionsPtBrController } from './languages/Pt-BR/collections.pt.cont
 import { PrismaModule } from 'src/prisma/prisma.module'
 import { CollectionImagesModule } from './subroutes/collection-images/collection-images.module'
 import { CollectionsCategoryModule } from './subroutes/collections-category/collections-category.module'
+import { CollectionClothesModule } from './subroutes/collection-clothes/collection-clothes.module'
 
 @Module({
   controllers: [
@@ -25,6 +26,7 @@ import { CollectionsCategoryModule } from './subroutes/collections-category/coll
     // Sub-Routes
     CollectionImagesModule,
     CollectionsCategoryModule,
+    CollectionClothesModule,
   ],
 })
 export class CollectionsModule {}

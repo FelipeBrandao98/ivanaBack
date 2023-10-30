@@ -27,6 +27,7 @@ model Image {
   Collection         Collection[]
   CollectionCategory CollectionCategory[]
   Avaliation         Comments[]
+  CollectionClothes  CollectionClothes[]
 }
 
 // News
@@ -71,22 +72,23 @@ model NewsCategory {
 
 // Collections
 model Collection {
-  id               Int                 @id @default(autoincrement())
-  title            String
-  titleDe          String?
-  titleEn          String?
-  titleFr          String?
-  description      String
-  descriptionDe    String?
-  descriptionEn    String?
-  descriptionFr    String?
-  category         CollectionCategory? @relation(fields: [categoryId], references: [id])
-  categoryId       Int?
-  cover            Image?              @relation(fields: [coverId], references: [id])
-  coverId          Int?
-  createdAt        DateTime            @default(now())
-  updatedAt        DateTime            @updatedAt
-  CollectionImages CollectionImages[]
+  id                Int                 @id @default(autoincrement())
+  title             String
+  titleDe           String?
+  titleEn           String?
+  titleFr           String?
+  description       String
+  descriptionDe     String?
+  descriptionEn     String?
+  descriptionFr     String?
+  category          CollectionCategory? @relation(fields: [categoryId], references: [id])
+  categoryId        Int?
+  cover             Image?              @relation(fields: [coverId], references: [id])
+  coverId           Int?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  CollectionImages  CollectionImages[]
+  CollectionClothes CollectionClothes[]
 }
 
 model CollectionCategory {
@@ -113,6 +115,21 @@ model CollectionImages {
   author       String?
   collection   Collection? @relation(fields: [collectionId], references: [id])
   collectionId Int?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model CollectionClothes {
+  id           String      @id @default(uuid())
+  collection   Collection? @relation(fields: [collectionId], references: [id])
+  collectionId Int?
+  cover        Image?      @relation(fields: [coverId], references: [id])
+  coverId      Int?
+  likes        Int?
+  name         String
+  nameDe       String
+  nameFr       String
+  nameEn       String
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }
