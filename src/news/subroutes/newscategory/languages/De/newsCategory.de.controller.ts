@@ -11,7 +11,7 @@ import { NewscategoryService } from '../../newscategory.service'
 import { DeNewsCategoryLanguageInterceptor } from '../../interceptors/german.interceptor'
 
 @Controller('news/category')
-@ApiTags('News Category')
+@ApiTags('News Category - Languages')
 @UseInterceptors(DeNewsCategoryLanguageInterceptor)
 export class NewsCategoryDeController {
   constructor(private readonly newsCategoryService: NewscategoryService) {}

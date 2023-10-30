@@ -21,7 +21,7 @@ import { CollectionClothesEntity } from './entities/collection-clothe.entity'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('collections/clothes')
-@ApiTags('Collection Clothes')
+@ApiTags('Collections Clothes')
 export class CollectionClothesController {
   constructor(
     private readonly collectionClothesService: CollectionClothesService,

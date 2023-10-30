@@ -11,7 +11,7 @@ import { DeCollectionsCategoryLanguageInterceptor } from '../../interceptors/ger
 import { CollectionsCategoryEntity } from '../../entities/collections-category.entity'
 
 @Controller('collections/category')
-@ApiTags('Collections Category')
+@ApiTags('Collections Category - Languages')
 @UseInterceptors(DeCollectionsCategoryLanguageInterceptor)
 export class CollectionsCategoryDeController {
   constructor(

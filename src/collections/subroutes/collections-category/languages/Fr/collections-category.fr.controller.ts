@@ -11,7 +11,7 @@ import { FrCollectionsCategoryLanguageInterceptor } from '../../interceptors/fre
 import { CollectionsCategoryEntity } from '../../entities/collections-category.entity'
 
 @Controller('collections/category')
-@ApiTags('Collections Category')
+@ApiTags('Collections Category - Languages')
 @UseInterceptors(FrCollectionsCategoryLanguageInterceptor)
 export class CollectionsCategoryFrController {
   constructor(

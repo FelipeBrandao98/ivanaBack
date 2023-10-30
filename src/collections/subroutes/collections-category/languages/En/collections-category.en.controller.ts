@@ -11,7 +11,7 @@ import { EnCollectionsCategoryLanguageInterceptor } from '../../interceptors/eng
 import { CollectionsCategoryEntity } from '../../entities/collections-category.entity'
 
 @Controller('collections/category')
-@ApiTags('Collections Category')
+@ApiTags('Collections Category - Languages')
 @UseInterceptors(EnCollectionsCategoryLanguageInterceptor)
 export class CollectionsCategoryEnController {
   constructor(

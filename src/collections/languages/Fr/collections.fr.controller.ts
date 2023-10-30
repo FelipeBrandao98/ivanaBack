@@ -10,7 +10,7 @@ import { ApiTags } from '@nestjs/swagger'
 import { FrCollectionLanguageInterceptor } from 'src/collections/interceptors/french.interceptor'
 
 @Controller('collections')
-@ApiTags('Collections')
+@ApiTags('Collections - Languages')
 @UseInterceptors(FrCollectionLanguageInterceptor)
 export class CollectionsFrController {
   constructor(private readonly collectionsService: CollectionsService) {}

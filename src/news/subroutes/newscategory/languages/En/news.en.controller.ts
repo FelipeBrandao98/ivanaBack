@@ -11,7 +11,7 @@ import { EnNewsCategoryLanguageInterceptor } from '../../interceptors/english.in
 import { NewscategoryEntity } from '../../entities/newscategory.entity'
 
 @Controller('news/category')
-@ApiTags('News Category')
+@ApiTags('News Category - Languages')
 @UseInterceptors(EnNewsCategoryLanguageInterceptor)
 export class NewsCategoryEnController {
   constructor(private readonly newsCategoryService: NewscategoryService) {}

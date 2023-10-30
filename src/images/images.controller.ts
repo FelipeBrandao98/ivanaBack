@@ -27,7 +27,7 @@ import { CreateImageDto } from './dto/create-image.dto'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('images')
-@ApiTags('images')
+@ApiTags('Images')
 export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 

@@ -11,7 +11,7 @@ import { PtBrNewsLanguageInterceptor } from 'src/news/interceptors/brazilian.int
 import { NewsEntity } from 'src/news/entities/news.entity'
 
 @Controller('news')
-@ApiTags('News')
+@ApiTags('News - Languages')
 @UseInterceptors(PtBrNewsLanguageInterceptor)
 export class NewsPtBrController {
   constructor(private readonly newsService: NewsService) {}

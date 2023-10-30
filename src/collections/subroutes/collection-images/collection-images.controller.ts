@@ -22,7 +22,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @Controller('collections/images')
-@ApiTags('Collection Images')
+@ApiTags('Collections Images')
 export class CollectionImagesController {
   imagesService: any
   constructor(

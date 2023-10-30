@@ -11,8 +11,8 @@ import { CollectionClothesEntity } from '../../entities/collection-clothe.entity
 import { CollectionClothesService } from '../../collection-clothes.service'
 import { DeCollectionsClothesLanguageInterceptor } from '../../interceptors/german.interceptor'
 
-@Controller('collections/category')
-@ApiTags('Collections Category')
+@Controller('collections/clothes')
+@ApiTags('Collections Clothes - Languages')
 @UseInterceptors(DeCollectionsClothesLanguageInterceptor)
 export class CollectionsClothesDeController {
   constructor(

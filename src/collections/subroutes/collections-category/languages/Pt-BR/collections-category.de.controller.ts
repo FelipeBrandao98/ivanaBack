@@ -11,7 +11,7 @@ import { PtBrCollectionsCategoryLanguageInterceptor } from '../../interceptors/b
 import { CollectionsCategoryEntity } from '../../entities/collections-category.entity'
 
 @Controller('collections/category')
-@ApiTags('Collections Category')
+@ApiTags('Collections Category - Languages')
 @UseInterceptors(PtBrCollectionsCategoryLanguageInterceptor)
 export class CollectionsCategoryPtBrController {
   constructor(

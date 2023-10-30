@@ -10,7 +10,7 @@ import { ApiTags } from '@nestjs/swagger'
 import { DeCollectionLanguageInterceptor } from 'src/collections/interceptors/german.interceptor'
 
 @Controller('collections')
-@ApiTags('Collections')
+@ApiTags('Collections - Languages')
 @UseInterceptors(DeCollectionLanguageInterceptor)
 export class CollectionsDeController {
   constructor(private readonly collectionsService: CollectionsService) {}
