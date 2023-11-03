@@ -2,7 +2,8 @@
   "name": "median",
   "version": "0.0.1",
   "engines": {
-    "node": "18.16.x"
+    "node": "18.16.x",
+    "pnpm": "8.7.4"
   },
   "description": "",
   "author": "",
@@ -31,7 +32,7 @@
     "@nestjs/passport": "^10.0.2",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.6",
-    "@prisma/client": "^5.1.1",
+    "@prisma/client": "^5.5.2",
     "@types/bcrypt": "^5.0.0",
     "@types/passport-jwt": "^3.0.12",
     "@types/uuid": "^9.0.6",
