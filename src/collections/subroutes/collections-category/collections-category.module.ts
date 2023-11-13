@@ -1,11 +1,18 @@
+// NestJs imports
 import { Module } from '@nestjs/common'
-import { CollectionsCategoryService } from './collections-category.service'
-import { CollectionsCategoryController } from './collections-category.controller'
+
+// Prisma imports
 import { PrismaModule } from 'src/prisma/prisma.module'
+
+// Controllers imports
+import { CollectionsCategoryController } from './collections-category.controller'
 import { CollectionsCategoryDeController } from './languages/De/collections-category.de.controller'
 import { CollectionsCategoryEnController } from './languages/En/collections-category.en.controller'
 import { CollectionsCategoryFrController } from './languages/Fr/collections-category.fr.controller'
 import { CollectionsCategoryPtBrController } from './languages/Pt-BR/collections-category.de.controller'
+
+// Services imports
+import { CollectionsCategoryService } from './collections-category.service'
 
 @Module({
   controllers: [
@@ -18,4 +25,7 @@ import { CollectionsCategoryPtBrController } from './languages/Pt-BR/collections
   providers: [CollectionsCategoryService],
   imports: [PrismaModule],
 })
-export class CollectionsCategoryModule {}
+// Class declaration
+export class CollectionsCategoryModule {
+  // Properties
+}

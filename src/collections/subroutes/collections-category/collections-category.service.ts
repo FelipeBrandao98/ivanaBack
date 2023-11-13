@@ -1,42 +1,54 @@
+// NestJs imports
 import { Injectable } from '@nestjs/common'
-import { CreateCollectionsCategoryDto } from './dto/create-collections-category.dto'
-import { UpdateCollectionsCategoryDto } from './dto/update-collections-category.dto'
+
+// Prisma imports
 import { PrismaService } from 'src/prisma/prisma.service'
 
-@Injectable()
-export class CollectionsCategoryService {
-  constructor(private prisma: PrismaService) {}
+// DTOs imports
+import { CreateCollectionsCategoryDto } from './dto/create-collections-category.dto'
+import { UpdateCollectionsCategoryDto } from './dto/update-collections-category.dto'
 
-  // CRUD Operators
-  create(createCollectionsCategoryDto: CreateCollectionsCategoryDto) {
-    return this.prisma.collectionCategory.create({
+@Injectable()
+// Class declaration
+export class CollectionsCategoryService {
+  // Contructor Method
+  constructor(private prisma: PrismaService) {}
+  //
+
+  // CRUD Operations - Properties
+  async create(createCollectionsCategoryDto: CreateCollectionsCategoryDto) {
+    return await this.prisma.collectionCategory.create({
       data: createCollectionsCategoryDto,
     })
   }
 
-  findAll() {
-    return this.prisma.collectionCategory.findMany({ include: { cover: true } })
+  async findAll() {
+    return await this.prisma.collectionCategory.findMany({
+      include: { cover: true },
+    })
   }
 
-  findOne(id: number) {
-    return this.prisma.collectionCategory.findUnique({
+  async findOne(id: number) {
+    return await this.prisma.collectionCategory.findUnique({
       where: { id: id },
       include: { cover: true },
     })
   }
 
-  update(
-    id: number,
+  async update(
+    collectionCategoryId: number,
     updateCollectionsCategoryDto: UpdateCollectionsCategoryDto,
   ) {
-    return this.prisma.collectionCategory.update({
-      where: { id: id },
+    return await this.prisma.collectionCategory.update({
+      where: { id: collectionCategoryId },
       data: updateCollectionsCategoryDto,
       include: { cover: true },
     })
   }
 
-  remove(id: number) {
-    return this.prisma.collectionCategory.delete({ where: { id: id } })
+  async remove(collectionCategoryId: number) {
+    return await this.prisma.collectionCategory.delete({
+      where: { id: collectionCategoryId },
+    })
   }
 }

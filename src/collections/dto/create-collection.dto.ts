@@ -1,52 +1,99 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNumber, IsOptional, IsString } from 'class-validator'
 
+// Validators Pipe Imports
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator'
+
+// Class declaration
 export class CreateCollectionDto {
+  // Properties
+  @IsNotEmpty()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({
+    required: true,
+    example: 'Please, use the collection title in Portuguese from brazil',
+  })
   title: string
 
+  @IsNotEmpty()
   @IsString()
   @IsOptional()
-  @ApiProperty({ required: false })
-  titleDe?: string
+  @ApiProperty({
+    required: true,
+    example: 'Please, use the collection title in Deutsch',
+  })
+  titleDe: string
+
+  @IsNotEmpty()
+  @IsString()
+  @IsOptional()
+  @ApiProperty({
+    required: true,
+    example: 'Please, use the collection title in English',
+  })
+  titleEn: string
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ required: false })
-  titleEn?: string
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty({ required: false })
+  @ApiProperty({
+    required: true,
+    example: 'Please, use the collection title in French',
+  })
   titleFr: string
 
+  @IsNotEmpty()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({
+    required: true,
+    example: 'Please, use the collection description in Portuguese from brazil',
+  })
   description: string
 
+  @IsNotEmpty()
   @IsString()
   @IsOptional()
-  @ApiProperty({ required: false })
-  descriptionDe?: string
+  @ApiProperty({
+    required: true,
+    example: 'Please, use the collection description in Deutsch',
+  })
+  descriptionDe: string
 
+  @IsNotEmpty()
   @IsString()
   @IsOptional()
-  @ApiProperty({ required: false })
-  descriptionEn?: string
+  @ApiProperty({
+    required: true,
+    example: 'Please, use the collection description in English',
+  })
+  descriptionEn: string
 
+  @IsNotEmpty()
   @IsString()
   @IsOptional()
-  @ApiProperty({ required: false })
-  descriptionFr?: string
+  @ApiProperty({
+    required: true,
+    example: 'Please, use the collection description in French',
+  })
+  descriptionFr: string
 
+  @IsNotEmpty()
   @IsNumber()
   @IsOptional()
-  @ApiProperty({ required: false })
-  categoryId?: number
+  @ApiProperty({
+    required: false,
+    type: 'number',
+    example: 'Please, use the id from category',
+  })
+  categoryId: number
 
+  @IsNotEmpty()
   @IsNumber()
   @IsOptional()
-  @ApiProperty({ required: false })
-  coverId?: number
+  @ApiProperty({
+    required: false,
+    type: 'number',
+    example: 'Please, use the id from cover',
+  })
+  coverId: number
+  //
 }

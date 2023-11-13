@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Get,
@@ -6,29 +7,44 @@ import {
   UseInterceptors,
 } from '@nestjs/common'
 
+// NestJs - Swagger imports
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { CollectionClothesEntity } from '../../entities/collection-clothe.entity'
+
+// Services imports
 import { CollectionClothesService } from '../../collection-clothes.service'
+
+// Entities imports
+import { CollectionClothesEntity } from '../../entities/collection-clothe.entity'
+
+// Interceptors imports
 import { PtBrCollectionsClothesLanguageInterceptor } from '../../interceptors/brazilian.interceptor'
 
-@Controller('collections/clothes')
 @ApiTags('Collections Clothes - Languages')
 @UseInterceptors(PtBrCollectionsClothesLanguageInterceptor)
+@Controller('collections/clothes')
+// Class declaration
 export class CollectionsClothesPtBrController {
+  // Constructor Methods
   constructor(
     private readonly collectionsClothesService: CollectionClothesService,
   ) {}
+  //
 
+  // Properties
   @Get('pt-BR')
   @ApiOkResponse({ type: CollectionClothesEntity })
-  findAll() {
-    const response = this.collectionsClothesService.findAll()
-    return response
+  async findAll() {
+    const collectionClothes = await this.collectionsClothesService.findAll()
+
+    return new CollectionClothesEntity(collectionClothes)
   }
 
-  @Get('pt-BR/:id')
+  @Get('pt-BR/:collectionClothesId')
   @ApiOkResponse({ type: CollectionClothesEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.collectionsClothesService.findOne(id)
+  async findOne(@Param('collectionClothesId', ParseIntPipe) collectionClothesId: number) {
+    const collectionClothes = await this.collectionsClothesService.findOne(collectionClothesId)
+
+    return new CollectionClothesEntity(collectionClothes)
   }
+  //
 }

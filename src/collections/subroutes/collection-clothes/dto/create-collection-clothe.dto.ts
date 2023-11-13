@@ -1,24 +1,44 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
 
+// Validators Pipe Imports
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
+
+// Class declaration
 export class CreateCollectionClotheDto {
+  // Properties
+  @IsNumber()
   @ApiProperty({ required: false })
-  collectionId?: number
-
-  @ApiProperty()
-  coverId?: number
-
-  @ApiProperty()
   likes: number
 
-  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ required: true })
   name: string
 
-  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ required: true })
   nameDe: string
 
-  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ required: true })
   nameFr: string
 
-  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ required: true })
   nameEn: string
+
+  @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty({ required: false })
+  collectionId: number
+
+  @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty({ required: false })
+  coverId: number
+  //
 }

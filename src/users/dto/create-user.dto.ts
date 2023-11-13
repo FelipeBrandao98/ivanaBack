@@ -1,6 +1,9 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
+
+// Validators Pipe Imports
 import {
-  Equals,
+  Contains,
   IsDateString,
   IsEmail,
   IsNotEmpty,
@@ -8,29 +11,33 @@ import {
   IsStrongPassword,
 } from 'class-validator'
 
+// class declaration
 export class CreateUserDto {
-  @ApiProperty()
-  @IsString()
+  // Properties
   @IsNotEmpty()
+  @IsString()
+  @Contains(' ', { message: 'Must contain a Name and Last Name' })
+  @ApiProperty({ required: true, example: 'Fulano de tal' })
   name: string
 
-  @ApiProperty()
-  @IsEmail()
   @IsNotEmpty()
+  @IsEmail()
+  @ApiProperty({ required: true, example: 'exemple@exemple.com' })
   email: string
 
-  @ApiProperty()
-  @IsStrongPassword()
   @IsNotEmpty()
+  @IsStrongPassword()
+  @ApiProperty({ required: true, example: '*******' })
   password: string
 
-  @ApiProperty()
-  @IsStrongPassword()
   @IsNotEmpty()
+  @IsStrongPassword()
+  @ApiProperty({ required: true, example: 'Must be equal to password' })
   confirmPassword: string
 
-  @ApiProperty()
-  @IsDateString()
   @IsNotEmpty()
+  @IsDateString()
+  @ApiProperty({ required: true })
   birthDate: Date
+  //
 }

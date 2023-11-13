@@ -1,48 +1,60 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
+
+// Entity from prisma import
 import { CollectionCategory } from '@prisma/client'
+
+// Entities imports
 import { ImagesEntity } from 'src/images/entities/image.entity'
 
+// Class declaration
 export class CollectionsCategoryEntity implements CollectionCategory {
-  constructor(partial: Partial<CollectionCategory>) {
+  // Constructor Method
+  constructor(
+    partial: Partial<CollectionsCategoryEntity[] | CollectionsCategoryEntity>,
+  ) {
     Object.assign(this, partial)
   }
+  //
 
-  @ApiProperty()
+  // Properties
+  @ApiProperty({ required: true, type: 'uuid' })
   id: number
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: true, type: 'string' })
   description: string
 
-  @ApiProperty({ required: false, nullable: true })
-  descriptionDe: string | null
+  @ApiProperty({ required: true, type: 'string' })
+  descriptionDe: string
 
-  @ApiProperty({ required: false, nullable: true })
-  descriptionEn: string | null
+  @ApiProperty({ required: true, type: 'string' })
+  descriptionEn: string
 
-  @ApiProperty({ required: false, nullable: true })
-  descriptionFr: string | null
+  @ApiProperty({ required: true, type: 'string' })
+  descriptionFr: string
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: true, type: 'string' })
   subdescription: string
 
-  @ApiProperty({ required: false, nullable: true })
-  subdescriptionDe: string | null
+  @ApiProperty({ required: true, type: 'string' })
+  subdescriptionDe: string
 
-  @ApiProperty({ required: false, nullable: true })
-  subdescriptionEn: string | null
+  @ApiProperty({ required: true, type: 'string' })
+  subdescriptionEn: string
 
-  @ApiProperty({ required: false, nullable: true })
-  subdescriptionFr: string | null
+  @ApiProperty({ required: true, type: 'string' })
+  subdescriptionFr: string
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, type: 'number' })
   coverId: number
 
-  @ApiProperty({ required: false, type: ImagesEntity })
-  cover: ImagesEntity
+  // @ApiProperty({ required: false, type: ImagesEntity })
+  // cover: ImagesEntity
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: true, type: Date })
   createdAt: Date
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: true, type: Date })
   updatedAt: Date
+  //
 }

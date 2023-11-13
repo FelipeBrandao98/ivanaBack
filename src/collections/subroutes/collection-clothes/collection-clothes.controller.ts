@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Get,
@@ -7,66 +8,99 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common'
-import { CollectionClothesService } from './collection-clothes.service'
-import { CreateCollectionClotheDto } from './dto/create-collection-clothe.dto'
-import { UpdateCollectionClotheDto } from './dto/update-collection-clothe.dto'
+
+// NestJs - Swagger imports
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger'
+
+// DTOs imports
+import { CreateCollectionClotheDto } from './dto/create-collection-clothe.dto'
+import { UpdateCollectionClotheDto } from './dto/update-collection-clothe.dto'
+
+// Services imports
+import { CollectionClothesService } from './collection-clothes.service'
+
+// Entities imports
 import { CollectionClothesEntity } from './entities/collection-clothe.entity'
+
+// Security imports
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
-@Controller('collections/clothes')
 @ApiTags('Collections Clothes')
+@Controller('collections/clothes')
+// Class declaration
 export class CollectionClothesController {
+  // Constructor Method
   constructor(
     private readonly collectionClothesService: CollectionClothesService,
   ) {}
+  //
 
   @Post()
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: CollectionClothesEntity })
-  create(@Body() createCollectionClotheDto: CreateCollectionClotheDto) {
-    return this.collectionClothesService.create(createCollectionClotheDto)
+  async create(@Body() createCollectionClotheDto: CreateCollectionClotheDto) {
+    const collectionClothes = await this.collectionClothesService.create(
+      createCollectionClotheDto,
+    )
+
+    return new CollectionClothesEntity(collectionClothes)
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionClothesEntity })
-  findAll() {
-    return this.collectionClothesService.findAll()
+  async findAll() {
+    const collectionClothes = await this.collectionClothesService.findAll()
+
+    return new CollectionClothesEntity(collectionClothes)
   }
 
-  @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  @Get(':collectionClothesId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionClothesEntity })
-  findOne(@Param('id') id: string) {
-    return this.collectionClothesService.findOne(+id)
+  async findOne(@Param('collectionClothesId', ParseIntPipe) collectionClothesId: number) {
+    const collectionClothes = await this.collectionClothesService.findOne(
+      collectionClothesId,
+    )
+    
+    return new CollectionClothesEntity(collectionClothes)
   }
 
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @Patch(':collectionClothesId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionClothesEntity })
-  update(
-    @Param('id') id: string,
+  async update(
+    @Param('collectionClothesId', ParseIntPipe) collectionClothesId: number,
     @Body() updateCollectionClotheDto: UpdateCollectionClotheDto,
   ) {
-    return this.collectionClothesService.update(id, updateCollectionClotheDto)
+    const collectionClothes = await this.collectionClothesService.update(
+      collectionClothesId,
+      updateCollectionClotheDto,
+    )
+
+    return new CollectionClothesEntity(collectionClothes)
   }
 
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @Delete(':collectionClothesId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionClothesEntity })
-  remove(@Param('id') id: string) {
-    return this.collectionClothesService.remove(id)
+  async remove(@Param('collectionClothesId', ParseIntPipe) collectionClothesId: number) {
+    const collectionClothes = await this.collectionClothesService.remove(
+      collectionClothesId,
+    )
+
+    return new CollectionClothesEntity(collectionClothes)
   }
 }

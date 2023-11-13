@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Post,
@@ -7,50 +8,78 @@ import {
   UseGuards,
   Get,
 } from '@nestjs/common'
-import { UsersService } from './users.service'
-import { CreateUserDto } from './dto/create-user.dto'
-import { UpdateUserDto } from './dto/update-user.dto'
+
+// NestJs - Swagger Imports
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+
+// DTOs imports
+import { CreateUserDto } from './dto/create-user.dto'
+import { UpdateUserDto } from './dto/update-user.dto'
+
+// Services imports
+import { UsersService } from './users.service'
+
+// Entities imports
 import { UserEntity } from './entities/user.entity'
 
-@Controller('users')
-@ApiTags('Users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+// Security imports
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
+@ApiTags('Users')
+@Controller('users')
+// Class Declaration
+export class UsersController {
+  // Constructor Method
+  constructor(private readonly usersService: UsersService) {}
+  //
+
+  // Properties
   @Get()
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: UserEntity })
   async findMany() {
-    return new UserEntity(await this.usersService.findAll())
+    const user = await this.usersService.findMany()
+
+    return new UserEntity(user)
   }
 
-  @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  @Get(':userId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: UserEntity })
-  async findOne(@Param('id') id: string) {
-    return new UserEntity(await this.usersService.findOne(id))
+  async findOne(@Param('userId') userId: string) {
+    const user = await this.usersService.findOne(userId)
+
+    return new UserEntity(user)
   }
 
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: UserEntity })
   async create(@Body() createUserDto: CreateUserDto) {
-    return new UserEntity(await this.usersService.create(createUserDto))
+    const user = await this.usersService.create(createUserDto)
+
+    return new UserEntity(user)
   }
 
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @Patch(':userId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: UserEntity })
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return new UserEntity(await this.usersService.update(id, updateUserDto))
+  async update(
+    @Param('userId') userId: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    const user = await this.usersService.update(userId, updateUserDto)
+
+    return new UserEntity(user)
   }
+  //
 }

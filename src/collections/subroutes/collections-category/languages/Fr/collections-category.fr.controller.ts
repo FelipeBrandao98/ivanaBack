@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Get,
@@ -5,28 +6,47 @@ import {
   ParseIntPipe,
   UseInterceptors,
 } from '@nestjs/common'
-import { CollectionsCategoryService } from '../../collections-category.service'
+
+// NestJs - Swagger imports
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { FrCollectionsCategoryLanguageInterceptor } from '../../interceptors/french.interceptor'
+
+// Services imports
+import { CollectionsCategoryService } from '../../collections-category.service'
+
+// Entities imports
 import { CollectionsCategoryEntity } from '../../entities/collections-category.entity'
 
-@Controller('collections/category')
+// Interceptors imports
+import { FrCollectionsCategoryLanguageInterceptor } from '../../interceptors/french.interceptor'
+
 @ApiTags('Collections Category - Languages')
 @UseInterceptors(FrCollectionsCategoryLanguageInterceptor)
+@Controller('collections/category')
+// Class declaration
 export class CollectionsCategoryFrController {
+  // Constructor Method
   constructor(
     private readonly collectiosCategoryService: CollectionsCategoryService,
   ) {}
+  //
 
   @Get('fr')
   @ApiOkResponse({ type: CollectionsCategoryEntity })
-  findAll() {
-    return this.collectiosCategoryService.findAll()
+  async findAll() {
+    const collectionCategory = await this.collectiosCategoryService.findAll()
+
+    return new CollectionsCategoryEntity(collectionCategory)
   }
 
-  @Get('fr/:id')
+  @Get('fr/:collectionCategoryId')
   @ApiOkResponse({ type: CollectionsCategoryEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.collectiosCategoryService.findOne(id)
+  async findOne(
+    @Param('collectionCategoryId', ParseIntPipe) collectionCategoryId: number,
+  ) {
+    const collectionCategory = await this.collectiosCategoryService.findOne(
+      collectionCategoryId,
+    )
+
+    return new CollectionsCategoryEntity(collectionCategory)
   }
 }

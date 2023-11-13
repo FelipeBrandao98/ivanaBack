@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Get,
@@ -5,23 +6,40 @@ import {
   ParseIntPipe,
   UseInterceptors,
 } from '@nestjs/common'
-import { CollectionsService } from 'src/collections/collections.service'
+
+// NestJs - Swagger imports
 import { ApiTags } from '@nestjs/swagger'
+
+// Services imports
+import { CollectionsService } from 'src/collections/collections.service'
+
+// Entities imports
+import { CollectionEntity } from 'src/collections/entities/collection.entity'
+
+// Interceptors imports
 import { DeCollectionLanguageInterceptor } from 'src/collections/interceptors/german.interceptor'
 
-@Controller('collections')
 @ApiTags('Collections - Languages')
 @UseInterceptors(DeCollectionLanguageInterceptor)
+@Controller('collections')
+// Class declaration
 export class CollectionsDeController {
+  // Constructor Method
   constructor(private readonly collectionsService: CollectionsService) {}
+  //
 
+  // Properties
   @Get('de')
-  findAll() {
-    return this.collectionsService.findAll()
+  async findAll() {
+    const collection = await this.collectionsService.findAll()
+    return new CollectionEntity(collection)
   }
 
-  @Get('de/:id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.collectionsService.findOne(id)
+  @Get('de/:collectionId')
+  async findOne(@Param('collectionId', ParseIntPipe) collectionId: number) {
+    const collection = await this.collectionsService.findOne(collectionId)
+
+    return new CollectionEntity(collection)
   }
+  //
 }

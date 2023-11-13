@@ -7,7 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Mailer
 model Mailer {
   id          Int           @id @default(autoincrement())
   mail        String        @unique
@@ -15,97 +14,94 @@ model Mailer {
   Appointment Appointment[]
 }
 
-// Images
 model Image {
   id                 Int                  @id @default(autoincrement())
   src                String               @unique
-  url                String
-  author             String?
   createdAt          DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
-  News               News[]
+  author             String?
+  url                String
   Collection         Collection[]
   CollectionCategory CollectionCategory[]
-  Avaliation         Comments[]
   CollectionClothes  CollectionClothes[]
+  Avaliation         Comments[]
+  News               News[]
 }
 
-// News
 model News {
   id            Int           @id @default(autoincrement())
-  category      NewsCategory? @relation(fields: [categoryId], references: [id])
   categoryId    Int?
   title         String        @unique
-  titleDe       String?
-  titleEn       String?
-  titleFr       String?
-  cover         Image?        @relation(fields: [coverId], references: [id])
   coverId       Int?
   coverCredit   String
-  coverCreditDe String?
-  coverCreditEn String?
-  coverCreditFr String?
   subtitle      String        @unique
-  subtitleDe    String?
-  subtitleEn    String?
-  subtitleFr    String?
   publishDate   DateTime      @default(now())
   published     Boolean       @default(false)
   body          String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   bodyDe        String?
   bodyEn        String?
   bodyFr        String?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  coverCreditDe String?
+  coverCreditEn String?
+  coverCreditFr String?
+  subtitleDe    String?
+  subtitleEn    String?
+  subtitleFr    String?
+  titleDe       String?
+  titleEn       String?
+  titleFr       String?
+  category      NewsCategory? @relation(fields: [categoryId], references: [id])
+  cover         Image?        @relation(fields: [coverId], references: [id])
 }
 
 model NewsCategory {
   id            Int      @id @default(autoincrement())
   description   String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   descriptionDe String?
   descriptionEn String?
   descriptionFr String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
   News          News[]
 }
 
-// Collections
 model Collection {
   id                Int                 @id @default(autoincrement())
   title             String
-  titleDe           String?
-  titleEn           String?
-  titleFr           String?
   description       String
+  categoryId        Int?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   descriptionDe     String?
   descriptionEn     String?
   descriptionFr     String?
-  category          CollectionCategory? @relation(fields: [categoryId], references: [id])
-  categoryId        Int?
-  cover             Image?              @relation(fields: [coverId], references: [id])
+  titleDe           String?
+  titleEn           String?
+  titleFr           String?
   coverId           Int?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  CollectionImages  CollectionImages[]
+  category          CollectionCategory? @relation(fields: [categoryId], references: [id])
+  cover             Image?              @relation(fields: [coverId], references: [id])
   CollectionClothes CollectionClothes[]
+  CollectionImages  CollectionImages[]
 }
 
 model CollectionCategory {
   id               Int          @id @default(autoincrement())
   description      String
+  subdescription   String
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  coverId          Int?
   descriptionDe    String?
   descriptionEn    String?
   descriptionFr    String?
-  subdescription   String
   subdescriptionDe String?
   subdescriptionEn String?
   subdescriptionFr String?
-  cover            Image?       @relation(fields: [coverId], references: [id])
-  coverId          Int?
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
   Collection       Collection[]
+  cover            Image?       @relation(fields: [coverId], references: [id])
 }
 
 model CollectionImages {
@@ -113,17 +109,14 @@ model CollectionImages {
   src          String      @unique
   url          String
   author       String?
-  collection   Collection? @relation(fields: [collectionId], references: [id])
   collectionId Int?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
+  collection   Collection? @relation(fields: [collectionId], references: [id])
 }
 
 model CollectionClothes {
-  id           String      @id @default(uuid())
-  collection   Collection? @relation(fields: [collectionId], references: [id])
   collectionId Int?
-  cover        Image?      @relation(fields: [coverId], references: [id])
   coverId      Int?
   likes        Int?
   name         String
@@ -132,34 +125,37 @@ model CollectionClothes {
   nameEn       String
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
+  id           Int         @id @default(autoincrement())
+  collection   Collection? @relation(fields: [collectionId], references: [id])
+  cover        Image?      @relation(fields: [coverId], references: [id])
 }
 
 model Comments {
   id          Int      @id @default(autoincrement())
-  userName    String
   avaliation  Int
   description String
   likes       Int
   isActive    Boolean
   createdAt   DateTime @default(now())
-  image       Image?   @relation(fields: [imageId], references: [id])
   imageId     Int?
+  userName    String
+  image       Image?   @relation(fields: [imageId], references: [id])
 }
 
 model Appointment {
   id         Int      @id @default(autoincrement())
   name       String
   mailerId   Int?
-  mailer     Mailer?  @relation(fields: [mailerId], references: [id])
-  phone      String
-  bride      Boolean  @default(false)
-  groom      Boolean  @default(false)
-  debutant   Boolean  @default(false)
-  bridesmaid Boolean  @default(false)
-  party      Boolean  @default(false)
-  merryDate  DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  bride      Boolean  @default(false)
+  bridesmaid Boolean  @default(false)
+  debutant   Boolean  @default(false)
+  groom      Boolean  @default(false)
+  party      Boolean  @default(false)
+  phone      String
+  merryDate  DateTime
+  mailer     Mailer?  @relation(fields: [mailerId], references: [id])
 }
 
 model User {

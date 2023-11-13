@@ -1,38 +1,57 @@
+// NestJs imports
 import { Injectable } from '@nestjs/common'
-import { CreateCollectionClotheDto } from './dto/create-collection-clothe.dto'
-import { UpdateCollectionClotheDto } from './dto/update-collection-clothe.dto'
+
+// Prisma imports
 import { PrismaService } from 'src/prisma/prisma.service'
 
-@Injectable()
-export class CollectionClothesService {
-  constructor(private prisma: PrismaService) {}
+// DTOs imports
+import { CreateCollectionClotheDto } from './dto/create-collection-clothe.dto'
+import { UpdateCollectionClotheDto } from './dto/update-collection-clothe.dto'
 
-  // CRUD Operators
-  create(createCollectionClotheDto: CreateCollectionClotheDto) {
+@Injectable()
+// Class declaration
+export class CollectionClothesService {
+  // Constructor Method
+  constructor(private prisma: PrismaService) {}
+  //
+
+  // CRUD Operators - Properties
+  async create(createCollectionClotheDto: CreateCollectionClotheDto) {
     return this.prisma.collectionClothes.create({
       data: createCollectionClotheDto,
+      include: { collection: true, cover: true },
     })
   }
 
-  findAll() {
+  async findAll() {
     return this.prisma.collectionClothes.findMany({
       include: { collection: true, cover: true },
     })
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} collectionClothe`
+  async findOne(collectionClothesId: number) {
+    return this.prisma.collectionClothes.findMany({
+      where: { id: collectionClothesId },
+      include: { collection: true, cover: true },
+    })
   }
 
-  update(id: string, updateCollectionClotheDto: UpdateCollectionClotheDto) {
+  async update(
+    collectionClothesId: number,
+    updateCollectionClotheDto: UpdateCollectionClotheDto,
+  ) {
     return this.prisma.collectionClothes.update({
-      where: { id: id },
+      where: { id: collectionClothesId },
       data: updateCollectionClotheDto,
       include: { collection: true, cover: true },
     })
   }
 
-  remove(id: string) {
-    return this.prisma.collectionClothes.delete({ where: { id: id } })
+  async remove(collectionClothesId: number) {
+    return this.prisma.collectionClothes.delete({
+      where: { id: collectionClothesId },
+      include: { collection: true, cover: true },
+    })
   }
+  //
 }

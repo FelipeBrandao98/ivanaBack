@@ -1,4 +1,12 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateCollectionClotheDto } from './create-collection-clothe.dto';
+// NestJs - Swagger imports
+import { PartialType } from '@nestjs/swagger'
 
-export class UpdateCollectionClotheDto extends PartialType(CreateCollectionClotheDto) {}
+// Class who is extended imports
+import { CreateCollectionClotheDto } from './create-collection-clothe.dto'
+
+// Class declaration
+export class UpdateCollectionClotheDto extends PartialType(
+  CreateCollectionClotheDto,
+) {
+  // Properties
+}

@@ -1,49 +1,93 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator'
 
+// Validators Pipe Imports
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
+
+// Class declaration
 export class CreateCollectionsCategoryDto {
+  // Properties
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: true })
+  @ApiProperty({
+    required: true,
+    type: 'string',
+    example:
+      'Please, use the name from collection category in Portugues from brazil',
+  })
   description: string
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: false, nullable: true })
-  descriptionDe?: string
-
-  @IsOptional()
-  @IsString()
-  @ApiProperty({ required: false, nullable: true })
-  descriptionEn?: string
-
-  @IsOptional()
-  @IsString()
-  @ApiProperty({ required: false, nullable: true })
-  descriptionFr?: string
+  @ApiProperty({
+    required: true,
+    type: 'string',
+    example: 'Please, use the name from collection category in Deutsch',
+  })
+  descriptionDe: string
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: true })
+  @ApiProperty({
+    required: true,
+    type: 'string',
+    example: 'Please, use the name from collection category in English',
+  })
+  descriptionEn: string
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    required: true,
+    type: 'string',
+    example: 'Please, use the name from collection category in French',
+  })
+  descriptionFr: string
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    required: true,
+    type: 'string',
+    example:
+      'Please, use the description from collection category in Portugues from brazil',
+  })
   subdescription: string
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: false })
-  subdescriptionDe?: string
+  @ApiProperty({
+    required: true,
+    type: 'string',
+    example: 'Please, use the description from collection category in Deutsch',
+  })
+  subdescriptionDe: string
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: false })
-  subdescriptionEn?: string
+  @ApiProperty({
+    required: true,
+    type: 'string',
+    example: 'Please, use the description from collection category in English',
+  })
+  subdescriptionEn: string
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: false })
-  subdescriptionFr?: string
+  @ApiProperty({
+    required: true,
+    type: 'string',
+    example: 'Please, use the description from collection category in French',
+  })
+  subdescriptionFr: string
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsNumber()
-  @ApiProperty({ required: false })
+  @ApiProperty({
+    required: true,
+    type: 'number',
+    example: 'Please, use the id from cover',
+  })
   coverId: number
+  //
 }

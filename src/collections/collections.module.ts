@@ -1,16 +1,22 @@
+// NestJs imports
 import { Module } from '@nestjs/common'
 
-import { CollectionsService } from './collections.service'
+// Prisma imports
+import { PrismaModule } from 'src/prisma/prisma.module'
+
+// Module imports
+import { CollectionClothesModule } from './subroutes/collection-clothes/collection-clothes.module'
+import { CollectionsCategoryModule } from './subroutes/collections-category/collections-category.module'
+
+// Controllers imports
 import { CollectionsController } from './collections.controller'
 import { CollectionsDeController } from './languages/De/collections.de.controller'
 import { CollectionsEnController } from './languages/En/collections.en.controller'
 import { CollectionsFrController } from './languages/Fr/collections.fr.controller'
 import { CollectionsPtBrController } from './languages/Pt-BR/collections.pt.controller'
 
-import { PrismaModule } from 'src/prisma/prisma.module'
-import { CollectionImagesModule } from './subroutes/collection-images/collection-images.module'
-import { CollectionsCategoryModule } from './subroutes/collections-category/collections-category.module'
-import { CollectionClothesModule } from './subroutes/collection-clothes/collection-clothes.module'
+// Services imports
+import { CollectionsService } from './collections.service'
 
 @Module({
   controllers: [
@@ -24,9 +30,11 @@ import { CollectionClothesModule } from './subroutes/collection-clothes/collecti
   imports: [
     PrismaModule,
     // Sub-Routes
-    CollectionImagesModule,
     CollectionsCategoryModule,
     CollectionClothesModule,
   ],
 })
-export class CollectionsModule {}
+// Class declaration
+export class CollectionsModule {
+  // Properties
+}

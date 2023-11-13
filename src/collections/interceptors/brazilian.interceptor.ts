@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   CallHandler,
   ExecutionContext,
@@ -9,6 +10,7 @@ import { tap } from 'rxjs/operators'
 import { CollectionEntity } from '../entities/collection.entity'
 
 @Injectable()
+// Class declaration
 export class PtBrCollectionLanguageInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,

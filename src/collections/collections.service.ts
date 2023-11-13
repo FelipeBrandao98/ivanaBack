@@ -1,40 +1,51 @@
+// NestJs imports
 import { Injectable } from '@nestjs/common'
-import { CreateCollectionDto } from './dto/create-collection.dto'
-import { UpdateCollectionDto } from './dto/update-collection.dto'
+
+// Prisma imports
 import { PrismaService } from 'src/prisma/prisma.service'
 
+// DTOs imports
+import { CreateCollectionDto } from './dto/create-collection.dto'
+import { UpdateCollectionDto } from './dto/update-collection.dto'
+
 @Injectable()
+// Class declaration
 export class CollectionsService {
+  // Constructor Method
   constructor(private prisma: PrismaService) {}
+  //
 
-  // CRUD Operations
-  create(createCollectionDto: CreateCollectionDto) {
-    console.log(createCollectionDto)
-    return this.prisma.collection.create({ data: createCollectionDto })
-  }
-
-  findAll() {
-    return this.prisma.collection.findMany({
+  // CRUD Operations - Properties
+  async create(createCollectionDto: CreateCollectionDto) {
+    return await this.prisma.collection.create({
+      data: createCollectionDto,
       include: { cover: true, category: true },
     })
   }
 
-  findOne(id: number) {
-    return this.prisma.collection.findUnique({
-      where: { id: id },
+  async findAll() {
+    return await this.prisma.collection.findMany({
       include: { cover: true, category: true },
     })
   }
 
-  update(id: number, updateCollectionDto: UpdateCollectionDto) {
-    return this.prisma.collection.update({
-      where: { id: id },
+  async findOne(collectionId: number) {
+    return await this.prisma.collection.findUnique({
+      where: { id: collectionId },
+      include: { cover: true, category: true },
+    })
+  }
+
+  async update(collectionId: number, updateCollectionDto: UpdateCollectionDto) {
+    return await this.prisma.collection.update({
+      where: { id: collectionId },
       data: updateCollectionDto,
       include: { cover: true, category: true },
     })
   }
 
-  remove(id: number) {
-    return this.prisma.collection.delete({ where: { id: id } })
+  async remove(collectionId: number) {
+    return await this.prisma.collection.delete({ where: { id: collectionId } })
   }
+  //
 }

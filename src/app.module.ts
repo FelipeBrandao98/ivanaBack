@@ -1,9 +1,10 @@
+// NestJs imports
 import { Module } from '@nestjs/common'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
 
+// Prisma imports
 import { PrismaModule } from './prisma/prisma.module'
 
+// Modules imports
 import { MailerModule } from './mailer/mailer.module'
 import { NewsModule } from './news/news.module'
 import { ImagesModule } from './images/images.module'
@@ -25,7 +26,8 @@ import { AuthModule } from './auth/auth.module'
     UsersModule,
     AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
-export class AppModule {}
+// Class declaration
+export class AppModule {
+  // Properties
+}

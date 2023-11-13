@@ -1,29 +1,49 @@
+// NestJs imports
 import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common'
-import { PrismaService } from './../prisma/prisma.service'
-import { JwtService } from '@nestjs/jwt'
-import { AuthEntity } from './entity/auth.entity'
 
+// Prisma imports
+import { PrismaService } from './../prisma/prisma.service'
+
+// DTOs imports
+import { LoginDto } from './dto/login.dto'
+
+// Hash Script imports
 import * as bcrypt from 'bcrypt'
 
-@Injectable()
-export class AuthService {
-  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
+// Services imports
+import { JwtService } from '@nestjs/jwt'
 
-  async login(email: string, password: string): Promise<AuthEntity> {
+// Entities imports
+import { AuthEntity } from './entities/auth.entity'
+
+@Injectable()
+// Class declaration
+export class AuthService {
+  // Constructor Method
+  constructor(private prisma: PrismaService, private jwtService: JwtService) {}
+  //
+
+  // CRUD Operations - Properties
+  async login(loginDto: LoginDto): Promise<AuthEntity> {
     // Step 1: Fetch a user with the given email
-    const user = await this.prisma.user.findUnique({ where: { email: email } })
+    const user = await this.prisma.user.findUnique({
+      where: { email: loginDto.email },
+    })
 
     // If no user is found, throw an error
     if (!user) {
-      throw new NotFoundException(`No user found for email: ${email}`)
+      throw new NotFoundException(`No user found for email: ${loginDto.email}`)
     }
 
     // Step 2: Check if the password is correct
-    const isPasswordValid = await bcrypt.compare(password, user.password)
+    const isPasswordValid = await bcrypt.compare(
+      loginDto.password,
+      user.password,
+    )
 
     // If password does not match, throw an error
     if (!isPasswordValid) {
@@ -35,4 +55,5 @@ export class AuthService {
       accessToken: this.jwtService.sign({ userId: user.id }),
     }
   }
+  //
 }

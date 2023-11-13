@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Get,
@@ -9,55 +10,86 @@ import {
   ParseIntPipe,
   UseGuards,
 } from '@nestjs/common'
-import { CollectionsCategoryService } from './collections-category.service'
+
+// NestJs - Swagger imports
+import { ApiOkResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger'
+
+// DTOs imports
 import { CreateCollectionsCategoryDto } from './dto/create-collections-category.dto'
 import { UpdateCollectionsCategoryDto } from './dto/update-collections-category.dto'
-import { ApiOkResponse, ApiTags, ApiBearerAuth } from '@nestjs/swagger'
+
+// Services imports
+import { CollectionsCategoryService } from './collections-category.service'
+
+// Entities imports
 import { CollectionsCategoryEntity } from './entities/collections-category.entity'
+
+// Secutiry imports
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
-@Controller('collections/category')
 @ApiTags('Collections Category')
+@Controller('collections/category')
+// Class declaration
 export class CollectionsCategoryController {
+  // Contructor Method
   constructor(
     private readonly collectionsCategoryService: CollectionsCategoryService,
   ) {}
+  //
 
+  // Properties
   @Get()
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionsCategoryEntity })
-  findAll() {
-    return this.collectionsCategoryService.findAll()
+  async findAll() {
+    const collectionCategory = await this.collectionsCategoryService.findAll()
+
+    return new CollectionsCategoryEntity(collectionCategory)
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionsCategoryEntity })
-  create(@Body() createCollectionsCategoryDto: CreateCollectionsCategoryDto) {
-    return this.collectionsCategoryService.create(createCollectionsCategoryDto)
+  async create(
+    @Body() createCollectionsCategoryDto: CreateCollectionsCategoryDto,
+  ) {
+    const collectionCategory = await this.collectionsCategoryService.create(
+      createCollectionsCategoryDto,
+    )
+
+    return new CollectionsCategoryEntity(collectionCategory)
   }
 
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @Patch(':collectionCategoryId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionsCategoryEntity })
-  update(
-    @Param('id', ParseIntPipe) id: number,
+  async update(
+    @Param('collectionCategoryId', ParseIntPipe) collectionCategoryId: number,
     @Body() updateCollectionsCategoryDto: UpdateCollectionsCategoryDto,
   ) {
-    return this.collectionsCategoryService.update(
-      id,
+    const collectionCategory = await this.collectionsCategoryService.update(
+      collectionCategoryId,
       updateCollectionsCategoryDto,
     )
+
+    return new CollectionsCategoryEntity(collectionCategory)
   }
 
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @Delete(':collectionCategoryId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionsCategoryEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.collectionsCategoryService.remove(id)
+  async remove(
+    @Param('collectionCategoryId', ParseIntPipe) collectionCategoryId: number,
+  ) {
+    const collectionCategory = await this.collectionsCategoryService.remove(
+      collectionCategoryId,
+    )
+
+    return new CollectionsCategoryEntity(collectionCategory)
   }
+  //
 }

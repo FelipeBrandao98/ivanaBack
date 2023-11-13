@@ -1,11 +1,18 @@
+// NestJs imports
 import { Module } from '@nestjs/common'
-import { CollectionClothesService } from './collection-clothes.service'
-import { CollectionClothesController } from './collection-clothes.controller'
+
+// Prisma imports
 import { PrismaModule } from 'src/prisma/prisma.module'
+
+// Controllers imports
+import { CollectionClothesController } from './collection-clothes.controller'
 import { CollectionsClothesDeController } from './languages/De/collections-clothes.de.controller'
 import { CollectionsClothesEnController } from './languages/En/collections-clothes.en.controller'
 import { CollectionsClothesFrController } from './languages/Fr/collections-clothes.fr.controller'
 import { CollectionsClothesPtBrController } from './languages/Pt-BR/collections-clothes.de.controller'
+
+// Services imports
+import { CollectionClothesService } from './collection-clothes.service'
 
 @Module({
   controllers: [
@@ -18,4 +25,7 @@ import { CollectionsClothesPtBrController } from './languages/Pt-BR/collections-
   providers: [CollectionClothesService],
   imports: [PrismaModule],
 })
-export class CollectionClothesModule {}
+// Class declaration
+export class CollectionClothesModule {
+  // Properties
+}

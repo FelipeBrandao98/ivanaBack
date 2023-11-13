@@ -1,7 +1,14 @@
+// NestJs imports
 import { Module } from '@nestjs/common'
-import { UsersService } from './users.service'
-import { UsersController } from './users.controller'
+
+// Prisma imports
 import { PrismaModule } from 'src/prisma/prisma.module'
+
+// Controllers imports
+import { UsersController } from './users.controller'
+
+// Services imports
+import { UsersService } from './users.service'
 
 @Module({
   controllers: [UsersController],
@@ -9,4 +16,7 @@ import { PrismaModule } from 'src/prisma/prisma.module'
   imports: [PrismaModule],
   exports: [UsersService],
 })
-export class UsersModule {}
+// Class Declaration
+export class UsersModule {
+  // Properties
+}

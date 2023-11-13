@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common'
+
 import { CreateImageDto } from './dto/create-image.dto'
 import { UpdateImageDto } from './dto/update-image.dto'
+
 import { PrismaService } from 'src/prisma/prisma.service'
+
 import {
   GetObjectCommand,
   GetObjectCommandOutput,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3'
+
 import { randomUUID } from 'crypto'
 
 @Injectable()
@@ -50,24 +54,5 @@ export class ImagesService {
     )
 
     return response.Body.transformToByteArray()
-  }
-
-  findOne(id: number) {
-    return this.prisma.image.findUnique({
-      where: { id: id },
-    })
-  }
-
-  update(id: number, updateImageDto: UpdateImageDto) {
-    return this.prisma.image.update({
-      where: { id: id },
-      data: updateImageDto,
-    })
-  }
-
-  remove(id: number) {
-    return this.prisma.image.delete({
-      where: { id: id },
-    })
   }
 }

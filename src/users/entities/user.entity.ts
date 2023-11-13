@@ -1,30 +1,38 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
+
+// Entity from prisma import
 import { User } from '@prisma/client'
+
 import { Exclude } from 'class-transformer'
 
+// class declaration
 export class UserEntity implements User {
-  constructor(partial: Partial<UserEntity[] | UserEntity | string>) {
+  // Constructor Method
+  constructor(partial: Partial<UserEntity[] | UserEntity>) {
     Object.assign(this, partial)
   }
 
-  @ApiProperty()
+  // Properties
+  @ApiProperty({ required: false, type: 'uuid', uniqueItems: true })
   id: string
 
-  @ApiProperty()
+  @ApiProperty({ required: true, type: 'Full Name' })
   name: string
 
-  @ApiProperty()
+  @ApiProperty({ required: true, type: 'e-mail', uniqueItems: true })
   email: string
 
   @Exclude()
   password: string
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
   birthDate: Date
 
-  @ApiProperty()
+  @ApiProperty({ required: true, type: Date })
   createdAt: Date
 
-  @ApiProperty()
+  @ApiProperty({ required: true, type: Date })
   updatedAt: Date
+  //
 }
