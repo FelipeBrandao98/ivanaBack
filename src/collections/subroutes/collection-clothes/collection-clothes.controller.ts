@@ -46,7 +46,9 @@ export class CollectionClothesController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: CollectionClothesEntity })
-  async create(@Body() createCollectionClotheDto: CreateCollectionClotheDto) {
+  async create(
+    @Body() createCollectionClotheDto: CreateCollectionClotheDto,
+  ): Promise<CollectionClothesEntity> {
     const collectionClothes = await this.collectionClothesService.create(
       createCollectionClotheDto,
     )
@@ -58,7 +60,7 @@ export class CollectionClothesController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionClothesEntity })
-  async findAll() {
+  async findAll(): Promise<CollectionClothesEntity[]> {
     const collectionsClothes = await this.collectionClothesService.findAll()
 
     return collectionsClothes.map(
@@ -72,7 +74,7 @@ export class CollectionClothesController {
   @ApiOkResponse({ type: CollectionClothesEntity })
   async findOne(
     @Param('collectionClothesId', ParseIntPipe) collectionClothesId: number,
-  ) {
+  ): Promise<CollectionClothesEntity> {
     const collectionClothes = await this.collectionClothesService.findOne(
       collectionClothesId,
     )
@@ -87,7 +89,7 @@ export class CollectionClothesController {
   async update(
     @Param('collectionClothesId', ParseIntPipe) collectionClothesId: number,
     @Body() updateCollectionClotheDto: UpdateCollectionClotheDto,
-  ) {
+  ): Promise<CollectionClothesEntity> {
     const collectionClothes = await this.collectionClothesService.update(
       collectionClothesId,
       updateCollectionClotheDto,
@@ -102,7 +104,7 @@ export class CollectionClothesController {
   @ApiOkResponse({ type: CollectionClothesEntity })
   async remove(
     @Param('collectionClothesId', ParseIntPipe) collectionClothesId: number,
-  ) {
+  ): Promise<CollectionClothesEntity> {
     const collectionClothes = await this.collectionClothesService.remove(
       collectionClothesId,
     )
