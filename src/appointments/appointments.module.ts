@@ -1,8 +1,17 @@
+// NestJs imports
 import { Module } from '@nestjs/common'
-import { AppointmentsService } from './appointments.service'
-import { AppointmentsController } from './appointments.controller'
+
+// Prisma imports
 import { PrismaModule } from 'src/prisma/prisma.module'
+
+// Controller imports
+import { AppointmentsController } from './appointments.controller'
+
+// Services imports
+import { AppointmentsService } from './appointments.service'
 import { MailerService } from 'src/mailer/mailer.service'
+
+// Module from call external api
 import { HttpModule } from '@nestjs/axios'
 
 @Module({
@@ -10,4 +19,7 @@ import { HttpModule } from '@nestjs/axios'
   providers: [AppointmentsService, MailerService],
   imports: [PrismaModule, HttpModule],
 })
-export class AppointmentsModule {}
+// Class declaration
+export class AppointmentsModule {
+  // Properties
+}

@@ -8,11 +8,6 @@ import { Exclude } from 'class-transformer'
 
 // class declaration
 export class UserEntity implements User {
-  // Constructor Method
-  constructor(partial: Partial<UserEntity[] | UserEntity>) {
-    Object.assign(this, partial)
-  }
-
   // Properties
   @ApiProperty({ required: false, type: 'uuid', uniqueItems: true })
   id: string
@@ -34,5 +29,11 @@ export class UserEntity implements User {
 
   @ApiProperty({ required: true, type: Date })
   updatedAt: Date
+  //
+
+  // Constructor Method
+  constructor(partial: Partial<UserEntity[] | UserEntity>) {
+    Object.assign(this, partial)
+  }
   //
 }

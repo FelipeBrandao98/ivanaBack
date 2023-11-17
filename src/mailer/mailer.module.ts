@@ -1,7 +1,16 @@
+// NestJs imports
 import { Module } from '@nestjs/common'
-import { MailerService } from './mailer.service'
-import { MailerController } from './mailer.controller'
+
+// Prisma imports
 import { PrismaModule } from 'src/prisma/prisma.module'
+
+// Controllers imports
+import { MailerController } from './mailer.controller'
+
+// Services imports
+import { MailerService } from './mailer.service'
+
+// Module from call external api
 import { HttpModule } from '@nestjs/axios'
 
 @Module({
@@ -9,4 +18,7 @@ import { HttpModule } from '@nestjs/axios'
   providers: [MailerService],
   imports: [PrismaModule, HttpModule],
 })
-export class MailerModule {}
+// Class declaration
+export class MailerModule {
+  // Properties
+}

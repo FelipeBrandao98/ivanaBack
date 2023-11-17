@@ -15,11 +15,13 @@ import { AppModule } from './app.module'
 
 // Global Filters imports
 import { PrismaClientExceptionFilter } from './filters/prisma-client-exception/prisma-client-exception.filter'
-import { PasswordExceptionFilter } from './filters/exeptions/password-match.exception'
-import { UserExistsFilter } from './filters/exeptions/user-exists.exception'
+import { PasswordExceptionFilter } from './filters/exceptions/password-match.exception'
+import { UserExistsFilter } from './filters/exceptions/user-exists.exception'
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    cors: true,
+  })
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -48,7 +50,7 @@ async function bootstrap() {
   app.useGlobalFilters(new PasswordExceptionFilter(httpAdapter))
   app.useGlobalFilters(new UserExistsFilter(httpAdapter))
 
-  app.enableCors()
+  // app.enableCors()
 
   const config = new DocumentBuilder()
     .setTitle('Ivana Beaumond - Backend')

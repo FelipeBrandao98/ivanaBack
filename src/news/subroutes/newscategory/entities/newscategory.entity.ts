@@ -1,11 +1,12 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
+
+// Entity from prisma import
 import { NewsCategory } from '@prisma/client'
 
+// Class declaration
 export class NewscategoryEntity implements NewsCategory {
-  constructor(partial: Partial<NewscategoryEntity>) {
-    Object.assign(this, partial)
-  }
-
+  // Properties
   @ApiProperty()
   id: number
 
@@ -26,4 +27,11 @@ export class NewscategoryEntity implements NewsCategory {
 
   @ApiProperty()
   updatedAt: Date
+  //
+
+  // Constructor Methods
+  constructor(partial: Partial<NewscategoryEntity>) {
+    Object.assign(this, partial)
+  }
+  //
 }

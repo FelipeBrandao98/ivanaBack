@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Get,
@@ -8,46 +9,77 @@ import {
   Delete,
   ParseIntPipe,
 } from '@nestjs/common'
-import { CommentsService } from './comments.service'
+
+// NestJs - Swagger imports
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
+
+// DTOs imports
 import { CreateCommentDto } from './dto/create-comment.dto'
 import { UpdateCommentDto } from './dto/update-comment.dto'
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
+
+// Services imports
+import { CommentsService } from './comments.service'
+
+// Entities imports
 import { CommentEntity } from './entities/comment.entity'
 
-@Controller('comments')
 @ApiTags('Comments')
+@Controller('comments')
+// Class declaration
 export class CommentsController {
+  // Constructor Method
   constructor(private readonly commentsService: CommentsService) {}
+  //
 
+  // Properties
   @Post()
   @ApiOkResponse({ type: CommentEntity })
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentsService.create(createCommentDto)
+  async create(
+    @Body() createCommentDto: CreateCommentDto,
+  ): Promise<CommentEntity> {
+    const comment = await this.commentsService.create(createCommentDto)
+
+    return new CommentEntity(comment)
   }
 
   @Get()
   @ApiOkResponse({ type: CommentEntity })
-  findAll() {
-    return this.commentsService.findAll()
+  async findAll(): Promise<CommentEntity[]> {
+    const comments = await this.commentsService.findAll()
+
+    return comments.map((comment) => new CommentEntity(comment))
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.commentsService.findOne(id)
+  @Get(':commentId')
+  async findOne(
+    @Param('commentId', ParseIntPipe) commentId: number,
+  ): Promise<CommentEntity> {
+    const comment = await this.commentsService.findOne(commentId)
+    return new CommentEntity(comment)
   }
 
-  @Patch(':id')
+  @Patch(':commentId')
   @ApiOkResponse({ type: CommentEntity })
-  update(
-    @Param('id', ParseIntPipe) id: number,
+  async update(
+    @Param('commentId', ParseIntPipe) commentId: number,
     @Body() updateCommentDto: UpdateCommentDto,
-  ) {
-    return this.commentsService.update(id, updateCommentDto)
+  ): Promise<CommentEntity> {
+    const comment = await this.commentsService.update(
+      commentId,
+      updateCommentDto,
+    )
+
+    return new CommentEntity(comment)
   }
 
-  @Delete(':id')
+  @Delete(':commentId')
   @ApiOkResponse({ type: CommentEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.commentsService.remove(id)
+  async remove(
+    @Param('commentId', ParseIntPipe) commentId: number,
+  ): Promise<CommentEntity> {
+    const comment = await this.commentsService.remove(commentId)
+
+    return new CommentEntity(comment)
   }
+  //
 }

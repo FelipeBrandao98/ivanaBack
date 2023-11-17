@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Get,
@@ -6,69 +7,119 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common'
-import { AppointmentsService } from './appointments.service'
+
+// NestJs - Swagger imports
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger'
+
+// DTOs imports
 import { CreateAppointmentDto } from './dto/create-appointment.dto'
 import { UpdateAppointmentDto } from './dto/update-appointment.dto'
-import { MailerService } from 'src/mailer/mailer.service'
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { AppointmentEntity } from './entities/appointment.entity'
 import { CreateMailerDto } from 'src/mailer/dto/create-mailer.dto'
 
-@Controller('appointments')
+// Services imports
+import { AppointmentsService } from './appointments.service'
+import { MailerService } from 'src/mailer/mailer.service'
+
+// Entities imports
+import { AppointmentEntity } from './entities/appointment.entity'
+
+// Security imports
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+
 @ApiTags('Appointments')
+@Controller('appointments')
+// Class declarations
 export class AppointmentsController {
+  // Constructor Methods
   constructor(
     private readonly appointmentsService: AppointmentsService,
     private readonly mailerService: MailerService,
   ) {}
+  //
 
+  // Properties
   @Post()
-  @ApiOkResponse({ type: AppointmentEntity })
-  async create(@Body() createAppointmentDto: CreateAppointmentDto) {
-    const emailFromDatabase = this.mailerService.findOne(
+  @ApiCreatedResponse({ type: AppointmentEntity })
+  async create(
+    @Body() createAppointmentDto: CreateAppointmentDto,
+  ): Promise<AppointmentEntity> {
+    let createMailerDto: CreateMailerDto
+    createMailerDto.mail = createAppointmentDto.email
+
+    const emailExists = await this.mailerService.findOne(
       createAppointmentDto.email,
     )
-    const hasEmail = await emailFromDatabase.then((email) => {
-      return email
-    })
 
-    const createMailerDto: CreateMailerDto = {
-      mail: createAppointmentDto.email,
+    if (emailExists) {
+      createAppointmentDto.mailerId = emailExists.id
     }
 
-    if (!hasEmail) {
-      const createdEmail = await this.mailerService.create(createMailerDto)
-      createAppointmentDto.mailerId = createdEmail.id
-      delete createAppointmentDto.email
-    } else {
-      createAppointmentDto.mailerId = hasEmail.id
-      delete createAppointmentDto.email
+    if (!emailExists) {
+      const { id: mailerId } = await this.mailerService.create(createMailerDto)
+      createAppointmentDto.mailerId = mailerId
     }
 
-    return await this.appointmentsService.create(createAppointmentDto)
+    const appointment = await this.appointmentsService.create(
+      createAppointmentDto,
+    )
+
+    return new AppointmentEntity(appointment)
   }
 
   @Get()
-  findAll() {
-    return this.appointmentsService.findAll()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: AppointmentEntity })
+  async findAll(): Promise<AppointmentEntity[]> {
+    const appointments = await this.appointmentsService.findAll()
+
+    return appointments.map((appointment) => new AppointmentEntity(appointment))
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.appointmentsService.findOne(+id)
+  @Get(':appointmentId')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: AppointmentEntity })
+  async findOne(
+    @Param('appointmentId', ParseIntPipe) appointmentId: number,
+  ): Promise<AppointmentEntity> {
+    const appointment = await this.appointmentsService.findOne(appointmentId)
+
+    return new AppointmentEntity(appointment)
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
+  @Patch(':appointmentId')
+  @ApiOkResponse({ type: AppointmentEntity })
+  async update(
+    @Param('appointmentId', ParseIntPipe) appointmentId: number,
     @Body() updateAppointmentDto: UpdateAppointmentDto,
-  ) {
-    return this.appointmentsService.update(+id, updateAppointmentDto)
+  ): Promise<AppointmentEntity> {
+    const appointment = await this.appointmentsService.update(
+      appointmentId,
+      updateAppointmentDto,
+    )
+
+    return new AppointmentEntity(appointment)
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.appointmentsService.remove(+id)
+  @Delete(':appointmentId')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: AppointmentEntity })
+  async remove(
+    @Param('appointmentId', ParseIntPipe) appointmentId: number,
+  ): Promise<AppointmentEntity> {
+    const appointment = await this.appointmentsService.remove(appointmentId)
+
+    return new AppointmentEntity(appointment)
   }
+  //
 }

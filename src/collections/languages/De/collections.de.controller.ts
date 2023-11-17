@@ -30,13 +30,16 @@ export class CollectionsDeController {
 
   // Properties
   @Get('de')
-  async findAll() {
-    const collection = await this.collectionsService.findAll()
-    return new CollectionEntity(collection)
+  async findAll(): Promise<CollectionEntity[]> {
+    const collections = await this.collectionsService.findAll()
+
+    return collections.map((collection) => new CollectionEntity(collection))
   }
 
   @Get('de/:collectionId')
-  async findOne(@Param('collectionId', ParseIntPipe) collectionId: number) {
+  async findOne(
+    @Param('collectionId', ParseIntPipe) collectionId: number,
+  ): Promise<CollectionEntity> {
     const collection = await this.collectionsService.findOne(collectionId)
 
     return new CollectionEntity(collection)

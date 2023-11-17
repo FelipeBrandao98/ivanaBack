@@ -43,17 +43,17 @@ export class UsersController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: UserEntity })
-  async findMany() {
-    const user = await this.usersService.findMany()
+  async findMany(): Promise<UserEntity[]> {
+    const users = await this.usersService.findMany()
 
-    return new UserEntity(user)
+    return users.map((user) => new UserEntity(user))
   }
 
   @Get(':userId')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: UserEntity })
-  async findOne(@Param('userId') userId: string) {
+  async findOne(@Param('userId') userId: string): Promise<UserEntity> {
     const user = await this.usersService.findOne(userId)
 
     return new UserEntity(user)
@@ -63,7 +63,7 @@ export class UsersController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: UserEntity })
-  async create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto): Promise<UserEntity> {
     const user = await this.usersService.create(createUserDto)
 
     return new UserEntity(user)
@@ -76,7 +76,7 @@ export class UsersController {
   async update(
     @Param('userId') userId: string,
     @Body() updateUserDto: UpdateUserDto,
-  ) {
+  ): Promise<UserEntity> {
     const user = await this.usersService.update(userId, updateUserDto)
 
     return new UserEntity(user)

@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger'
 // Class Declaration
 export class AuthEntity {
   // Constuctor Method
-  constructor(partial: Partial<AuthEntity | string>) {
+  constructor(partial: Partial<AuthEntity>) {
     Object.assign(this, partial)
   }
   //

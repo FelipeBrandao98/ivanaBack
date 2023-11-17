@@ -1,7 +1,12 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
+
+// Class Validators imports
 import { IsBoolean, IsNotEmpty, IsString, MaxLength } from 'class-validator'
 
+// Class declaration
 export class CreateNewsDto {
+  // Properties
   @IsString()
   @IsNotEmpty()
   @MaxLength(320)
@@ -101,4 +106,5 @@ export class CreateNewsDto {
   @IsNotEmpty()
   @ApiProperty({ required: false })
   bodyFr?: string
+  //
 }

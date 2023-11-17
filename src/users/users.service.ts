@@ -12,8 +12,8 @@ import { UpdateUserDto } from './dto/update-user.dto'
 import * as bcrypt from 'bcrypt'
 
 // Errors imports
-import { PasswordException } from 'src/filters/exeptions/password-match.filter'
-import { UserExists } from 'src/filters/exeptions/user-exists.filter'
+import { PasswordException } from 'src/filters/exceptions/password-match.filter'
+import { UserExists } from 'src/filters/exceptions/user-exists.filter'
 
 @Injectable()
 // class declaration

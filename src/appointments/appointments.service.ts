@@ -1,35 +1,52 @@
+// NestJs imports
 import { Injectable } from '@nestjs/common'
-import { CreateAppointmentDto } from './dto/create-appointment.dto'
-import { UpdateAppointmentDto } from './dto/update-appointment.dto'
+
+// Prisma imports
 import { PrismaService } from 'src/prisma/prisma.service'
 
+// DTOs imports
+import { CreateAppointmentDto } from './dto/create-appointment.dto'
+import { UpdateAppointmentDto } from './dto/update-appointment.dto'
+
 @Injectable()
+// Class declaration
 export class AppointmentsService {
+  // Constructor Methods
   constructor(private prisma: PrismaService) {}
+  //
 
-  create(createAppointmentDto: CreateAppointmentDto) {
-    return this.prisma.appointment.create({ data: createAppointmentDto })
+  // CRUD Operations - Properties
+  async create(createAppointmentDto: CreateAppointmentDto) {
+    return await this.prisma.appointment.create({
+      data: createAppointmentDto,
+      include: { mailer: true },
+    })
   }
 
-  findAll() {
-    return this.prisma.appointment.findMany({ include: { mailer: true } })
+  async findAll() {
+    return await this.prisma.appointment.findMany({ include: { mailer: true } })
   }
 
-  findOne(id: number) {
-    return this.prisma.appointment.findUnique({
+  async findOne(id: number) {
+    return await this.prisma.appointment.findUnique({
       where: { id: id },
       include: { mailer: true },
     })
   }
 
-  update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
-    return this.prisma.appointment.update({
+  async update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
+    return await this.prisma.appointment.update({
       where: { id: id },
+      include: { mailer: true },
       data: updateAppointmentDto,
     })
   }
 
-  remove(id: number) {
-    return this.prisma.appointment.delete({ where: { id: id } })
+  async remove(id: number) {
+    return await this.prisma.appointment.delete({
+      where: { id: id },
+      include: { mailer: true },
+    })
   }
+  //
 }

@@ -1,33 +1,60 @@
+// NestJs imports
 import { ApiProperty } from '@nestjs/swagger'
 
+// Validators Pipe Imports
+import {
+  IsBoolean,
+  IsDateString,
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsPhoneNumber,
+} from 'class-validator'
+
+// Class declaration
 export class CreateAppointmentDto {
-  @ApiProperty()
+  // Properties
+  @IsNotEmpty()
+  @ApiProperty({ required: true })
   name: string
 
-  @ApiProperty()
+  @IsNotEmpty()
+  @IsEmail()
+  @ApiProperty({ required: true })
   email: string
 
-  @ApiProperty({ nullable: true, required: false })
-  mailerId?: number
+  @IsNumber()
+  @ApiProperty({ required: false })
+  mailerId: number
 
-  @ApiProperty()
+  @IsNotEmpty()
+  @IsPhoneNumber()
+  @ApiProperty({ required: true })
   phone: string
 
-  @ApiProperty()
+  @IsNotEmpty()
+  @ApiProperty({ required: false })
   bride: boolean
 
-  @ApiProperty()
+  @IsBoolean()
+  @ApiProperty({ required: false })
   groom: boolean
 
-  @ApiProperty()
+  @IsBoolean()
+  @ApiProperty({ required: false })
   debutant: boolean
 
-  @ApiProperty()
+  @IsBoolean()
+  @ApiProperty({ required: false })
   bridesmaid: boolean
 
-  @ApiProperty()
+  @IsBoolean()
+  @ApiProperty({ required: false })
   party: boolean
 
-  @ApiProperty()
+  @IsNotEmpty()
+  @IsDateString()
+  @ApiProperty({ required: true })
   merryDate: Date
+  //
 }

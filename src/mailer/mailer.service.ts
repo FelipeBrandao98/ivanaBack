@@ -1,20 +1,32 @@
+// NestJs imports
 import { Injectable } from '@nestjs/common'
+
+// Prisma imports
+import { PrismaService } from 'src/prisma/prisma.service'
+
+// DTOs imports
 import { CreateMailerDto } from './dto/create-mailer.dto'
 import { UpdateMailerDto } from './dto/update-mailer.dto'
 import { SendMailDto } from './dto/send-mailer.dto'
 
-import { PrismaService } from 'src/prisma/prisma.service'
+// Send Mail imports
 import { HttpService } from '@nestjs/axios'
 import { Observable } from 'rxjs'
 import { AxiosResponse } from 'axios'
 
 @Injectable()
+// Class declaration
 export class MailerService {
+  // Constructor Method
   constructor(
     private prisma: PrismaService,
     private readonly httpService: HttpService,
   ) {}
+  //
 
+  // Properties
+  //
+  // Send Mails
   sendMailForUnique(sendMailDto: SendMailDto): Observable<AxiosResponse> {
     return this.httpService.post('http://localhost:3002/send', sendMailDto)
   }
@@ -22,25 +34,31 @@ export class MailerService {
   async sendMail(sendMailDto: SendMailDto) {
     return sendMailDto
   }
+  //
 
   //CRUD Operators
-  create(createMailerDto: CreateMailerDto) {
-    return this.prisma.mailer.create({ data: createMailerDto })
+  async create(createMailerDto: CreateMailerDto) {
+    return await this.prisma.mailer.create({ data: createMailerDto })
   }
 
-  findAll() {
-    return this.prisma.mailer.findMany()
+  async findAll() {
+    return await this.prisma.mailer.findMany()
   }
 
-  findOne(mail: string) {
-    return this.prisma.mailer.findUnique({ where: { mail: mail } })
+  async findOne(mail: string) {
+    return await this.prisma.mailer.findUnique({ where: { mail: mail } })
   }
 
-  update(id: number, updateMailerDto: UpdateMailerDto) {
-    return `This action updates a #${id} mailer`
+  async update(mailerId: number, updateMailerDto: UpdateMailerDto) {
+    return await this.prisma.mailer.update({
+      where: { id: mailerId },
+      data: updateMailerDto,
+    })
   }
 
-  remove(id: number) {
-    return this.prisma.mailer.delete({ where: { id: id } })
+  async remove(id: number) {
+    return await this.prisma.mailer.delete({ where: { id: id } })
   }
+  //
+  //
 }

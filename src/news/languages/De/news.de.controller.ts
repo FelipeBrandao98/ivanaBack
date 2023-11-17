@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Get,
@@ -5,32 +6,53 @@ import {
   ParseIntPipe,
   UseInterceptors,
 } from '@nestjs/common'
-import { NewsService } from 'src/news/news.service'
+
+// NestJs - Swagger imports
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { DeNewsLanguageInterceptor } from 'src/news/interceptors/german.interceptor'
+
+// Services imports
+import { NewsService } from 'src/news/news.service'
+
+// Entities imports
 import { NewsEntity } from 'src/news/entities/news.entity'
 
-@Controller('news')
+// Interceptors imports
+import { DeNewsLanguageInterceptor } from 'src/news/interceptors/german.interceptor'
+
 @ApiTags('News - Languages')
 @UseInterceptors(DeNewsLanguageInterceptor)
+@Controller('news')
+// Class declaration
 export class NewsDeController {
+  // Constructor Methods
   constructor(private readonly newsService: NewsService) {}
+  //
 
+  // Properties
   @Get('de')
   @ApiOkResponse({ type: NewsEntity })
-  findAll() {
-    return this.newsService.findAll()
+  async findAll(): Promise<NewsEntity[]> {
+    const news = await this.newsService.findAll()
+
+    return news.map((news) => new NewsEntity(news))
   }
 
   @Get('latest/de')
   @ApiOkResponse({ type: NewsEntity })
-  findLatests() {
-    return this.newsService.findLatests()
+  async findLatests(): Promise<NewsEntity[]> {
+    const news = await this.newsService.findLatests()
+
+    return news.map((news) => new NewsEntity(news))
   }
 
-  @Get('de/:id')
+  @Get('de/:newsId')
   @ApiOkResponse({ type: NewsEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.newsService.findOne(id)
+  async findOne(
+    @Param('newsId', ParseIntPipe) newsId: number,
+  ): Promise<NewsEntity> {
+    const news = await this.newsService.findOne(newsId)
+
+    return new NewsEntity(news)
   }
+  //
 }

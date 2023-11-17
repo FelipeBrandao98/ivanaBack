@@ -45,17 +45,19 @@ export class CollectionsController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionEntity })
-  async findAll() {
-    const collection = await this.collectionsService.findAll()
+  async findAll(): Promise<CollectionEntity[]> {
+    const collections = await this.collectionsService.findAll()
 
-    return new CollectionEntity(collection)
+    return collections.map((collection) => new CollectionEntity(collection))
   }
 
   @Post()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: CollectionEntity })
-  async create(@Body() createCollectionDto: CreateCollectionDto) {
+  async create(
+    @Body() createCollectionDto: CreateCollectionDto,
+  ): Promise<CollectionEntity> {
     const collection = await this.collectionsService.create(createCollectionDto)
 
     return new CollectionEntity(collection)
@@ -68,7 +70,7 @@ export class CollectionsController {
   async update(
     @Param('collectionId', ParseIntPipe) collectionId: number,
     @Body() updateCollectionDto: UpdateCollectionDto,
-  ) {
+  ): Promise<CollectionEntity> {
     const collection = await this.collectionsService.update(
       collectionId,
       updateCollectionDto,
@@ -80,7 +82,9 @@ export class CollectionsController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionEntity })
-  async remove(@Param('collectionId', ParseIntPipe) collectionId: number) {
+  async remove(
+    @Param('collectionId', ParseIntPipe) collectionId: number,
+  ): Promise<CollectionEntity> {
     const collection = await this.collectionsService.remove(collectionId)
     return new CollectionEntity(collection)
   }

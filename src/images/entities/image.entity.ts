@@ -1,11 +1,12 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
+
+// Entity from prisma import
 import { Image } from '@prisma/client'
 
+// Class declaration
 export class ImagesEntity implements Image {
-  constructor(partial: Partial<ImagesEntity>) {
-    Object.assign(this, partial)
-  }
-
+  // Properties
   @ApiProperty()
   id: number
 
@@ -23,4 +24,11 @@ export class ImagesEntity implements Image {
 
   @ApiProperty()
   updatedAt: Date
+  //
+
+  // Constructor Method
+  constructor(partial: Partial<ImagesEntity>) {
+    Object.assign(this, partial)
+  }
+  //
 }

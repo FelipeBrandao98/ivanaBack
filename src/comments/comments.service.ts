@@ -1,36 +1,46 @@
+// NestJs imports
 import { Injectable } from '@nestjs/common'
-import { CreateCommentDto } from './dto/create-comment.dto'
-import { UpdateCommentDto } from './dto/update-comment.dto'
+
+// Prisma imports
 import { PrismaService } from 'src/prisma/prisma.service'
 
+// DTOs imports
+import { CreateCommentDto } from './dto/create-comment.dto'
+import { UpdateCommentDto } from './dto/update-comment.dto'
+
 @Injectable()
+// Class declaration
 export class CommentsService {
+  // Constructor Methods
   constructor(private prisma: PrismaService) {}
+  //
 
-  create(createCommentDto: CreateCommentDto) {
-    return this.prisma.comments.create({ data: createCommentDto })
+  // CRUD Operators - Properties
+  async create(createCommentDto: CreateCommentDto) {
+    return await this.prisma.comments.create({ data: createCommentDto })
   }
 
-  findAll() {
-    return this.prisma.comments.findMany({ include: { image: true } })
+  async findAll() {
+    return await this.prisma.comments.findMany({ include: { image: true } })
   }
 
-  findOne(id: number) {
-    return this.prisma.comments.findUnique({
-      where: { id: id },
+  async findOne(commentId: number) {
+    return await this.prisma.comments.findUnique({
+      where: { id: commentId },
       include: { image: true },
     })
   }
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return this.prisma.comments.update({
-      where: { id: id },
+  async update(commentId: number, updateCommentDto: UpdateCommentDto) {
+    return await this.prisma.comments.update({
+      where: { id: commentId },
       data: updateCommentDto,
       include: { image: true },
     })
   }
 
-  remove(id: number) {
-    return this.prisma.comments.delete({ where: { id: id } })
+  async remove(commentId: number) {
+    return await this.prisma.comments.delete({ where: { id: commentId } })
   }
+  //
 }

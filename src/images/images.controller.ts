@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Get,
@@ -10,23 +11,39 @@ import {
   Header,
   UseGuards,
 } from '@nestjs/common'
-import { ImagesService } from './images.service'
+
+// NestJs - Swagger imports
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger'
-import { ImagesEntity } from './entities/image.entity'
-import { FileInterceptor } from '@nestjs/platform-express'
+
+// DTOs imports
 import { CreateImageDto } from './dto/create-image.dto'
+
+// Services imports
+import { ImagesService } from './images.service'
+
+// Entities imports
+import { ImagesEntity } from './entities/image.entity'
+
+// Security imports
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
-@Controller('images')
-@ApiTags('Images')
-export class ImagesController {
-  constructor(private readonly imagesService: ImagesService) {}
+// Interceptors imports
+import { FileInterceptor } from '@nestjs/platform-express'
 
+@ApiTags('Images')
+@Controller('images')
+// Class declaration
+export class ImagesController {
+  // Constructor Method
+  constructor(private readonly imagesService: ImagesService) {}
+  //
+
+  // Properties
   @Post()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -35,17 +52,21 @@ export class ImagesController {
   async create(
     @Body() createImageDto: CreateImageDto,
     @UploadedFile() file: Express.Multer.File,
-  ) {
-    return new ImagesEntity(
-      await this.imagesService.create(createImageDto, file),
-    )
+  ): Promise<ImagesEntity> {
+    const image = await this.imagesService.create(createImageDto, file)
+
+    return new ImagesEntity(image)
   }
 
   @Get(':imgpath')
   @ApiOkResponse({ type: ImagesEntity })
   @Header('Content-Type', 'image/jpeg')
-  async getStaticFile(@Param('imgpath') imgpath: string) {
+  async getStaticFile(
+    @Param('imgpath') imgpath: string,
+  ): Promise<StreamableFile> {
     const file = await this.imagesService.getImage(imgpath)
+
     return new StreamableFile(file)
   }
+  //
 }

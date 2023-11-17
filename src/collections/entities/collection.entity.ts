@@ -1,3 +1,6 @@
+// NestJs imports
+import { Exclude } from 'class-transformer'
+
 // NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
 
@@ -10,12 +13,6 @@ import { CollectionsCategoryEntity } from '../subroutes/collections-category/ent
 
 // Class declaration
 export class CollectionEntity implements Collection {
-  // Constructor Method
-  constructor(partial: Partial<CollectionEntity[] | CollectionEntity>) {
-    Object.assign(this, partial)
-  }
-  //
-
   // Properties
   @ApiProperty({ required: true, type: 'number' })
   id: number
@@ -23,43 +20,57 @@ export class CollectionEntity implements Collection {
   @ApiProperty({ required: true })
   title: string
 
-  @ApiProperty({ required: true, })
+  @ApiProperty({ required: true })
   titleDe: string
 
-  @ApiProperty({ required: true, })
+  @ApiProperty({ required: true })
   titleEn: string
 
-  @ApiProperty({ required: true, })
+  @ApiProperty({ required: true })
   titleFr: string
 
   @ApiProperty({ required: true })
   description: string
 
-  @ApiProperty({ required: true, })
+  @ApiProperty({ required: true })
   descriptionDe: string
 
-  @ApiProperty({ required: true, })
+  @ApiProperty({ required: true })
   descriptionEn: string
 
-  @ApiProperty({ required: true, })
+  @ApiProperty({ required: true })
   descriptionFr: string
 
-  @ApiProperty({ required: false })
+  @Exclude()
   categoryId: number
 
-  // @ApiProperty({ required: false, type: CollectionsCategoryEntity })
-  // cover: CollectionsCategoryEntity
+  @ApiProperty({ required: false, type: CollectionsCategoryEntity })
+  category?: CollectionsCategoryEntity
 
-  @ApiProperty({ required: false })
+  @Exclude()
   coverId: number
 
-  // @ApiProperty({ required: false, type: ImagesEntity })
-  // cover: ImagesEntity
+  @ApiProperty({ required: false, type: ImagesEntity })
+  cover?: ImagesEntity
 
   @ApiProperty({ required: true })
   createdAt: Date
 
   @ApiProperty({ required: true })
   updatedAt: Date
+  //
+
+  // Constructor Method
+  constructor({ category, cover, ...data }: Partial<CollectionEntity>) {
+    Object.assign(this, data)
+
+    if (category) {
+      this.category = new CollectionsCategoryEntity(category)
+    }
+
+    if (cover) {
+      this.cover = new ImagesEntity(cover)
+    }
+  }
   //
 }

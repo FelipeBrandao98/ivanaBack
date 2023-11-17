@@ -34,15 +34,21 @@ export class CollectionsClothesDeController {
   @Get('de')
   @ApiOkResponse({ type: CollectionClothesEntity })
   async findAll() {
-    const collectionClothes = await this.collectionsClothesService.findAll()
+    const collectionsClothes = await this.collectionsClothesService.findAll()
 
-    return new CollectionClothesEntity(collectionClothes)
+    return collectionsClothes.map(
+      (collectionClothes) => new CollectionClothesEntity(collectionClothes),
+    )
   }
 
   @Get('de/:collectionClothesId')
   @ApiOkResponse({ type: CollectionClothesEntity })
-  async findOne(@Param('collectionClothesId', ParseIntPipe) collectionClothesId: number) {
-    const collectionClothes = await this.collectionsClothesService.findOne(collectionClothesId)
+  async findOne(
+    @Param('collectionClothesId', ParseIntPipe) collectionClothesId: number,
+  ) {
+    const collectionClothes = await this.collectionsClothesService.findOne(
+      collectionClothesId,
+    )
 
     return new CollectionClothesEntity(collectionClothes)
   }

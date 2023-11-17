@@ -1,9 +1,13 @@
+// NestJs imports
 import { Module } from '@nestjs/common'
 
+// Prisma imports
 import { PrismaModule } from 'src/prisma/prisma.module'
 
+// Controllers imports
 import { ImagesController } from './images.controller'
 
+// Services imports
 import { ImagesService } from './images.service'
 
 @Module({
@@ -11,4 +15,7 @@ import { ImagesService } from './images.service'
   providers: [ImagesService],
   imports: [PrismaModule],
 })
-export class ImagesModule {}
+// Class declaration
+export class ImagesModule {
+  // Properties
+}

@@ -26,16 +26,18 @@ import { FrCollectionsCategoryLanguageInterceptor } from '../../interceptors/fre
 export class CollectionsCategoryFrController {
   // Constructor Method
   constructor(
-    private readonly collectiosCategoryService: CollectionsCategoryService,
+    private readonly collectionsCategoryService: CollectionsCategoryService,
   ) {}
   //
 
   @Get('fr')
   @ApiOkResponse({ type: CollectionsCategoryEntity })
   async findAll() {
-    const collectionCategory = await this.collectiosCategoryService.findAll()
+    const collectionsCategory = await this.collectionsCategoryService.findAll()
 
-    return new CollectionsCategoryEntity(collectionCategory)
+    return collectionsCategory.map(
+      (collectionCategory) => new CollectionsCategoryEntity(collectionCategory),
+    )
   }
 
   @Get('fr/:collectionCategoryId')
@@ -43,7 +45,7 @@ export class CollectionsCategoryFrController {
   async findOne(
     @Param('collectionCategoryId', ParseIntPipe) collectionCategoryId: number,
   ) {
-    const collectionCategory = await this.collectiosCategoryService.findOne(
+    const collectionCategory = await this.collectionsCategoryService.findOne(
       collectionCategoryId,
     )
 

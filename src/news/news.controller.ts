@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Post,
@@ -9,55 +10,80 @@ import {
   Get,
   UseGuards,
 } from '@nestjs/common'
-import { NewsService } from './news.service'
-import { CreateNewsDto } from './dto/create-news.dto'
-import { UpdateNewsDto } from './dto/update-news.dto'
+
+// NestJs imports
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger'
+
+// DTOs imports
+import { CreateNewsDto } from './dto/create-news.dto'
+import { UpdateNewsDto } from './dto/update-news.dto'
+
+// Services imports
+import { NewsService } from './news.service'
+
+// Entities imports
 import { NewsEntity } from './entities/news.entity'
+
+// Security imports
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
-@Controller('news')
 @ApiTags('News')
+@Controller('news')
+// Class declaration
 export class NewsController {
+  // Constructor Methods
   constructor(private readonly newsService: NewsService) {}
+  //
 
+  // Properties
   @Get()
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: NewsEntity })
-  findAll() {
-    return this.newsService.findAll()
+  async findAll(): Promise<NewsEntity[]> {
+    const news = await this.newsService.findAll()
+
+    return news.map((news) => new NewsEntity(news))
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({ type: NewsEntity })
-  create(@Body() createNewsDto: CreateNewsDto) {
-    return this.newsService.create(createNewsDto)
+  async create(@Body() createNewsDto: CreateNewsDto): Promise<NewsEntity> {
+    const news = await this.newsService.create(createNewsDto)
+
+    return new NewsEntity(news)
   }
 
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @Patch(':newsId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: NewsEntity })
-  update(
-    @Param('id', ParseIntPipe) id: number,
+  async update(
+    @Param('newsId', ParseIntPipe) newsId: number,
     @Body() updateNewsDto: UpdateNewsDto,
-  ) {
-    return this.newsService.update(id, updateNewsDto)
+  ): Promise<NewsEntity> {
+    const news = await this.newsService.update(newsId, updateNewsDto)
+
+    return new NewsEntity(news)
   }
 
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @Delete(':newsId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: NewsEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.newsService.remove(id)
+  async remove(
+    @Param('newsId', ParseIntPipe) newsId: number,
+  ): Promise<NewsEntity> {
+    const news = await this.newsService.remove(newsId)
+
+    return new NewsEntity(news)
   }
+  //
 }

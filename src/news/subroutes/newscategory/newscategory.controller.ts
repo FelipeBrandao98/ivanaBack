@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Post,
@@ -9,50 +10,83 @@ import {
   Get,
   UseGuards,
 } from '@nestjs/common'
-import { NewscategoryService } from './newscategory.service'
+
+// NestJs - Swagger imports
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+
+// DTOs imports
 import { CreateNewscategoryDto } from './dto/create-newscategory.dto'
 import { UpdateNewscategoryDto } from './dto/update-newscategory.dto'
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+
+// Services imports
+import { NewscategoryService } from './newscategory.service'
+
+// Entities imports
 import { NewscategoryEntity } from './entities/newscategory.entity'
+
+// Security imports
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
-@Controller('news/category')
 @ApiTags('News Category')
+@Controller('news/category')
+// Class declaration
 export class NewscategoryController {
+  // Constructor Methods
   constructor(private readonly newscategoryService: NewscategoryService) {}
+  //
 
+  // Properties
   @Get()
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: NewscategoryEntity })
-  findAll() {
-    return this.newscategoryService.findAll()
+  async findAll(): Promise<NewscategoryEntity[]> {
+    const newsCategory = await this.newscategoryService.findAll()
+
+    return newsCategory.map(
+      (newsCategory) => new NewscategoryEntity(newsCategory),
+    )
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: NewscategoryEntity })
-  create(@Body() createNewscategoryDto: CreateNewscategoryDto) {
-    return this.newscategoryService.create(createNewscategoryDto)
+  async create(
+    @Body() createNewscategoryDto: CreateNewscategoryDto,
+  ): Promise<NewscategoryEntity> {
+    const newsCategory = await this.newscategoryService.create(
+      createNewscategoryDto,
+    )
+
+    return new NewscategoryEntity(newsCategory)
   }
 
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @Patch(':newsCategoryId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: NewscategoryEntity })
-  update(
-    @Param('id', ParseIntPipe) id: number,
+  async update(
+    @Param('newsCategoryId', ParseIntPipe) newsCategoryId: number,
     @Body() updateNewscategoryDto: UpdateNewscategoryDto,
-  ) {
-    return this.newscategoryService.update(id, updateNewscategoryDto)
+  ): Promise<NewscategoryEntity> {
+    const newsCategory = await this.newscategoryService.update(
+      newsCategoryId,
+      updateNewscategoryDto,
+    )
+
+    return new NewscategoryEntity(newsCategory)
   }
 
-  @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @Delete(':newsCategoryId')
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: NewscategoryEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.newscategoryService.remove(id)
+  async remove(
+    @Param('newsCategoryId', ParseIntPipe) newsCategoryId: number,
+  ): Promise<NewscategoryEntity> {
+    const newsCategory = await this.newscategoryService.remove(newsCategoryId)
+
+    return new NewscategoryEntity(newsCategory)
   }
 }

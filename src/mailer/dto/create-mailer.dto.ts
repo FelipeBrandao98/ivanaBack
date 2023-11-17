@@ -1,17 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
-import {
-  Contains,
-  IsLowercase,
-  IsNotEmpty,
-  IsString,
-  MaxLength,
-} from 'class-validator'
+import { IsEmail, IsLowercase, IsNotEmpty, IsString } from 'class-validator'
 
 export class CreateMailerDto {
   @IsString()
   @IsNotEmpty()
-  @MaxLength(320)
-  @Contains('@')
+  @IsEmail()
   @IsLowercase()
   @ApiProperty({ required: true })
   mail: string

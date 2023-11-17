@@ -1,8 +1,17 @@
+// NestJs imports
+import { Exclude } from 'class-transformer'
+
+/// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
+
+// Entity from prisma import
 import { Comments } from '@prisma/client'
+
+// Entities imports
 import { ImagesEntity } from 'src/images/entities/image.entity'
 
 export class CommentEntity implements Comments {
+  // Properties
   @ApiProperty()
   id: number
 
@@ -24,9 +33,20 @@ export class CommentEntity implements Comments {
   @ApiProperty()
   createdAt: Date
 
-  @ApiProperty()
-  imageId: number | null
+  @Exclude()
+  imageId: number
 
   @ApiProperty({ type: ImagesEntity })
-  image: ImagesEntity
+  image?: ImagesEntity
+  //
+
+  // Constructor Method
+  constructor({ image, ...data }: Partial<CommentEntity>) {
+    Object.assign(this, data)
+
+    if (image) {
+      this.image = new ImagesEntity(image)
+    }
+  }
+  //
 }

@@ -1,19 +1,27 @@
+// NestJs imports
 import { Injectable } from '@nestjs/common'
-import { CreateNewsDto } from './dto/create-news.dto'
-import { UpdateNewsDto } from './dto/update-news.dto'
+
+// Prisma imports
 import { PrismaService } from 'src/prisma/prisma.service'
 
+// DTOs imports
+import { CreateNewsDto } from './dto/create-news.dto'
+import { UpdateNewsDto } from './dto/update-news.dto'
+
 @Injectable()
+// Class declaration
 export class NewsService {
+  // Constructor Methods
   constructor(private prisma: PrismaService) {}
+  //
 
-  // CRUD Operators
-  create(createNewsDto: CreateNewsDto) {
-    return this.prisma.news.create({ data: createNewsDto })
+  // CRUD Operators - Properties
+  async create(createNewsDto: CreateNewsDto) {
+    return await this.prisma.news.create({ data: createNewsDto })
   }
 
-  findAll() {
-    return this.prisma.news.findMany({
+  async findAll() {
+    return await this.prisma.news.findMany({
       include: {
         cover: true,
         category: true,
@@ -21,9 +29,9 @@ export class NewsService {
     })
   }
 
-  findOne(id: number) {
-    return this.prisma.news.findUnique({
-      where: { id: id, published: true },
+  async findOne(newsId: number) {
+    return await this.prisma.news.findUnique({
+      where: { id: newsId, published: true },
       include: {
         cover: true,
         category: true,
@@ -31,8 +39,8 @@ export class NewsService {
     })
   }
 
-  findLatests() {
-    return this.prisma.news.findMany({
+  async findLatests() {
+    return await this.prisma.news.findMany({
       where: { published: true },
       orderBy: [{ publishDate: 'asc' }],
       take: 4,
@@ -43,10 +51,10 @@ export class NewsService {
     })
   }
 
-  findCategories(category: number) {
-    return this.prisma.news.findMany({
+  async findByCategorie(categoryId: number) {
+    return await this.prisma.news.findMany({
       where: {
-        categoryId: category,
+        categoryId: categoryId,
         published: true,
       },
       include: {
@@ -56,11 +64,15 @@ export class NewsService {
     })
   }
 
-  update(id: number, updateNewsDto: UpdateNewsDto) {
-    return this.prisma.news.update({ where: { id: id }, data: updateNewsDto })
+  async update(newsId: number, updateNewsDto: UpdateNewsDto) {
+    return await this.prisma.news.update({
+      where: { id: newsId },
+      data: updateNewsDto,
+    })
   }
 
-  remove(id: number) {
-    return this.prisma.news.delete({ where: { id: id } })
+  async remove(newsId: number) {
+    return await this.prisma.news.delete({ where: { id: newsId } })
   }
+  //
 }

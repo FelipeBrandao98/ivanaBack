@@ -26,7 +26,7 @@ import { PtBrCollectionsCategoryLanguageInterceptor } from '../../interceptors/b
 export class CollectionsCategoryPtBrController {
   // Constructor Method
   constructor(
-    private readonly collectiosCategoryService: CollectionsCategoryService,
+    private readonly collectionsCategoryService: CollectionsCategoryService,
   ) {}
   //
 
@@ -34,8 +34,10 @@ export class CollectionsCategoryPtBrController {
   @Get('pt-BR')
   @ApiOkResponse({ type: CollectionsCategoryEntity })
   async findAll() {
-    return new CollectionsCategoryEntity(
-      await this.collectiosCategoryService.findAll(),
+    const collectionsCategory = await this.collectionsCategoryService.findAll()
+
+    return collectionsCategory.map(
+      (collectionCategory) => new CollectionsCategoryEntity(collectionCategory),
     )
   }
 
@@ -44,7 +46,7 @@ export class CollectionsCategoryPtBrController {
   async findOne(
     @Param('collectionCategoryId', ParseIntPipe) collectionCategoryId: number,
   ) {
-    const collectionCategory = await this.collectiosCategoryService.findOne(
+    const collectionCategory = await this.collectionsCategoryService.findOne(
       collectionCategoryId,
     )
 

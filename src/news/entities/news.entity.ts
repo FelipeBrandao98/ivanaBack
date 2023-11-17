@@ -1,53 +1,54 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
+
+// Entity from prisma import
 import { News } from '@prisma/client'
+
+// Entities imports
 import { ImagesEntity } from 'src/images/entities/image.entity'
 import { NewscategoryEntity } from '../subroutes/newscategory/entities/newscategory.entity'
+import { Exclude } from 'class-transformer'
 
 export class NewsEntity implements News {
+  // Properties
   @ApiProperty()
   id: number
-
-  @ApiProperty({ required: true })
-  categoryId: number
 
   @ApiProperty({ required: true, nullable: false })
   title: string
 
   @ApiProperty({ required: false, nullable: false })
-  titleDe: string | null
+  titleDe: string
 
   @ApiProperty({ required: false, nullable: false })
-  titleEn: string | null
+  titleEn: string
 
   @ApiProperty({ required: false, nullable: false })
-  titleFr: string | null
-
-  @ApiProperty({ required: false })
-  coverId: number
+  titleFr: string
 
   @ApiProperty({ required: true, nullable: false })
   coverCredit: string
 
   @ApiProperty({ required: true, nullable: true })
-  coverCreditDe: string | null
+  coverCreditDe: string
 
   @ApiProperty({ required: true, nullable: true })
-  coverCreditEn: string | null
+  coverCreditEn: string
 
   @ApiProperty({ required: true, nullable: true })
-  coverCreditFr: string | null
+  coverCreditFr: string
 
   @ApiProperty({ required: true, nullable: false })
   subtitle: string
 
   @ApiProperty({ required: false, nullable: false })
-  subtitleDe: string | null
+  subtitleDe: string
 
   @ApiProperty({ required: false, nullable: false })
-  subtitleEn: string | null
+  subtitleEn: string
 
   @ApiProperty({ required: false, nullable: false })
-  subtitleFr: string | null
+  subtitleFr: string
 
   @ApiProperty({ required: true, nullable: false })
   publishDate: Date
@@ -59,13 +60,13 @@ export class NewsEntity implements News {
   body: string
 
   @ApiProperty({ required: false, nullable: false })
-  bodyDe: string | null
+  bodyDe: string
 
   @ApiProperty({ required: false, nullable: false })
-  bodyEn: string | null
+  bodyEn: string
 
   @ApiProperty({ required: false, nullable: false })
-  bodyFr: string | null
+  bodyFr: string
 
   @ApiProperty()
   createdAt: Date
@@ -73,9 +74,29 @@ export class NewsEntity implements News {
   @ApiProperty()
   updatedAt: Date
 
+  @Exclude()
+  coverId: number
+
   @ApiProperty({ required: false, type: ImagesEntity })
   cover?: ImagesEntity
 
+  @Exclude()
+  categoryId: number
+
   @ApiProperty({ required: false, type: NewscategoryEntity })
   category?: NewscategoryEntity
+
+  // Constructor Methods
+  constructor({ cover, category, ...data }: Partial<NewsEntity>) {
+    Object.assign(this, data)
+
+    if (cover) {
+      this.cover = new ImagesEntity(cover)
+    }
+
+    if (category) {
+      this.category = new NewscategoryEntity(category)
+    }
+  }
+  //
 }

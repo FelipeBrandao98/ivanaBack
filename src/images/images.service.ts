@@ -1,10 +1,13 @@
+// NestJs imports
 import { Injectable } from '@nestjs/common'
 
+// DTOs imports
 import { CreateImageDto } from './dto/create-image.dto'
-import { UpdateImageDto } from './dto/update-image.dto'
 
+// Prisma imports
 import { PrismaService } from 'src/prisma/prisma.service'
 
+// AWS imports
 import {
   GetObjectCommand,
   GetObjectCommandOutput,
@@ -12,10 +15,17 @@ import {
   S3Client,
 } from '@aws-sdk/client-s3'
 
+// Hash imports
 import { randomUUID } from 'crypto'
 
 @Injectable()
+// Class declaration
 export class ImagesService {
+  // Constructor Method
+  constructor(private prisma: PrismaService) {}
+  //
+
+  // AWS instance
   private readonly s3Client = new S3Client({
     region: process.env.S3_REGION,
     credentials: {
@@ -23,10 +33,9 @@ export class ImagesService {
       secretAccessKey: process.env.S3_SECRET_ACCESSKEY,
     },
   })
+  //
 
-  constructor(private prisma: PrismaService) {}
-
-  // CRUD Operators
+  // CRUD Operators - Properties
   async create(createImageDto: CreateImageDto, file: Express.Multer.File) {
     const filename = `${file.originalname.split('.')[0]}-${randomUUID()}`
 
@@ -55,4 +64,5 @@ export class ImagesService {
 
     return response.Body.transformToByteArray()
   }
+  //
 }

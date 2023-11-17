@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   CallHandler,
   ExecutionContext,
@@ -6,9 +7,12 @@ import {
 } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { tap } from 'rxjs/operators'
+
+// Entities imports
 import { NewsEntity } from '../entities/news.entity'
 
 @Injectable()
+// Class declaration
 export class DeNewsLanguageInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,

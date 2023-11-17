@@ -1,7 +1,12 @@
+// NestJs - Swagger imports
 import { ApiProperty } from '@nestjs/swagger'
+
+// Class Validators imports
 import { IsNotEmpty, IsString, MaxLength } from 'class-validator'
 
+// Class declaration
 export class CreateNewscategoryDto {
+  // Properties
   @IsString()
   @IsNotEmpty()
   @MaxLength(100)
@@ -12,17 +17,18 @@ export class CreateNewscategoryDto {
   @IsNotEmpty()
   @MaxLength(100)
   @ApiProperty({ required: false })
-  descriptionDe?: string | null
+  descriptionDe?: string
 
   @IsString()
   @IsNotEmpty()
   @MaxLength(100)
   @ApiProperty({ required: false })
-  descriptionEn?: string | null
+  descriptionEn?: string
 
   @IsString()
   @IsNotEmpty()
   @MaxLength(100)
   @ApiProperty({ required: false })
-  descriptionFr?: string | null
+  descriptionFr?: string
+  //
 }

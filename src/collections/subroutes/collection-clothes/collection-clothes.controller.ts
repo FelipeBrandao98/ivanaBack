@@ -59,20 +59,24 @@ export class CollectionClothesController {
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionClothesEntity })
   async findAll() {
-    const collectionClothes = await this.collectionClothesService.findAll()
+    const collectionsClothes = await this.collectionClothesService.findAll()
 
-    return new CollectionClothesEntity(collectionClothes)
+    return collectionsClothes.map(
+      (collectionClothes) => new CollectionClothesEntity(collectionClothes),
+    )
   }
 
   @Get(':collectionClothesId')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionClothesEntity })
-  async findOne(@Param('collectionClothesId', ParseIntPipe) collectionClothesId: number) {
+  async findOne(
+    @Param('collectionClothesId', ParseIntPipe) collectionClothesId: number,
+  ) {
     const collectionClothes = await this.collectionClothesService.findOne(
       collectionClothesId,
     )
-    
+
     return new CollectionClothesEntity(collectionClothes)
   }
 
@@ -96,7 +100,9 @@ export class CollectionClothesController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionClothesEntity })
-  async remove(@Param('collectionClothesId', ParseIntPipe) collectionClothesId: number) {
+  async remove(
+    @Param('collectionClothesId', ParseIntPipe) collectionClothesId: number,
+  ) {
     const collectionClothes = await this.collectionClothesService.remove(
       collectionClothesId,
     )

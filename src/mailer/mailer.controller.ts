@@ -1,3 +1,4 @@
+// NestJs imports
 import {
   Controller,
   Get,
@@ -8,11 +9,8 @@ import {
   Delete,
   ParseIntPipe,
 } from '@nestjs/common'
-import { MailerService } from './mailer.service'
-import { SendMailDto } from './dto/send-mailer.dto'
-import { CreateMailerDto } from './dto/create-mailer.dto'
-import { UpdateMailerDto } from './dto/update-mailer.dto'
 
+// NestJs - Swagger imports
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
@@ -20,55 +18,85 @@ import {
   ApiTags,
 } from '@nestjs/swagger'
 
+// DTOs imports
+import { CreateMailerDto } from './dto/create-mailer.dto'
+import { UpdateMailerDto } from './dto/update-mailer.dto'
+import { SendMailDto } from './dto/send-mailer.dto'
+
+// Services imports
+import { MailerService } from './mailer.service'
+
+// Entities imports
 import { MailerEntity } from './entities/mailer.entity'
 
-@Controller('mailer')
+import { Observable } from 'rxjs'
+import { AxiosResponse } from 'axios'
+
 @ApiTags('mailer')
+@Controller('mailer')
+// Class declaration
 export class MailerController {
+  // Constructor Method
   constructor(private readonly mailerService: MailerService) {}
+  //
 
   // Mailer Methods
   @Post('send')
   @ApiBearerAuth()
-  async sendMail(@Body() sendMailDto: SendMailDto) {
-    return this.mailerService.sendMailForUnique(sendMailDto)
+  awaitsendMail(@Body() sendMailDto: SendMailDto): Observable<AxiosResponse> {
+    const mailer = this.mailerService.sendMailForUnique(sendMailDto)
+
+    return mailer
   }
 
   // CRUD methods
   @Post()
   @ApiCreatedResponse({ type: MailerEntity })
-  create(@Body() createMailerDto: CreateMailerDto) {
-    return this.mailerService.create(createMailerDto)
+  async create(
+    @Body() createMailerDto: CreateMailerDto,
+  ): Promise<MailerEntity> {
+    const mailer = await this.mailerService.create(createMailerDto)
+
+    return new MailerEntity(mailer)
   }
 
   @Get()
   @ApiBearerAuth()
   @ApiOkResponse({ type: MailerEntity, isArray: true })
-  findAll() {
-    return this.mailerService.findAll()
+  async findAll(): Promise<MailerEntity[]> {
+    const mailers = await this.mailerService.findAll()
+
+    return mailers.map((mailer) => new MailerEntity(mailer))
   }
 
   @Get(':mail')
   @ApiBearerAuth()
   @ApiOkResponse({ type: MailerEntity })
-  findOne(@Param('mail') mail: string) {
-    return this.mailerService.findOne(mail)
+  async findOne(@Param('mail') mail: string): Promise<MailerEntity> {
+    const mailer = await this.mailerService.findOne(mail)
+
+    return new MailerEntity(mailer)
   }
 
-  @Patch(':id')
+  @Patch(':mailerId')
   @ApiBearerAuth()
   @ApiOkResponse({ type: MailerEntity })
-  update(
-    @Param('id', ParseIntPipe) id: number,
+  async update(
+    @Param('mailerId', ParseIntPipe) mailerId: number,
     @Body() updateMailerDto: UpdateMailerDto,
-  ) {
-    return this.mailerService.update(id, updateMailerDto)
+  ): Promise<MailerEntity> {
+    const mailer = await this.mailerService.update(mailerId, updateMailerDto)
+
+    return new MailerEntity(mailer)
   }
 
-  @Delete(':id')
+  @Delete(':mailerId')
   @ApiBearerAuth()
   @ApiOkResponse({ type: MailerEntity })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.mailerService.remove(id)
+  async remove(@Param('mailerId', ParseIntPipe) mailerId: number) {
+    const mailer = await this.mailerService.remove(mailerId)
+
+    return new MailerEntity(mailer)
   }
+  //
 }

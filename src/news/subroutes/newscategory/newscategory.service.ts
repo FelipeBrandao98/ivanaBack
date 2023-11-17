@@ -4,30 +4,43 @@ import { UpdateNewscategoryDto } from './dto/update-newscategory.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
 
 @Injectable()
+// Class declaration
 export class NewscategoryService {
+  // Constructor Methods
   constructor(private prisma: PrismaService) {}
+  //
 
-  // CRUD operators
-  create(createNewscategoryDto: CreateNewscategoryDto) {
-    return this.prisma.newsCategory.create({ data: createNewscategoryDto })
+  // CRUD operators - Properties
+  async create(createNewscategoryDto: CreateNewscategoryDto) {
+    return await this.prisma.newsCategory.create({
+      data: createNewscategoryDto,
+    })
   }
 
-  findAll() {
-    return this.prisma.newsCategory.findMany()
+  async findAll() {
+    return await this.prisma.newsCategory.findMany()
   }
 
-  findOne(id: number) {
-    return this.prisma.newsCategory.findUnique({ where: { id: id } })
+  async findOne(newsCategoryId: number) {
+    return await this.prisma.newsCategory.findUnique({
+      where: { id: newsCategoryId },
+    })
   }
 
-  update(id: number, updateNewscategoryDto: UpdateNewscategoryDto) {
-    return this.prisma.newsCategory.update({
-      where: { id: id },
+  async update(
+    newsCategoryId: number,
+    updateNewscategoryDto: UpdateNewscategoryDto,
+  ) {
+    return await this.prisma.newsCategory.update({
+      where: { id: newsCategoryId },
       data: updateNewscategoryDto,
     })
   }
 
-  remove(id: number) {
-    return this.prisma.newsCategory.delete({ where: { id: id } })
+  async remove(newsCategoryId: number) {
+    return await this.prisma.newsCategory.delete({
+      where: { id: newsCategoryId },
+    })
   }
+  //
 }

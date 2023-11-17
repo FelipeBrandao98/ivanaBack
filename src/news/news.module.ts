@@ -1,23 +1,32 @@
+// NestJs imports
 import { Module } from '@nestjs/common'
 
-import { NewsService } from './news.service'
+// Prisma imports
+import { PrismaModule } from 'src/prisma/prisma.module'
+
+// Modules imports
+import { NewscategoryModule } from './subroutes/newscategory/newscategory.module'
+
+// Controllers imports
 import { NewsController } from './news.controller'
 import { NewsDeController } from './languages/De/news.de.controller'
 import { NewsEnController } from './languages/En/news.en.controller'
 import { NewsFrController } from './languages/Fr/news.fr.controller'
 import { NewsPtBrController } from './languages/Pt-BR/news.pt.controller'
 
-import { PrismaModule } from 'src/prisma/prisma.module'
+// Services imports
 import { NewscategoryService } from './subroutes/newscategory/newscategory.service'
-import { NewscategoryModule } from './subroutes/newscategory/newscategory.module'
+import { NewsService } from './news.service'
 
 @Module({
   controllers: [
-    NewsController,
+    // Sub-Routes
     NewsDeController,
     NewsEnController,
     NewsFrController,
     NewsPtBrController,
+    // Route
+    NewsController,
   ],
   providers: [NewsService, NewscategoryService],
   imports: [
@@ -26,4 +35,7 @@ import { NewscategoryModule } from './subroutes/newscategory/newscategory.module
     NewscategoryModule,
   ],
 })
-export class NewsModule {}
+// Class declaration
+export class NewsModule {
+  // Properties
+}

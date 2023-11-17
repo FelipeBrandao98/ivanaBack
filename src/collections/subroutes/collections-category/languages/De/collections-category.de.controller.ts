@@ -26,7 +26,7 @@ import { DeCollectionsCategoryLanguageInterceptor } from '../../interceptors/ger
 export class CollectionsCategoryDeController {
   // Constructor Method
   constructor(
-    private readonly collectiosCategoryService: CollectionsCategoryService,
+    private readonly collectionsCategoryService: CollectionsCategoryService,
   ) {}
   //
 
@@ -34,9 +34,11 @@ export class CollectionsCategoryDeController {
   @Get('de')
   @ApiOkResponse({ type: CollectionsCategoryEntity })
   async findAll() {
-    const collectionCategory = await this.collectiosCategoryService.findAll()
+    const collectionsCategory = await this.collectionsCategoryService.findAll()
 
-    return new CollectionsCategoryEntity(collectionCategory)
+    return collectionsCategory.map(
+      (collectionCategory) => new CollectionsCategoryEntity(collectionCategory),
+    )
   }
 
   @Get('de/:collectionCategoryId')
@@ -44,7 +46,7 @@ export class CollectionsCategoryDeController {
   async findOne(
     @Param('collectionCategoryId', ParseIntPipe) collectionCategoryId: number,
   ) {
-    const collectionCategory = await this.collectiosCategoryService.findOne(
+    const collectionCategory = await this.collectionsCategoryService.findOne(
       collectionCategoryId,
     )
 

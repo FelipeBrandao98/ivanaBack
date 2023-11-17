@@ -16,11 +16,11 @@ import { CollectionClothesService } from './collection-clothes.service'
 
 @Module({
   controllers: [
-    CollectionClothesController,
     CollectionsClothesDeController,
     CollectionsClothesEnController,
     CollectionsClothesFrController,
     CollectionsClothesPtBrController,
+    CollectionClothesController,
   ],
   providers: [CollectionClothesService],
   imports: [PrismaModule],

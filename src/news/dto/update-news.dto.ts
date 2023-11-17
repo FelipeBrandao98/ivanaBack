@@ -1,4 +1,10 @@
+// NestJs imports
 import { PartialType } from '@nestjs/swagger'
+
+// Class who is extended imports
 import { CreateNewsDto } from './create-news.dto'
 
-export class UpdateNewsDto extends PartialType(CreateNewsDto) {}
+// Class declaration
+export class UpdateNewsDto extends PartialType(CreateNewsDto) {
+  // Properties
+}

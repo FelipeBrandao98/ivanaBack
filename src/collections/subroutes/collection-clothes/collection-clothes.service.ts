@@ -30,7 +30,7 @@ export class CollectionClothesService {
   }
 
   async findOne(collectionClothesId: number) {
-    return this.prisma.collectionClothes.findMany({
+    return this.prisma.collectionClothes.findUnique({
       where: { id: collectionClothesId },
       include: { collection: true, cover: true },
     })

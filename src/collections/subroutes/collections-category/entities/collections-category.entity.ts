@@ -9,14 +9,6 @@ import { ImagesEntity } from 'src/images/entities/image.entity'
 
 // Class declaration
 export class CollectionsCategoryEntity implements CollectionCategory {
-  // Constructor Method
-  constructor(
-    partial: Partial<CollectionsCategoryEntity[] | CollectionsCategoryEntity>,
-  ) {
-    Object.assign(this, partial)
-  }
-  //
-
   // Properties
   @ApiProperty({ required: true, type: 'uuid' })
   id: number
@@ -48,13 +40,23 @@ export class CollectionsCategoryEntity implements CollectionCategory {
   @ApiProperty({ required: false, type: 'number' })
   coverId: number
 
-  // @ApiProperty({ required: false, type: ImagesEntity })
-  // cover: ImagesEntity
+  @ApiProperty({ required: false, type: ImagesEntity })
+  cover?: ImagesEntity
 
   @ApiProperty({ required: true, type: Date })
   createdAt: Date
 
   @ApiProperty({ required: true, type: Date })
   updatedAt: Date
+  //
+
+  // Constructor Method
+  constructor({ cover, ...data }: Partial<CollectionsCategoryEntity>) {
+    Object.assign(this, data)
+
+    if (cover) {
+      this.cover = new ImagesEntity(cover)
+    }
+  }
   //
 }

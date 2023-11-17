@@ -1,4 +1,4 @@
-// NestJs imports
+// NestJs - interceptor imports
 import {
   CallHandler,
   ExecutionContext,
@@ -7,6 +7,8 @@ import {
 } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { tap } from 'rxjs/operators'
+
+// EntitiesImports
 import { CollectionEntity } from '../entities/collection.entity'
 
 @Injectable()
@@ -14,7 +16,7 @@ import { CollectionEntity } from '../entities/collection.entity'
 export class PtBrCollectionLanguageInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
-    next: CallHandler<any>,
+    next: CallHandler,
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       tap((items: CollectionEntity[]) => {
@@ -26,6 +28,14 @@ export class PtBrCollectionLanguageInterceptor implements NestInterceptor {
           delete item.titleDe
           delete item.titleEn
           delete item.titleFr
+
+          delete item.category.descriptionDe
+          delete item.category.descriptionEn
+          delete item.category.descriptionFr
+
+          delete item.category.subdescriptionDe
+          delete item.category.subdescriptionEn
+          delete item.category.subdescriptionFr
         })
       }),
     )

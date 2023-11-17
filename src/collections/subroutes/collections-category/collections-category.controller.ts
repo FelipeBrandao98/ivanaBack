@@ -43,9 +43,11 @@ export class CollectionsCategoryController {
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CollectionsCategoryEntity })
   async findAll() {
-    const collectionCategory = await this.collectionsCategoryService.findAll()
+    const collectionsCategory = await this.collectionsCategoryService.findAll()
 
-    return new CollectionsCategoryEntity(collectionCategory)
+    return collectionsCategory.map(
+      (collectionCategory) => new CollectionsCategoryEntity(collectionCategory),
+    )
   }
 
   @Post()
