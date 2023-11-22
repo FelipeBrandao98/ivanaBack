@@ -31,7 +31,7 @@ async function bootstrap() {
       skipMissingProperties: true,
       // whitelist: true,
       forbidNonWhitelisted: true,
-      forbidUnknownValues: true,
+      // forbidUnknownValues: true,
       // disableErrorMessages: true,
       errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE,
       // exceptionFactory: {},

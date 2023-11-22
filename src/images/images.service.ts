@@ -39,14 +39,18 @@ export class ImagesService {
   async create(createImageDto: CreateImageDto, file: Express.Multer.File) {
     const filename = `${file.originalname.split('.')[0]}-${randomUUID()}`
 
-    await this.s3Client.send(
-      new PutObjectCommand({
-        Bucket: process.env.S3_BUCKET,
-        Key: filename,
-        Body: file.buffer,
-        ContentEncoding: 'utf8',
-      }),
-    )
+    try {
+      await this.s3Client.send(
+        new PutObjectCommand({
+          Bucket: process.env.S3_BUCKET,
+          Key: filename,
+          Body: file.buffer,
+          ContentEncoding: 'utf8',
+        }),
+      )
+    } catch (err) {
+      throw new Error(err)
+    }
 
     createImageDto.src = filename
     createImageDto.url = `${process.env.SERVER_ADDRESS}/images/${filename}`
