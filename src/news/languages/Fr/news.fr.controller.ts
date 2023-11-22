@@ -29,7 +29,7 @@ export class NewsFrController {
   //
 
   // Properties
-  @Get('en')
+  @Get('fr')
   @ApiOkResponse({ type: NewsEntity })
   async findAll(): Promise<NewsEntity[]> {
     const news = await this.newsService.findAll()
@@ -37,7 +37,7 @@ export class NewsFrController {
     return news.map((news) => new NewsEntity(news))
   }
 
-  @Get('latest/en')
+  @Get('latest/fr')
   @ApiOkResponse({ type: NewsEntity })
   async findLatests(): Promise<NewsEntity[]> {
     const news = await this.newsService.findLatests()
@@ -45,7 +45,7 @@ export class NewsFrController {
     return news.map((news) => new NewsEntity(news))
   }
 
-  @Get('en/:newsId')
+  @Get('fr/:newsId')
   @ApiOkResponse({ type: NewsEntity })
   async findOne(
     @Param('newsId', ParseIntPipe) newsId: number,
