@@ -42,7 +42,7 @@ export class NewsService {
   async findLatests() {
     return await this.prisma.news.findMany({
       where: { published: true },
-      orderBy: [{ publishDate: 'asc' }],
+      orderBy: [{ publishDate: 'desc' }],
       take: 4,
       include: {
         category: true,
