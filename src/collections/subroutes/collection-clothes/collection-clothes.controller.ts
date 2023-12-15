@@ -56,12 +56,28 @@ export class CollectionClothesController {
     return new CollectionClothesEntity(collectionClothes)
   }
 
-  @Get()
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
+  @Get(':collectionId/product')
   @ApiOkResponse({ type: CollectionClothesEntity })
-  async findAll(): Promise<CollectionClothesEntity[]> {
-    const collectionsClothes = await this.collectionClothesService.findAll()
+  async findProducts(
+    @Param('collectionId', ParseIntPipe) collectionId: number,
+  ): Promise<CollectionClothesEntity[]> {
+    const collectionsClothes = await this.collectionClothesService.findProducts(
+      collectionId,
+    )
+
+    return collectionsClothes.map(
+      (collectionClothes) => new CollectionClothesEntity(collectionClothes),
+    )
+  }
+
+  @Get(':collectionId')
+  @ApiOkResponse({ type: CollectionClothesEntity })
+  async findAll(
+    @Param('collectionId', ParseIntPipe) collectionId: number,
+  ): Promise<CollectionClothesEntity[]> {
+    const collectionsClothes = await this.collectionClothesService.findAll(
+      collectionId,
+    )
 
     return collectionsClothes.map(
       (collectionClothes) => new CollectionClothesEntity(collectionClothes),

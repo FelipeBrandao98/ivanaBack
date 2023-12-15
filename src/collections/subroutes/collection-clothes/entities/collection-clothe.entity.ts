@@ -21,6 +21,9 @@ export class CollectionClothesEntity implements CollectionClothes {
   likes: number
 
   @ApiProperty()
+  isProduct: boolean
+
+  @ApiProperty()
   name: string
 
   @ApiProperty()
@@ -32,7 +35,7 @@ export class CollectionClothesEntity implements CollectionClothes {
   @ApiProperty()
   nameEn: string
 
-  @Exclude()
+  @ApiProperty()
   collectionId: number
 
   @ApiProperty({ required: false, type: CollectionEntity })

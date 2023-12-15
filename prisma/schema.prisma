@@ -121,10 +121,11 @@ model CollectionClothes {
   collectionId Int?
   coverId      Int?
   likes        Int?
-  name         String
-  nameDe       String
-  nameFr       String
-  nameEn       String
+  isProduct    Boolean?
+  name         String?
+  nameDe       String?
+  nameFr       String?
+  nameEn       String?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   collection   Collection? @relation(fields: [collectionId], references: [id])

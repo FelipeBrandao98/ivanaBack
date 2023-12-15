@@ -31,10 +31,12 @@ export class CollectionsClothesFrController {
   //
 
   // Properties
-  @Get('fr')
+  @Get('fr/:collectionId')
   @ApiOkResponse({ type: CollectionClothesEntity })
-  async findAll() {
-    const collectionsClothes = await this.collectionsClothesService.findAll()
+  async findAll(@Param('collectionId', ParseIntPipe) collectionId: number) {
+    const collectionsClothes = await this.collectionsClothesService.findAll(
+      collectionId,
+    )
 
     return collectionsClothes.map(
       (collectionClothes) => new CollectionClothesEntity(collectionClothes),

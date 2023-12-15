@@ -31,10 +31,12 @@ export class CollectionsClothesDeController {
   //
 
   // Properties
-  @Get('de')
+  @Get('de/:collectionId')
   @ApiOkResponse({ type: CollectionClothesEntity })
-  async findAll() {
-    const collectionsClothes = await this.collectionsClothesService.findAll()
+  async findAll(@Param('collectionId', ParseIntPipe) collectionId: number) {
+    const collectionsClothes = await this.collectionsClothesService.findAll(
+      collectionId,
+    )
 
     return collectionsClothes.map(
       (collectionClothes) => new CollectionClothesEntity(collectionClothes),

@@ -2,7 +2,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 
 // Validators Pipe Imports
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
+import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator'
 
 // Class declaration
 export class CreateCollectionClotheDto {
@@ -11,24 +11,28 @@ export class CreateCollectionClotheDto {
   @ApiProperty({ required: false })
   likes: number
 
+  @IsBoolean()
+  @ApiProperty({ required: false })
+  isProduct: boolean
+
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   name: string
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   nameDe: string
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   nameFr: string
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   nameEn: string
 
   @IsNotEmpty()

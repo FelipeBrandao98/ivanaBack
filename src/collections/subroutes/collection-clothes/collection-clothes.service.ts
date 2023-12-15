@@ -23,8 +23,16 @@ export class CollectionClothesService {
     })
   }
 
-  async findAll() {
+  async findAll(collectionId: number) {
     return this.prisma.collectionClothes.findMany({
+      where: { collectionId: collectionId, isProduct: false || null },
+      include: { collection: true, cover: true },
+    })
+  }
+
+  async findProducts(collectionId: number) {
+    return this.prisma.collectionClothes.findMany({
+      where: { collectionId: collectionId, isProduct: true },
       include: { collection: true, cover: true },
     })
   }
