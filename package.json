@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "engines": {
     "node": "18.16.x",
-    "pnpm": "8.11.0"
+    "npm": "10.2.3",
+    "pnpm": "8.11.x"
   },
   "description": "",
   "author": "",
