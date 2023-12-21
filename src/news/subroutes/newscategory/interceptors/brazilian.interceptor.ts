@@ -20,11 +20,19 @@ export class PtBrNewsCategoryLanguageInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       tap((items: NewscategoryEntity[]) => {
-        items.map((item: NewscategoryEntity) => {
+        if (Array.isArray(items)) {
+          items.map((item: NewscategoryEntity) => {
+            delete item.descriptionDe
+            delete item.descriptionEn
+            delete item.descriptionFr
+          })
+        } else {
+          const item: NewscategoryEntity = items
+
           delete item.descriptionDe
           delete item.descriptionEn
           delete item.descriptionFr
-        })
+        }
       }),
     )
   }

@@ -20,12 +20,21 @@ export class FrNewsCategoryLanguageInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       tap((items: NewscategoryEntity[]) => {
-        items.map((item: NewscategoryEntity) => {
+        if (Array.isArray(items)) {
+          items.map((item: NewscategoryEntity) => {
+            item.description = item.descriptionFr
+            delete item.descriptionDe
+            delete item.descriptionEn
+            delete item.descriptionFr
+          })
+        } else {
+          const item: NewscategoryEntity = items
+
           item.description = item.descriptionFr
           delete item.descriptionDe
           delete item.descriptionEn
           delete item.descriptionFr
-        })
+        }
       }),
     )
   }

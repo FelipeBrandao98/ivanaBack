@@ -54,5 +54,36 @@ export class NewsPtBrController {
 
     return new NewsEntity(news)
   }
+
+  @Get('pt-BR/category/:categoryId')
+  @ApiOkResponse({ type: NewsEntity })
+  async findAllByCat(
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ): Promise<NewsEntity[]> {
+    const news = await this.newsService.findByCategory(categoryId)
+
+    return news.map((news) => new NewsEntity(news))
+  }
+
+  @Get('pt-BR/page/:page')
+  @ApiOkResponse({ type: NewsEntity })
+  async findAllWithPage(
+    @Param('page', ParseIntPipe) page: number,
+  ): Promise<NewsEntity[]> {
+    const news = await this.newsService.findAll(page)
+
+    return news.map((news) => new NewsEntity(news))
+  }
+
+  @Get('pt-BR/page/:page/categoryId/:categoryId')
+  @ApiOkResponse({ type: NewsEntity })
+  async findAllByCategory(
+    @Param('page', ParseIntPipe) page: number,
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ): Promise<NewsEntity[]> {
+    const news = await this.newsService.findByCategory(categoryId, page)
+
+    return news.map((news) => new NewsEntity(news))
+  }
   //
 }

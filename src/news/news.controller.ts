@@ -85,5 +85,32 @@ export class NewsController {
 
     return new NewsEntity(news)
   }
+
+  @Get('page/:page/categoryId/:categoryId')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: NewsEntity })
+  async findAllByCategory(
+    @Param('page', ParseIntPipe) page: number,
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ): Promise<NewsEntity[]> {
+    const news = await this.newsService.findByCategory(categoryId, page)
+
+    return news.map((news) => new NewsEntity(news))
+  }
+
+  @Get('count/:categoryId')
+  @ApiOkResponse()
+  async countPagesInCategory(
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ) {
+    return await this.newsService.getPagesbyCat(categoryId)
+  }
+
+  @Get('count')
+  @ApiOkResponse()
+  async countPages() {
+    return await this.newsService.getPages()
+  }
   //
 }
