@@ -7,6 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service'
 // DTOs imports
 import { CreateCollectionDto } from './dto/create-collection.dto'
 import { UpdateCollectionDto } from './dto/update-collection.dto'
+import { Collection } from '@prisma/client'
 
 @Injectable()
 // Class declaration
@@ -16,27 +17,37 @@ export class CollectionsService {
   //
 
   // CRUD Operations - Properties
-  async create(createCollectionDto: CreateCollectionDto) {
+  async create(createCollectionDto: CreateCollectionDto): Promise<Collection> {
     return await this.prisma.collection.create({
       data: createCollectionDto,
       include: { cover: true, category: true },
     })
   }
 
-  async findAll() {
+  async findAll(): Promise<Collection[]> {
     return await this.prisma.collection.findMany({
       include: { cover: true, category: true },
     })
   }
 
-  async findOne(collectionId: number) {
+  async findOne(collectionId: number): Promise<Collection> {
     return await this.prisma.collection.findUnique({
       where: { id: collectionId },
       include: { cover: true, category: true },
     })
   }
 
-  async update(collectionId: number, updateCollectionDto: UpdateCollectionDto) {
+  async findByCategoryId(categoryId: number): Promise<Collection[]> {
+    return await this.prisma.collection.findMany({
+      where: { categoryId: categoryId },
+      include: { cover: true, category: true },
+    })
+  }
+
+  async update(
+    collectionId: number,
+    updateCollectionDto: UpdateCollectionDto,
+  ): Promise<Collection> {
     return await this.prisma.collection.update({
       where: { id: collectionId },
       data: updateCollectionDto,
@@ -44,7 +55,7 @@ export class CollectionsService {
     })
   }
 
-  async remove(collectionId: number) {
+  async remove(collectionId: number): Promise<Collection> {
     return await this.prisma.collection.delete({ where: { id: collectionId } })
   }
   //

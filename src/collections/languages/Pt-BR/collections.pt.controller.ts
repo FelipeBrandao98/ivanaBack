@@ -43,4 +43,15 @@ export class CollectionsPtBrController {
     const collection = await this.collectionsService.findOne(collectionId)
     return new CollectionEntity(collection)
   }
+
+  @Get('pt-BR/category/:categoryId')
+  async findById(
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ): Promise<CollectionEntity[]> {
+    const collections = await this.collectionsService.findByCategoryId(
+      categoryId,
+    )
+
+    return collections.map((collection) => new CollectionEntity(collection))
+  }
 }

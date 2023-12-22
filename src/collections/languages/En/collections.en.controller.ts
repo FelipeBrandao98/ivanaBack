@@ -44,5 +44,16 @@ export class CollectionsEnController {
 
     return new CollectionEntity(collection)
   }
+
+  @Get('en/category/:categoryId')
+  async findById(
+    @Param('categoryId', ParseIntPipe) categoryId: number,
+  ): Promise<CollectionEntity[]> {
+    const collections = await this.collectionsService.findByCategoryId(
+      categoryId,
+    )
+
+    return collections.map((collection) => new CollectionEntity(collection))
+  }
   //
 }

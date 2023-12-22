@@ -41,7 +41,7 @@ export class CollectionEntity implements Collection {
   @ApiProperty({ required: true })
   descriptionFr: string
 
-  @Exclude()
+  @ApiProperty({ required: true })
   categoryId: number
 
   @ApiProperty({ required: false, type: CollectionsCategoryEntity })
