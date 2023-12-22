@@ -19,7 +19,18 @@ export class PtBrCollectionsCategoryLanguageInterceptor
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       tap((items: CollectionsCategoryEntity[]) => {
-        items.map((item: CollectionsCategoryEntity) => {
+        if (Array.isArray(items)) {
+          items.map((item: CollectionsCategoryEntity) => {
+            delete item.descriptionFr
+            delete item.descriptionDe
+            delete item.descriptionEn
+
+            delete item.subdescriptionFr
+            delete item.subdescriptionDe
+            delete item.subdescriptionEn
+          })
+        } else {
+          const item: CollectionsCategoryEntity = items
           delete item.descriptionFr
           delete item.descriptionDe
           delete item.descriptionEn
@@ -27,7 +38,7 @@ export class PtBrCollectionsCategoryLanguageInterceptor
           delete item.subdescriptionFr
           delete item.subdescriptionDe
           delete item.subdescriptionEn
-        })
+        }
       }),
     )
   }

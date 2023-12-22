@@ -19,7 +19,21 @@ export class FrCollectionsCategoryLanguageInterceptor
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       tap((items: CollectionsCategoryEntity[]) => {
-        items.map((item: CollectionsCategoryEntity) => {
+        if (Array.isArray(items)) {
+          items.map((item: CollectionsCategoryEntity) => {
+            item.description = item.descriptionFr
+            delete item.descriptionFr
+            delete item.descriptionDe
+            delete item.descriptionEn
+
+            item.subdescription = item.subdescriptionFr
+            delete item.subdescriptionFr
+            delete item.subdescriptionDe
+            delete item.subdescriptionEn
+          })
+        } else {
+          const item: CollectionsCategoryEntity = items
+
           item.description = item.descriptionFr
           delete item.descriptionFr
           delete item.descriptionDe
@@ -29,7 +43,7 @@ export class FrCollectionsCategoryLanguageInterceptor
           delete item.subdescriptionFr
           delete item.subdescriptionDe
           delete item.subdescriptionEn
-        })
+        }
       }),
     )
   }
