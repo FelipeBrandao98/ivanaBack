@@ -20,7 +20,27 @@ export class PtBrCollectionLanguageInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       tap((items: CollectionEntity[]) => {
-        items.map((item: CollectionEntity) => {
+        if (Array.isArray(items)) {
+          items.map((item: CollectionEntity) => {
+            delete item.descriptionDe
+            delete item.descriptionEn
+            delete item.descriptionFr
+
+            delete item.titleDe
+            delete item.titleEn
+            delete item.titleFr
+
+            delete item.category.descriptionDe
+            delete item.category.descriptionEn
+            delete item.category.descriptionFr
+
+            delete item.category.subdescriptionDe
+            delete item.category.subdescriptionEn
+            delete item.category.subdescriptionFr
+          })
+        } else {
+          const item: CollectionEntity = items
+
           delete item.descriptionDe
           delete item.descriptionEn
           delete item.descriptionFr
@@ -36,7 +56,7 @@ export class PtBrCollectionLanguageInterceptor implements NestInterceptor {
           delete item.category.subdescriptionDe
           delete item.category.subdescriptionEn
           delete item.category.subdescriptionFr
-        })
+        }
       }),
     )
   }

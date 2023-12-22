@@ -19,7 +19,31 @@ export class DeCollectionLanguageInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       tap((items: CollectionEntity[]) => {
-        items.map((item: CollectionEntity) => {
+        if (Array.isArray(items)) {
+          items.map((item: CollectionEntity) => {
+            item.description = item.descriptionDe
+            delete item.descriptionDe
+            delete item.descriptionEn
+            delete item.descriptionFr
+
+            item.title = item.titleDe
+            delete item.titleDe
+            delete item.titleEn
+            delete item.titleFr
+
+            item.category.description = item.category.descriptionDe
+            delete item.category.descriptionDe
+            delete item.category.descriptionEn
+            delete item.category.descriptionFr
+
+            item.category.subdescription = item.category.subdescriptionDe
+            delete item.category.subdescriptionDe
+            delete item.category.subdescriptionEn
+            delete item.category.subdescriptionFr
+          })
+        } else {
+          const item: CollectionEntity = items
+
           item.description = item.descriptionDe
           delete item.descriptionDe
           delete item.descriptionEn
@@ -39,7 +63,7 @@ export class DeCollectionLanguageInterceptor implements NestInterceptor {
           delete item.category.subdescriptionDe
           delete item.category.subdescriptionEn
           delete item.category.subdescriptionFr
-        })
+        }
       }),
     )
   }
