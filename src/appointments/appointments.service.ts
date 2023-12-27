@@ -24,7 +24,12 @@ export class AppointmentsService {
   }
 
   async findAll() {
-    return await this.prisma.appointment.findMany({ include: { mailer: true } })
+    return await this.prisma.appointment.findMany({
+      include: { mailer: true },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
   }
 
   async findOne(id: number) {

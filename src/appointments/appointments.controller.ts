@@ -49,10 +49,11 @@ export class AppointmentsController {
   @Post()
   @ApiCreatedResponse({ type: AppointmentEntity })
   async create(
-    @Body() createAppointmentDto: CreateAppointmentDto,
-  ): Promise<AppointmentEntity> {
-    let createMailerDto: CreateMailerDto
-    createMailerDto.mail = createAppointmentDto.email
+    @Body() createAppointmentDto: CreateAppointmentDto, // : Promise<AppointmentEntity>
+  ) {
+    const createMailerDto: CreateMailerDto = {
+      mail: createAppointmentDto.email,
+    }
 
     const emailExists = await this.mailerService.findOne(
       createAppointmentDto.email,
@@ -66,6 +67,8 @@ export class AppointmentsController {
       const { id: mailerId } = await this.mailerService.create(createMailerDto)
       createAppointmentDto.mailerId = mailerId
     }
+
+    delete createAppointmentDto.email
 
     const appointment = await this.appointmentsService.create(
       createAppointmentDto,

@@ -28,7 +28,7 @@ export class CreateAppointmentDto {
   mailerId: number
 
   @IsNotEmpty()
-  @IsPhoneNumber()
+  // @IsPhoneNumber()
   @ApiProperty({ required: true })
   phone: string
 
