@@ -54,5 +54,19 @@ export class CollectionsClothesPtBrController {
 
     return new CollectionClothesEntity(collectionClothes)
   }
+
+  @Get('pt-BR/product/:collectionClothesId')
+  @ApiOkResponse({ type: CollectionClothesEntity })
+  async findProducts(
+    @Param('collectionClothesId', ParseIntPipe) collectionClothesId: number,
+  ) {
+    const collectionClothes = await this.collectionsClothesService.findProducts(
+      collectionClothesId,
+    )
+
+    return collectionClothes.map(
+      (collectionClothes) => new CollectionClothesEntity(collectionClothes),
+    )
+  }
   //
 }

@@ -56,7 +56,7 @@ export class CollectionClothesController {
     return new CollectionClothesEntity(collectionClothes)
   }
 
-  @Get(':collectionId/product')
+  @Get('product/:collectionId')
   @ApiOkResponse({ type: CollectionClothesEntity })
   async findProducts(
     @Param('collectionId', ParseIntPipe) collectionId: number,

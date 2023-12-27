@@ -21,7 +21,23 @@ export class PtBrCollectionsClothesLanguageInterceptor
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       tap((items: CollectionClothesEntity[]) => {
-        items.map((item: CollectionClothesEntity) => {
+        if (Array.isArray(items)) {
+          items.map((item: CollectionClothesEntity) => {
+            delete item.nameDe
+            delete item.nameEn
+            delete item.nameFr
+
+            delete item.collection.descriptionDe
+            delete item.collection.descriptionEn
+            delete item.collection.descriptionFr
+
+            delete item.collection.titleDe
+            delete item.collection.titleEn
+            delete item.collection.titleFr
+          })
+        } else {
+          const item: CollectionClothesEntity = items
+
           delete item.nameDe
           delete item.nameEn
           delete item.nameFr
@@ -33,7 +49,7 @@ export class PtBrCollectionsClothesLanguageInterceptor
           delete item.collection.titleDe
           delete item.collection.titleEn
           delete item.collection.titleFr
-        })
+        }
       }),
     )
   }

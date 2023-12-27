@@ -21,7 +21,25 @@ export class FrCollectionsClothesLanguageInterceptor
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       tap((items: CollectionClothesEntity[]) => {
-        items.map((item: CollectionClothesEntity) => {
+        if (Array.isArray(items)) {
+          items.map((item: CollectionClothesEntity) => {
+            item.name = item.nameFr
+            delete item.nameDe
+            delete item.nameFr
+            delete item.nameEn
+
+            item.collection.description = item.collection.descriptionFr
+            delete item.collection.descriptionDe
+            delete item.collection.descriptionEn
+            delete item.collection.descriptionFr
+
+            item.collection.title = item.collection.titleFr
+            delete item.collection.titleDe
+            delete item.collection.titleEn
+            delete item.collection.titleFr
+          })
+        } else {
+          const item: CollectionClothesEntity = items
           item.name = item.nameFr
           delete item.nameDe
           delete item.nameFr
@@ -36,7 +54,7 @@ export class FrCollectionsClothesLanguageInterceptor
           delete item.collection.titleDe
           delete item.collection.titleEn
           delete item.collection.titleFr
-        })
+        }
       }),
     )
   }
