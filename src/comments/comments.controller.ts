@@ -8,10 +8,11 @@ import {
   Param,
   Delete,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common'
 
 // NestJs - Swagger imports
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 
 // DTOs imports
 import { CreateCommentDto } from './dto/create-comment.dto'
@@ -22,6 +23,7 @@ import { CommentsService } from './comments.service'
 
 // Entities imports
 import { CommentEntity } from './entities/comment.entity'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 
 @ApiTags('Comments')
 @Controller('comments')
@@ -33,6 +35,8 @@ export class CommentsController {
 
   // Properties
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CommentEntity })
   async create(
     @Body() createCommentDto: CreateCommentDto,
@@ -58,18 +62,24 @@ export class CommentsController {
     return new CommentEntity(comment)
   }
 
-  @Patch(':commentId')
+  @Patch('/:commentCode')
   @ApiOkResponse({ type: CommentEntity })
   async update(
-    @Param('commentId', ParseIntPipe) commentId: number,
+    @Param('commentCode') commentCode: string,
     @Body() updateCommentDto: UpdateCommentDto,
-  ): Promise<CommentEntity> {
-    const comment = await this.commentsService.update(
-      commentId,
-      updateCommentDto,
+  ): Promise<CommentEntity | void> {
+    const commentExists = await this.commentsService.getCommentByCode(
+      commentCode,
     )
 
-    return new CommentEntity(comment)
+    if (commentExists && commentExists.isActive === false) {
+      const comment = await this.commentsService.update(
+        commentExists.id,
+        updateCommentDto,
+      )
+
+      return new CommentEntity(comment)
+    }
   }
 
   @Delete(':commentId')

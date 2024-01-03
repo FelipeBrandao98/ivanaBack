@@ -7,6 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service'
 // DTOs imports
 import { CreateCommentDto } from './dto/create-comment.dto'
 import { UpdateCommentDto } from './dto/update-comment.dto'
+import { CommentEntity } from './entities/comment.entity'
 
 @Injectable()
 // Class declaration
@@ -31,11 +32,21 @@ export class CommentsService {
     })
   }
 
-  async update(commentId: number, updateCommentDto: UpdateCommentDto) {
+  async update(
+    commentId: number,
+    updateCommentDto: UpdateCommentDto,
+  ): Promise<CommentEntity> {
+    updateCommentDto.isActive = true
+
     return await this.prisma.comments.update({
       where: { id: commentId },
       data: updateCommentDto,
-      include: { image: true },
+    })
+  }
+
+  async getCommentByCode(commentCode: string) {
+    return await this.prisma.comments.findUnique({
+      where: { commentCode: commentCode },
     })
   }
 

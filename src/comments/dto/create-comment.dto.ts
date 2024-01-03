@@ -14,7 +14,7 @@ export class CreateCommentDto {
   likes: number
 
   @ApiProperty()
-  isActive: boolean
+  isActive?: boolean
 
   @ApiProperty({ required: false })
   imageId?: number

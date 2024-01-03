@@ -16,6 +16,9 @@ export class CommentEntity implements Comments {
   id: number
 
   @ApiProperty()
+  commentCode: string
+
+  @ApiProperty()
   userName: string
 
   @ApiProperty()

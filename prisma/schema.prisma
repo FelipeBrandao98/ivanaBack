@@ -134,13 +134,14 @@ model CollectionClothes {
 
 model Comments {
   id          Int      @id @default(autoincrement())
-  avaliation  Int
-  description String
-  likes       Int
-  isActive    Boolean
+  commentCode String   @unique @default(cuid())
+  avaliation  Int?
+  description String?
+  likes       Int?
+  isActive    Boolean? @default(false)
   createdAt   DateTime @default(now())
   imageId     Int?
-  userName    String
+  userName    String?
   image       Image?   @relation(fields: [imageId], references: [id])
 }
 
