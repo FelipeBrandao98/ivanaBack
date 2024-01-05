@@ -21,14 +21,30 @@ export class CommentsService {
     return await this.prisma.comments.create({ data: createCommentDto })
   }
 
+  async findAllPosted() {
+    return await this.prisma.comments.findMany({
+      where: { isActive: true },
+      include: { image: true },
+    })
+  }
+
   async findAll() {
-    return await this.prisma.comments.findMany({ include: { image: true } })
+    return await this.prisma.comments.findMany({
+      include: { image: true },
+    })
   }
 
   async findOne(commentId: number) {
     return await this.prisma.comments.findUnique({
       where: { id: commentId },
       include: { image: true },
+    })
+  }
+
+  async setLike(commentId: number, likes: number) {
+    return await this.prisma.comments.update({
+      where: { id: commentId },
+      data: { likes: likes + 1 },
     })
   }
 

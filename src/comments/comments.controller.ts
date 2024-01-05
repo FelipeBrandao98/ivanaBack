@@ -48,6 +48,16 @@ export class CommentsController {
 
   @Get()
   @ApiOkResponse({ type: CommentEntity })
+  async findAllPostes(): Promise<CommentEntity[]> {
+    const comments = await this.commentsService.findAllPosted()
+
+    return comments.map((comment) => new CommentEntity(comment))
+  }
+
+  @Get('all')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: CommentEntity })
   async findAll(): Promise<CommentEntity[]> {
     const comments = await this.commentsService.findAll()
 
@@ -62,7 +72,7 @@ export class CommentsController {
     return new CommentEntity(comment)
   }
 
-  @Patch('/:commentCode')
+  @Patch(':commentCode')
   @ApiOkResponse({ type: CommentEntity })
   async update(
     @Param('commentCode') commentCode: string,
@@ -79,6 +89,23 @@ export class CommentsController {
       )
 
       return new CommentEntity(comment)
+    }
+  }
+
+  @Patch('like/:commentId')
+  @ApiOkResponse({ type: CommentEntity })
+  async like(
+    @Param('commentId', ParseIntPipe) commentId: number,
+  ): Promise<CommentEntity | void> {
+    const commentExists = await this.commentsService.findOne(commentId)
+
+    if (commentExists) {
+      const like = await this.commentsService.setLike(
+        commentExists.id,
+        commentExists.likes ? commentExists.likes : 0,
+      )
+
+      return new CommentEntity(like)
     }
   }
 
