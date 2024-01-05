@@ -83,6 +83,8 @@ export class CommentsController {
   }
 
   @Delete(':commentId')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: CommentEntity })
   async remove(
     @Param('commentId', ParseIntPipe) commentId: number,
