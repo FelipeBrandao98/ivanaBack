@@ -58,6 +58,28 @@ export class ImagesService {
     return this.prisma.image.create({ data: createImageDto })
   }
 
+  async createAudio(createImageDto: CreateImageDto, file: Express.Multer.File) {
+    const filename = `${file.originalname.split('.')[0]}-${randomUUID()}`
+
+    try {
+      await this.s3Client.send(
+        new PutObjectCommand({
+          Bucket: process.env.S3_BUCKET,
+          Key: filename,
+          Body: file.buffer,
+          ContentEncoding: 'utf8',
+        }),
+      )
+    } catch (err) {
+      throw new Error(err)
+    }
+
+    createImageDto.src = filename
+    createImageDto.url = `${process.env.SERVER_ADDRESS}/audio/${filename}`
+
+    return this.prisma.image.create({ data: createImageDto })
+  }
+
   async getImage(imgName: string) {
     const response: GetObjectCommandOutput = await this.s3Client.send(
       new GetObjectCommand({

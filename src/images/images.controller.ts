@@ -35,7 +35,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 // Interceptors imports
 import { FileInterceptor } from '@nestjs/platform-express'
 
-@ApiTags('Images')
+@ApiTags('Images / Audios')
 @Controller('images')
 // Class declaration
 export class ImagesController {
@@ -58,6 +58,20 @@ export class ImagesController {
     return new ImagesEntity(image)
   }
 
+  @Post('audio')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiCreatedResponse({ type: ImagesEntity })
+  @UseInterceptors(FileInterceptor('file'))
+  async createAudio(
+    @Body() createImageDto: CreateImageDto,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<ImagesEntity> {
+    const image = await this.imagesService.create(createImageDto, file)
+
+    return new ImagesEntity(image)
+  }
+
   @Get(':imgpath')
   @ApiOkResponse({ type: ImagesEntity })
   @Header('Content-Type', 'image/jpeg')
@@ -65,6 +79,17 @@ export class ImagesController {
     @Param('imgpath') imgpath: string,
   ): Promise<StreamableFile> {
     const file = await this.imagesService.getImage(imgpath)
+
+    return new StreamableFile(file)
+  }
+
+  @Get('audio/:audioPath')
+  @ApiOkResponse({ type: ImagesEntity })
+  @Header('Content-Type', 'audio/mpeg')
+  async getStaticAudio(
+    @Param('audioPath') audioPath: string,
+  ): Promise<StreamableFile> {
+    const file = await this.imagesService.getImage(audioPath)
 
     return new StreamableFile(file)
   }
