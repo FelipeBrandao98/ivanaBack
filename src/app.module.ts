@@ -14,6 +14,7 @@ import { AppointmentsModule } from './appointments/appointments.module'
 import { UsersModule } from './users/users.module'
 import { AuthModule } from './auth/auth.module'
 import { TestMiddleware } from './middlewares/test.middleware'
+import { TracklistModule } from './tracklist/tracklist.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { TestMiddleware } from './middlewares/test.middleware'
     AppointmentsModule,
     UsersModule,
     AuthModule,
+    TracklistModule,
   ],
 })
 // Class declaration
